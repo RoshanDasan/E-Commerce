@@ -1,0 +1,36 @@
+<section class="">
+  <div class="container d-flex justify-content-center">
+    <div class="row w-75 mt-5">
+      <div class="col-md-12">
+        <h2 class="text-center">Edit Product</h2>
+        <form action="/admin/edit_product/<%=editproduct._id %>" method="POST" enctype="multipart/form-data">
+          <label for="">Prodcut Name</label>
+          <input type="text" name="name" class="form-control" value="<%=editproduct.Productname%>" />
+          <label for="">Description</label>
+          <input type="text" name="description" class="form-control" value="<%=editproduct.ProductDescription%>" />
+
+          <label for="">Price</label>
+          <input type="text" name="price" class="form-control" value="<%=editproduct.Price%>" />
+
+          
+          <label for="cars">Category</label>
+         
+          <select class="form-select" name="category" id="cars">
+            <% procategory.forEach(function(procategory) { %>
+            <option><%=procategory.CategoryName%> </option>
+            <% } )%>
+          </select>
+        
+          <label for="">Quantity</label>
+          <input type="text" name="quantity" class="form-control" value="<%=editproduct.Quantity%>" />
+
+          <label for="">Image</label>
+          <img src="/uploads/<%=editproduct.Image%>" alt="" style="width:100px;height:auto">
+          <input type="file" name="file2" class="form-control" />
+
+          <button type="submit" class="btn btn-success mt-4">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

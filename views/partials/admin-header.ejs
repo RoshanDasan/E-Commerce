@@ -1,0 +1,49 @@
+<header class="main-header navbar">
+ 
+  <div class="col-nav">
+   
+    <ul class="nav">
+      
+      
+     
+    
+      <% if (locals.admins) { %>
+        
+        <li class="dropdown nav-item text-center">
+          <a
+          class="dropdown-toggle"
+          data-bs-toggle="dropdown"
+          href="#"
+          id="dropdownAccount"
+          aria-expanded="false"
+        >
+          <img
+            class="img-xs rounded-circle"
+            src="/imgs/people/avatar2.jpg"
+            alt="User"
+        /></a>
+        <div
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownAccount"
+        >
+          <a class="dropdown-item" href="#"
+            ><i class="material-icons md-perm_identity"></i>Profile</a
+          >
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="/admin/logout"
+            ><i class="material-icons md-exit_to_app"></i>Logout</a
+          >
+          
+        </div>
+          
+          <%} else { %>
+           Account
+            
+          <% }
+           %>
+       
+      </li>
+    </ul>
+  </div>
+</header>
+

@@ -1,0 +1,64 @@
+<section>
+    <div class="page-header breadcrumb-wrap">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/" rel="nofollow">Home</a>
+          <span></span> Pages <span></span> Login / Register
+        </div>
+      </div>
+    </div>
+    <main class="main">
+      <section class="p-auto my-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-10 m-auto">
+              <div class="row d-flex justify-content-center">
+                <div class="col-lg-6">
+                  <div
+                    class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5"
+                  >
+                    <div class="padding_eight_all bg-white">
+                      <div class="heading_s1">
+                        <h5 class="mb-30">Enter your number.....</h5>
+                      </div>
+                      <%if (locals.userExist==true){%>
+                        <p id="message" style="color: red;">No user exist</p>
+                        <%}
+      
+                         
+                    
+                        %>
+                      <form action="/otpLogin" method="post">
+                        <div class="form-group">
+                          <input
+                            type=""
+                            required=""
+                            name="number"
+                            placeholder="+91..........."
+                          />
+                        </div>
+                       
+                        <div class="form-group">
+                          <button
+                            type="submit"
+                            class="btn btn-fill-out btn-block hover-up"
+                            name="login"
+                            style="width: 100%"
+                          >
+                            Request for OTP
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+   
+   
+  </section>
+  

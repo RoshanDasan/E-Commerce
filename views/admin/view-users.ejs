@@ -1,0 +1,71 @@
+<section class="">
+    <div class="container d-flex justify-content-center">
+      <div class="row w-75 mt-5">
+        <div class="col-md-12">
+          <h2 class="text-center">Users List</h2>
+          <form
+            action="/admin/add_sub"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Table section -->
+  <section  mx-auto>
+    <div class="card-body">
+      <div class="row mt-5 mx-auto">
+        <div class="table-responsive">
+          <div class="table-responsive">
+            <table class="table align-middle table-nowrap mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="align-middle" scope="col">No:</th>
+                  <th class="align-middle" scope="col">User Name</th>
+                  <th class="align-middle" scope="col">Email</th>
+                  <th class="align-middle" scope="col">Phone Number</th>
+                  <th class="align-middle" scope="col">Orders</th>
+                  <th class="align-middle" scope="col">Option</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% user.forEach(function(user,index) { %>
+                <tr>
+                  <td> <%=index+1 %> </td>
+                  <td><%= user.username %></td> 
+                  <td><%= user.email %></td>
+                  <td><%= user.phonenumber %></td>
+                  <td><a href="/admin/order/<%= user._id%>" class="btn btn-primary">Orders</a></td>
+                  <td>
+                      <%if(user.blocked){%>
+                        
+                        <a href ="/admin/unblock_users/<%= user._id %>" class="btn btn-success" >UnBlock</a>
+                 
+                        
+                      <%}
+                      else{%>
+                        <a href ="/admin/block_users/<%= user._id %>" class="btn btn-danger" onclick="return confirm('are you want to block <%=user.username%>?')">Block</a>
+
+              
+                      <%}
+                        %>
+
+
+
+                  </td>
+    
+                 
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- table-responsive end// -->
+      </div>
+    </div>
+  </section>
+  

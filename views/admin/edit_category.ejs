@@ -1,0 +1,18 @@
+<section class="">
+    <div class="container d-flex justify-content-center">
+      <div class="row w-75 mt-5">
+        <div class="col-md-12">
+          <h2 class="text-center">Edit Category</h2>
+          <form
+            action="/admin/edit_category/<%= response._id %>"
+            method="POST"
+           
+          >
+            <label for="">Category Name</label>
+            <input type="text" name="editCategoryname" class="form-control" value="<%=response.CategoryName %>"/>
+            <button type="submit" class="btn btn-success mt-4">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>

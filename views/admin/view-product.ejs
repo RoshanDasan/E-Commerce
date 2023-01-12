@@ -1,0 +1,64 @@
+<section class="">
+    <div class="container d-flex justify-content-center">
+      <div class="row w-75 mt-5">
+        <div class="col-md-12">
+          <h2 class="text-center">Product List</h2>
+          <form
+            action="/admin/add_sub"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Table section -->
+  <section  mx-auto>
+    <div class="card-body">
+      <div class="row mt-5 mx-auto">
+        <div class="table-responsive">
+          <div class="table-responsive">
+            <table class="table align-middle table-nowrap mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="align-middle" scope="col">No:</th>
+                  <th class="align-middle" scope="col">product Name</th>
+                  <th class="align-middle" scope="col">Description</th>
+                  <th class="align-middle" scope="col">price</th>
+                  <th class="align-middle" scope="col">Category</th>
+                  <th class="align-middle" scope="col">Quantity</th>
+                  <th class="align-middle" scope="col">Image</th>
+                  <th class="align-middle" scope="col">option</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% response.forEach(function(response,index) { %>
+                <tr>
+                  <td><%=index+1 %> </td>
+                  <td><%=response.Productname%></td> 
+                  <td><%=response.ProductDescription%></td> 
+                  <td><%=response.Price%></td> 
+                  <td><%=response.category%></td> 
+                  <td><%=response.Quantity%></td> 
+                
+                  <td><img src='/uploads/<%= response.Image %>' alt="" style="width:50px;height:50px";></td>
+                  <td>
+                        <a href ="/admin/edit_product/<%=response._id %>"  class="btn btn-success">Edit</a>
+                 
+                        <a href ="/admin/delete_product/<%=response._id %>" class="btn btn-danger"   onclick="return confirm('are you want to Delete <%=response.Productname%>?')">Delete</a>
+                  </td>
+    
+                 
+                </tr>
+          <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- table-responsive end// -->
+      </div>
+    </div>
+  </section>
+  

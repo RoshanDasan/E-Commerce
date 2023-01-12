@@ -1,0 +1,15 @@
+cart
+
+
+ <%if( locals.users){%>
+                  <span class="pro-count blue" id="cart-count"><%= locals.count %></span>
+<%}%>
+
+
+
+<%if(locals.users){%>
+             
+                <li><i class="fi-rs-user"></i><a href="/logout"><%=users.userName%></a></li>
+                 <%}else {%>
+                <li><i class="fi-rs-user"></i><a href="/login">Log In</a></li>
+                <%}%>

@@ -1,0 +1,230 @@
+
+
+
+<section></section>
+    
+   
+    <main class="main">
+       
+        <section class="mt-50 mb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table shopping-summery text-center clean">
+                                <thead>
+                                    <tr class="main-heading">
+                                    
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Subtotal</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                             
+                                <tbody>
+                                    
+                                    <% cartItems?.forEach(function(cartItems){%>
+                                      
+                                    <tr>
+                                   
+                                       
+                                        <td > <img src="/uploads/<%=cartItems.carted.Image %>" ></td>
+                                        <td class="product-des product-name">
+                                            <h5 class="product-name"><a href="shop-product-right.html"><%=cartItems.carted.Productname%></a></h5>
+                                            <p class="font-xs"><%=cartItems.carted.category%></p> 
+                                            <p class="font-xs"><%=cartItems.carted.ProductDescription%></p> 
+                                           
+                                        </td>
+                                        <td class="price" cartItemss-title="Price"><span><%=cartItems.carted.Price%> </span></td>
+                                        <td class="text-center" cartItemss-title="Stock">
+
+                                            <div class="detail-qty border radius  m-auto">
+                                               <div><button class="cart-item-count mr-5" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',-1)">-</button></div>
+                                                <span id="<%= cartItems.item %>"><%= cartItems.quantity%></span>
+                                                <div>  <button class="cart-item-count ml-5" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',1)">+</button></div> 
+                                            </div>
+                                        </td>
+                                        <td class="text-right" cartItemss-title="total">
+                                            
+                                        </td>
+                                        <!-- <td class="action" cartItemss-title="Remove"><a href="#" class="text-muted"><i class="fi-rs-trash"></i></a></td> -->
+                                        <td class="action" cartItemss-title="Remove"><button class="text-muted" onclick="return removeCart(this),removeItem('<%=cartItems._id%>','<%=cartItems.item %>')"><i class="fi-rs-trash"></i></button></td>
+                                      
+                                    </tr>
+                                    
+                                    
+                                    
+                                    <%}) %>
+                             
+                                </tbody>
+                             
+                            </table>
+                        </div>
+                      
+                        <div class="divider center_icon mt-50 mb-50"><i class="fi-rs-fingerprint"></i></div>
+                        <div class="row mb-50">
+                            <div class="col-lg-6 col-md-12">
+                               
+                                <% subtotal?.forEach(function(subtotal){%>
+                                    <span><%=subtotal.total%> </span>
+                                  
+                                    <%}) %>
+                                
+                                <div class="mb-30 mt-50">
+                                    <div class="heading_s1 mb-3">
+                                        <h4>Apply Coupon</h4>
+                                    </div>
+                                    <div class="total-amount">
+                                        <div class="left">
+                                            <div class="coupon">
+                                                <form action="/cartItems"  target="_blank">
+                                                    <div class="form-row row justify-content-center">
+                                                        <div class="form-group col-lg-6">
+                                                            <input class="font-medium" name="Coupon" placeholder="Enter Your Coupon">
+                                                        </div>
+                                                        <div class="form-group col-lg-6">
+
+
+                                                      <button class="btn  btn-sm"><i class="fi-rs-label mr-10"></i>Apply</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="border p-md-4 p-30 border-radius cartItems-totals">
+                                    <div class="heading_s1 mb-3">
+                                        <h4>cartItems Totals</h4>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="cartItems_total_label">cartItems Subtotal</td>
+                                                    <td class="cartItems_total_amount"><span id="subtotal" class="font-lg fw-900 text-brand"><%=total%></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="cartItems_total_label">Shipping</td>
+                                                    <td class="cartItems_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="cartItems_total_label">Total</td>
+                                                    <td class="cartItems_total_amount"><strong><span id="total" class="font-xl fw-900 text-brand "><%= total%></span></strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <a href="/check_out" class="btn "> <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+   
+
+    
+    
+   
+</section>
+
+
+<script>
+    function changeQuantity(cartId, prodId,userId,count){
+       console.log(cartId);
+       console.log(prodId);
+       console.log(count);
+       console.log(userId);
+
+       let quantity = parseInt(document.getElementById(prodId).textContent)
+       count=parseInt(count)
+
+       $.ajax({
+       url: '/change_product_quantity',
+       method: 'PUT',
+       data: {
+       user:userId,
+       cart: cartId,
+       product: prodId,
+       count: count,
+       quantity: quantity
+     
+     },
+
+     success:(response)=>{
+       console.log(response);
+      
+       if(response.removeProduct){
+           alert("Removed Product From Cart")
+           location.reload()
+       }
+       else{
+           console.log("hgfcvbnb"+prodId);
+           let cartQuantity= quantity+count
+           console.log(cartQuantity);
+           document.getElementById(prodId).innerHTML=cartQuantity
+           document.getElementById("total").innerHTML=response.total
+           document.getElementById("subtotal").innerHTML=response.total
+
+       }
+    }
+   })
+}
+
+
+function removeItem(cartId, prodId) {
+    $.ajax({
+          url: '/delete_cart_item',
+          data: {
+            cartId: cartId,
+            product: prodId
+          },
+          method: 'DELETE',
+          success: (response) => {
+            if (response.removeProduct) {
+              location.reload()
+            }    
+          }
+        })
+}
+
+
+
+function removeCart(form)
+{
+    event.preventDefault()
+     Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!',
+  timer: 3000 
+}).then((result) => {
+  if (result.isConfirmed) {
+    form.submit()
+    // Swal.fire(
+    //   'Deleted!',
+    //   'Your file has been deleted.',
+    //   'success'
+    // )
+  }
+})
+return false
+}
+
+
+
+                                     
+
+</script>

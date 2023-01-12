@@ -1,0 +1,317 @@
+<section class="mx-auto">
+  <main class="main">
+    <div class="page-header breadcrumb-wrap">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/" rel="nofollow">Home</a>
+          <span></span> Pages <span></span> Signup / Register
+        </div>
+      </div>
+    </div>
+  <div class="container">
+    <div class="row my-5">
+      <div class="col-lg-10 m-auto">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-8">
+            <div
+              class="login_wrap widget-taber-content p-30 background-white border-radius-5"
+            >
+              <div class="padding_eight_all bg-white">
+                <div class="heading_s1">
+                  <h3 class="mb-30">Create an Account</h3>
+                </div>
+                <p class="mb-50 font-sm">
+                  Your personal data will be used to support your experience
+                  throughout this website, to manage access to your account, and
+                  for other purposes described in our privacy policy
+                </p>
+                <%if (emailStatus==false){%>
+                  <p style="color: red;" class="message">EmailId already exist </p>
+                  <%}
+
+                   
+              
+                  %>
+                  
+                <form  action="/signup" method="post">
+                  <div class="form-group">
+                  
+                    <input
+                      type="text"
+                      required=""
+                      name="username"
+                      id="name"
+                      onkeyup=" validateName()"
+                      placeholder="Username"
+                    />
+                    <span id="name-error" class="validation-label"></span>
+                      
+                  </div>
+                 
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      required=""
+                      name="email"
+                      onkeyup="validateEmail() "
+                      id="email"
+                      placeholder="Email"
+                    />
+                    <span id="email-error" class="validation-label"></span>
+                  </div>
+       
+                  <div class="form-group">
+                    <input
+                      type="number"
+                      required=""
+                      id="phone"
+                      onkeyup="validatePhone()"
+                      name="phonenumber"
+                      placeholder="Phone Number"
+                    />
+                  </div>
+                  <span id="phone-error"></span>
+                  <div class="form-group">
+                    <input
+                      required=""
+                      type="password"
+                      id="password"
+                      onkeyup="validatePassword()"
+                      name="password"
+                      placeholder="Password"
+                    />
+                   
+                  </div>
+                  
+                  <div class="form-group">
+                    <input
+                      required=""
+                      type="password"
+                      name="cnfrmpassword"
+                      onkeyup="validatePassword()"
+                      id="cnfrm-password"
+                      placeholder="Confirm password"
+                    />
+                    <span id="pass-error" class="validation-label"></span>
+                  </div>
+                  <div class="login_footer form-group">
+                    <div class="chek-form">
+                      <div class="custome-checkbox">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          name="checkbox"
+                          id="exampleCheckbox12"
+                          value=""
+                        />
+                        <label class="form-check-label" for="exampleCheckbox12"
+                          ><span>I agree to terms &amp; Policy.</span></label
+                        >
+                      </div>
+                    </div>
+                    <a href="page-privacy-policy.html"
+                      ><i class="fi-rs-book-alt mr-5 text-muted"></i>Lean
+                      more</a
+                    >
+                      
+                  </div>
+                  <div class="form-group d-flex justify-content-center">
+                    <button
+                      type="submit"
+                      class="btn btn-fill-out btn-block hover-up"
+                      name="login"
+                      onclick="return validateForm()"
+                    >
+                      Submit &amp; Register
+                    </button>
+                  </div>
+                </form>
+                <div class="divider-text-center mt-15 mb-15">
+                  <span> or</span>
+                </div>
+                <ul class="btn-login list_none text-center mb-15">
+                  <li>
+                    <a
+                      href="#"
+                      class="btn btn-facebook hover-up mb-lg-0 mb-sm-4"
+                      >Login With Facebook</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="btn btn-google hover-up"
+                      >Login With Google</a
+                    >
+                  </li>
+                </ul>
+                <div class="text-muted text-center">
+                  Already have an account ? <a href="/login"> Sign in now</a >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+
+
+
+
+
+
+<script>
+
+var nameError = document.getElementById("name-error");
+var emailError = document.getElementById("email-error");
+var phoneError = document.getElementById("phone-error");
+let passError=document.getElementById("pass-error");
+
+
+
+function validateName() {
+  var name = document.getElementById("name").value;
+  var nameInput = document.getElementById("name");
+
+  if (name.length == 0) {
+    nameError.innerHTML = "Name is required";
+    nameError.style.color = "red";
+    nameInput.style.border = "solid 2px red";
+    return false;
+  }
+  if (!name.match(/^[A-Za-z]{3,}$/)) {
+    nameError.innerHTML = "Write valid name";
+    nameError.style.color = "red";
+    nameInput.style.border = "solid 2px red";
+
+    return false;
+  }
+  nameError.innerHTML = "";
+  // nameError.innerHTML = "Valid Name";
+  nameError.style.color = "green";
+  nameInput.style.border = "solid 2px green";
+
+  return true;
+}
+function validateEmail() {
+  var email = document.getElementById("email").value;
+  var emailInput = document.getElementById("email");
+
+  if (email.length == 0) {
+    emailError.innerHTML = "Email is required";
+    emailError.style.color = "red";
+    emailInput.style.border = "solid 2px red";
+
+    return false;
+  }
+  if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+    emailError.innerHTML = "Email invalid";
+    emailError.style.color = "red";
+    emailInput.style.border = "solid 2px red";
+
+    return false;
+  }
+  emailError.innerHTML = "";
+  emailError.style.color = "green";
+  emailInput.style.border = "solid 2px green";
+  return true;
+}
+function validatePhone(){
+  var phone = document.getElementById("phone").value;
+  var phoneInput = document.getElementById("phone");
+
+  if (phone.length == 0) {
+    phoneError.innerHTML = "phone number is required";
+    phoneError.style.color = "red";
+    phoneInput.style.border = "solid 2px red";
+    return false;
+  }
+  if (!phone.match(/^\d{10}$/)) {
+    phoneError.innerHTML = "Enter valid number";
+    phoneError.style.color = "red";
+    phoneInput.style.border = "solid 2px red";
+
+return false;
+  }
+  phoneError.innerHTML = "";
+  phoneError.style.color = "green";
+  phoneInput.style.border = "solid 2px green";
+  return true;
+
+}
+function validatePassword(){
+    
+let password = document.getElementById("password").value;
+let passwordInput = document.getElementById("password")
+let cnfrmPassword = document.getElementById("cnfrm-password").value;
+let cnfrmPasswordInput= document.getElementById("cnfrm-password")
+
+    if(password.length != 0){
+        if(password == cnfrmPassword){
+            passError.innerHTML = "Passwords match";
+            passError.style.color = "green";
+            passwordInput.style.border = "solid 2px green";
+            cnfrmPasswordInput.style.border = "solid 2px green";
+            return true
+        }
+        else if (!password.match(/[a-zA-Z]/)) {
+          passError.innerHTML = "Password must contain atleast 1 letter";
+          passError.style.color = "red";
+          passwordInput.style.border = "solid 2px red";
+          return false;
+        }
+        else if (!password.match(/^.{8,}$/)) {
+          passError.innerHTML = "Password min-length 8";
+          passError.style.color = "red";
+          passwordInput.style.border = "solid 2px red";
+          return false;
+        }
+        else if (!password.match(/^(?=.*[\W_])[\w\W]/)) {
+          passError.innerHTML = "Password must contain atleast one special character";
+          passError.style.color = "red";
+          passwordInput.style.border = "solid 2px red";
+          return false;
+        }
+        else{
+            passError.innerHTML = "Password don't match";
+            passError.style.color = "red";
+            passwordInput.style.border = "solid 2px red";
+            return false
+
+
+        }
+    }
+    else{
+        
+        message.textContent = "";
+    }
+}
+function validateForm() {
+  if (
+    !validateName() ||
+    !validateEmail()
+    
+  ) {
+    submitError.style.display = "block";
+    submitError.innerHTML = "Please fix all errors to submit.";
+    setTimeout(function () {
+      submitError.style.display = "none";
+    }, 3000);
+    return false;
+  }
+}
+
+  setTimeout(function() {
+    document.querySelector('.message').style.display = 'none';
+  }, 3000);
+</script>
+
+
+
+
+
+
+
+

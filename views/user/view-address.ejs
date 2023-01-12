@@ -1,0 +1,56 @@
+<h1>address</h1>
+<% response.forEach(function(response) { %>
+<div class="col-md-6 container">
+    <div class="order_review">
+        <div class="mb-20">
+    
+
+                <h4><%=response.item.fname%>:<%=response.item.lname%></h4>
+                <h5><%=response.item.street%></h6>
+                    <h5><%=response.item.apartment%></h6>
+                        <h5><%=response.item.city%></h5>
+                        <h5><%=response.item.state%></h5>
+                        <h5><%=response.item.pincode%></h5>
+                    <h5><%=response.item.mobile%></h5>
+                    <h5><%=response.item.email%></h5>
+
+
+            <button class="btn" onclick="deleteAddress('<%=response._id%>','<%=response.item._id%>')">Delete</button>       
+        </div>
+        
+        
+    </div>
+</div>
+<br>
+<% }) %> 
+
+
+
+<script>
+    
+ 
+ function deleteAddress(deleteId, addressId)
+ {
+    $.ajax({
+        url:'/delete_address',
+        data:{
+            deleteId:deleteId,
+
+            addressId:addressId
+        },
+        method: 'DELETE',
+
+        success:(response)=>
+        {
+            if(response.deleteAddress)
+            {
+                location.reload()
+            } 
+
+        }
+    })
+
+ }
+
+</script>
+

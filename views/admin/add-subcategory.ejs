@@ -1,0 +1,48 @@
+<section class="">
+  <div class="container d-flex justify-content-center">
+    <div class="row w-75 mt-5">
+      <div class="col-md-12">
+        <h2 class="text-center">Add SubCategory</h2>
+        <form
+          action="/admin/add_sub"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <label for="">SubCategory Name</label>
+          <input type="text" name="subname" class="form-control" />
+          <button type="submit" class="btn btn-success mt-4">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Table section -->
+<section w-50 mx-auto>
+  <div class="card-body">
+    <div class="row w-50 mt-5 mx-auto">
+      <div class="table-responsive">
+        <div class="table-responsive">
+          <table class="table align-middle table-nowrap mb-0">
+            <thead class="table-light">
+              <tr>
+                <th class="align-middle" scope="col">Category Name</th>
+                <th class="align-middle" scope="col">Option</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Neal Matthews</td>
+
+                <td>
+                  <a href="#" class="btn btn-xs btn-success"> Edit</a>
+                  <a href="#" class="btn btn-xs btn-danger"> Delete</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- table-responsive end// -->
+    </div>
+  </div>
+</section>
