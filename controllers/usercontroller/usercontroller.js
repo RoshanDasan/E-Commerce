@@ -187,6 +187,8 @@ module.exports = {
 
     let cartItems = await userhelpers.listAddToCart(req.session.user.id);
     let total = await userhelpers.totalCheckOutAmount(req.session.user.id);
+
+    
     userproductHelpers.checkOutpage(req.session.user.id).then((response) => {
       res.render("user/checkout", { users, cartItems, total, response });
     });
@@ -194,9 +196,7 @@ module.exports = {
 
   postcheckOutPage: async (req, res) => {
     let total = await userhelpers.totalCheckOutAmount(req.session.user.id);
-    let order = await userproductHelpers
-      .placeOrder(req.body, total)
-      .then((response) => {
+    let order = await userproductHelpers.placeOrder(req.body, total).then((response) => {
         console.log(response);
         if (req.body["payment-method"] == "COD") {
           res.json({ codstatus: true });
@@ -229,6 +229,7 @@ module.exports = {
     await userhelpers.changeProductQuantity(req.body).then(async (response) => {
       response.total = await userhelpers.totalCheckOutAmount(req.body.user);
 
+      
       res.json(response);
     });
   },
@@ -313,4 +314,80 @@ module.exports = {
     req.session.userloggedIn = false;
     res.render("user/login");
   },
-};
+
+  applyCoupon:async(req, res)=>
+{
+  let code = req.query.code;
+  console.log(code);
+  let total = await userhelpers.totalCheckOutAmount(req.session.user);
+  userproductHelpers.applyCoupon(code, total).then((response) => {
+  couponPrice = response.discountAmount ? response.discountAmount : 0;
+  res.json(response);
+  });
+
+},
+
+applyCouponSuccess:(req, res)=>
+{
+  let code = req.query.code;
+  console.log(code,'code');
+  userproductHelpers.couponValidator(code, req.session.user.id)
+    .then((response) => {
+      console.log(response);
+      res.json(response);
+    });
+
+
+},
+
+couponVerify:(req, res)=>
+{
+  let code = req.query.code;
+  userproductHelpers.couponVerify(code, req.session.user.id).then((response) => {
+   
+    res.json(response);
+  })
+},
+
+postVerifyPayment: (req, res) => {
+  console.log(req.body);
+  userproductHelpers.verifyPayment(req.body).then(() => {
+    console.log(req.body);
+
+    userproductHelpers.changePaymentStatus(req.session.user.id, req.body['order[receipt]']).then(() => {
+
+      res.json({ status: true })
+
+    }).catch((err) => {
+      console.log(err);
+      res.json({ status: false, err })
+    })
+
+  })
+
+
+},
+
+
+orderDetails:async(req,res)=>{
+     
+  let details=req.query.order
+   
+  userproductHelpers.viewOrderDetails(details).then((response)=>{   
+
+
+    console.log(response,'==response');
+
+  
+     let products = response.products[0]
+     let address = response.address
+     let orderDetails = response.details
+
+    
+    res.render('user/order-details',{products,address,orderDetails})
+
+   })
+   
+},
+
+}

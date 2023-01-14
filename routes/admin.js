@@ -5,6 +5,7 @@ const admincategorycontroller=require('../controllers/admincontroller/category')
 const adminHelper=require('../helpers/adminHelpers/adminProductHelpers')
 const adminusercontroller=require('../controllers/admincontroller/adminuser')
 const adminproductcontroller=require('../controllers/admincontroller/product')
+const adminCouponController = require('../controllers/admincontroller/adminCoupon')
 var router = express.Router();
 const user = require("../models/connection");
 const multer= require('multer');
@@ -54,6 +55,13 @@ router.get("/delete_product/:id",auths.auth,adminproductcontroller.deleteViewPro
 
 router.get("/order/:id", adminproductcontroller.getOrderList)
 
+router.get('/coupons',auths.auth, adminCouponController.getViewCoupon)
+
+router.get('/add_coupons',auths.auth, adminCouponController.getAddCoupon)
+
+router.post('/add_coupons',adminCouponController.postAddCoupon)
+
+router.get("/generate_coupon",adminCouponController.generateCoupon);
 
 
 module.exports = router;

@@ -17,7 +17,7 @@
                             <div class="custome-radio" style="width: 35rem; height: 13rem;background-color: whitesmoke; padding: 20px; border-radius: 30px;">
                                 
                                                                        
-                                <input type="radio" id="address1" name="address" value="address1" style="height: 10px;width:10px;">
+                                <input type="radio" id="address1" name="address" value="<%=response.item._id%>" style="height: 10px;width:10px;">
                                  
                                 <h4><%=response.item.fname%>:<%=response.item.lname%></h4>
                                 <h5><%=response.item.street%></h6>
@@ -120,6 +120,7 @@
             </div>
         </section>
   
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
         <script>
        
@@ -147,17 +148,15 @@
             function razorpay(order) {
               console.log(order); 
               var options = {
-                "key": "rzp_test_skvx7PSxj47qbu", // Enter the Key ID generated from the Dashboard
+                "key": "rzp_test_35L6RvxfjNKTJy", // Enter the Key ID generated from the Dashboard
                 "amount":Number(order.amount), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise,
                 "currency": "INR",
-                "name": "A2Z Ecommerce",
+                "name": "RoshanCart",
                 "description": "Test Transaction",
                 "image": "https://example.com/your_logo",
                 "order_id": order.id, //This is a sample Order ID. Pass the id obtained in the response of Step 1
                 "handler": function (response) {
-                //   alert(response.razorpay_payment_id);
-                //   alert(response.razorpay_order_id);
-                //   alert(response.razorpay_signature)
+           
                   verifypayment(response, order)
                 },
                 "prefill": {
@@ -179,10 +178,8 @@
            
             function verifypayment(payment,order){
 
-$.ajax({
-
-
-url:'verify_payment',
+            $.ajax({
+          url:'verify_payment',
                   data:{
                       payment,
                       order

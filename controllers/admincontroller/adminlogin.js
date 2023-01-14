@@ -1,7 +1,9 @@
 const { response } = require('../../app');
 const adminHelper= require('../../helpers/adminHelpers/adminProductHelpers');
+const coupenHelper = require('../../helpers/adminHelpers/adminCouponHelpers')
 const { category } = require('../../models/connection');
 const user = require("../../models/connection");
+
 
 
 
@@ -22,7 +24,7 @@ module.exports={
           res.render("admin/admin-dashboard",{layout:"adminLayout",admins})
         }else{
        
-      res.render('admin/login',{layout:'adminLayout'})
+         res.render('admin/login',{layout:'adminLayout'})
         }
         
       },
@@ -40,9 +42,9 @@ module.exports={
       }
       
         else{
-          adminloginErr=true
+          // adminloginErr=true
         
-        res.render('admin/login',{layout:'adminLayout',})
+        res.render('admin/login',{layout:'adminLayout',adminloginErr:true})
         }
        },
        
@@ -63,14 +65,15 @@ module.exports={
 
 getAdminLogOut:(req,res)=>{
   req.session.adminloggedIn=false
+  let admins=req.session.adminloggedIn
 
-  res.render("admin/login",{layout: "adminLayout"})
+  res.render("admin/login",{layout: "adminLayout",admins})
 },
 
+
+
+
 }
-
-
-
 
 
 

@@ -1,65 +1,39 @@
-<section class="d-flex justify-content-center mt-5">
-  <form action="/admin/login" method="post" class="">
-    <!-- Email input -->
-    <div class="form-outline mb-4">
-      <input type="email" id="form2Example1" name="email" class="form-control" />
-      <label class="form-label" for="form2Example1">Email address</label>
-    </div>
+<section class="vh-100 " style="background-color: #fff;">
+  <div class="container  h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100" >
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong">
+          <div class="card-body text-center">
 
-    <!-- Password input -->
-    <div class="form-outline mb-4">
-      <input type="password" id="form2Example2" name="password" class="form-control" />
-      <label class="form-label" for="form2Example2">Password</label>
-    </div>
+            <h3 class="mb-5"><span><h6 style="color: rgb(247, 207, 154);">Admin</h6></span> Sign in</h3>
 
-    <!-- 2 column grid layout for inline styling -->
-    <div class="row mb-4">
-      <div class="col d-flex justify-content-center">
-        <!-- Checkbox -->
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="form2Example31"
-            checked
-          />
-          <label class="form-check-label" for="form2Example31">
-            Remember me
-          </label>
+         
+
+            <form action="/admin/login" method="post">
+
+              <div class="form-outline mb-4">
+                <label class="form-label" for="typeEmailX-2">Email</label>
+                <input type="email" name="email" id="typeEmailX-2" class="form-control form-control-lg" />
+               
+              </div>
+  
+              <div class="form-outline mb-4">
+                <label class="form-label" for="typePasswordX-2">Password</label>
+                <input type="password" name="password" id="typePasswordX-2" class="form-control form-control-lg" />
+               
+              </div>        
+               <br>
+         
+
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+            <br>
+
+          </form>
+
+          </div>
         </div>
       </div>
-
-      <div class="col">
-        <!-- Simple link -->
-        <a href="#!">Forgot password?</a>
-      </div>
     </div>
-
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary !important btn-block mb-4">
-      Sign in
-    </button>
-
-    <!-- Register buttons -->
-    <div class="text-center">
-      <p>Not a member? <a href="#!">Register</a></p>
-      <p>or sign up with:</p>
-      <button type="button" class="btn btn-link btn-floating mx-1">
-        <i class="fab fa-facebook-f"></i>
-      </button>
-
-      <button type="button" class="btn btn-link btn-floating mx-1">
-        <i class="fab fa-google"></i>
-      </button>
-
-      <button type="button" class="btn btn-link btn-floating mx-1">
-        <i class="fab fa-twitter"></i>
-      </button>
-
-      <button type="button" class="btn btn-link btn-floating mx-1">
-        <i class="fab fa-github"></i>
-      </button>
-    </div>
-  </form>
+  </div>
 </section>

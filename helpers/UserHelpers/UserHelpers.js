@@ -230,7 +230,7 @@ module.exports = {
           {
             $group: {
               _id: null,
-              total: { $sum: { $multiply: ["$quantity", "$product.Price"] } },
+              total: { $sum: { $multiply: ["$quantity", "$product.Price"]}},
             },
           },
         ])
@@ -638,7 +638,7 @@ cancelOrder:(orderId,userId)=>{
   console.log('---------',orders._id);
 
   
-  let carts = await user.order.updateOne({'orders._id':orderId } ,
+  let carts = await user.order.updateOne({'orders._id':orderId },
      {
       $set:
       {

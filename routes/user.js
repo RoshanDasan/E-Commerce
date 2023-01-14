@@ -41,6 +41,8 @@ router.get("/check_out",auths.userauth,controllers.checkOutPage)
 
 router.post('/check_out',controllers.postcheckOutPage)
 
+router.post('/verify_payment', auths.userauth, controllers.postVerifyPayment)
+
 router.get("/add_address",auths.userauth,controllers.getAddresspage)
 
 router.post("/add_address",auths.userauth, controllers.postAddresspage)
@@ -59,6 +61,14 @@ router.get('/order',controllers.getOrderList)
 
 router.get('/order_success', controllers.GetSuccessPage)
 
+router.get('/order_details',controllers.orderDetails)
+
 router.get('/order_cancel/:id', controllers.cancelOrder)
+
+router.get('/apply_coupon', controllers.applyCoupon)
+
+router.get('/coupon_validator', controllers.applyCouponSuccess) 
+
+router.get('/coupon_verify', controllers.couponVerify)
 
 module.exports = router;

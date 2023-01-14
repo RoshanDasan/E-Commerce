@@ -79,22 +79,35 @@
                                     </div>
                                     <div class="total-amount">
                                         <div class="left">
-                                            <div class="coupon">
-                                                <form action="/cartItems"  target="_blank">
-                                                    <div class="form-row row justify-content-center">
-                                                        <div class="form-group col-lg-6">
-                                                            <input class="font-medium" name="Coupon" placeholder="Enter Your Coupon">
-                                                        </div>
-                                                        <div class="form-group col-lg-6">
-
-
-                                                      <button class="btn  btn-sm"><i class="fi-rs-label mr-10"></i>Apply</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                          <div class="coupon">
+                                            <form action="/cartItems" target="_blank">
+                                              <div class="form-row row justify-content-center">
+                                                <div class="form-group col-lg-6">
+                                                  <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    autocomplete="off"
+                                                    required
+                                                    id="code"
+                                                    placeholder="coupon code"
+                                                  />
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                  <button
+                                                    class="btn btn-sm btn-outline-primary bg-light"
+                                                    style="width: 3em; height: 3em"
+                                                    type="button"
+                                                    onclick="couponValidator(this,'<%=total%>')"
+                                                  >
+                                                    <i class="icon-long-arrow-right"></i>
+                                                  </button>
+                                                </div>
+                                              </div>
+                                            </form>
+                                            <span class="couponErr"></span>
+                                          </div>
                                         </div>
-                                    </div>
+                                      </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-12">
@@ -139,10 +152,6 @@
 
 <script>
     function changeQuantity(cartId, prodId,userId,count){
-       console.log(cartId);
-       console.log(prodId);
-       console.log(count);
-       console.log(userId);
 
        let quantity = parseInt(document.getElementById(prodId).textContent)
        count=parseInt(count)
@@ -159,22 +168,19 @@
      
      },
 
-     success:(response)=>{
-       console.log(response);
-      
+     success:(response)=>{  
        if(response.removeProduct){
            alert("Removed Product From Cart")
            location.reload()
        }
        else{
-           console.log("hgfcvbnb"+prodId);
+         
            let cartQuantity= quantity+count
            console.log(cartQuantity);
            document.getElementById(prodId).innerHTML=cartQuantity
            document.getElementById("total").innerHTML=response.total
            document.getElementById("subtotal").innerHTML=response.total
-
-       }
+           }
     }
    })
 }
@@ -222,6 +228,76 @@ function removeCart(form)
 })
 return false
 }
+
+
+
+function couponValidator(elem, total) {
+    code = document.getElementById("code").value.trim();
+    // couponTotal = document.getElementById("total").value;
+    $.ajax({
+      url: "/coupon_validator?code="+code,
+      method: "get",
+      success: (response) => {
+        console.log(response + "coupon validated");
+
+        console.log(response);
+        if (response.status == true) {
+          $.ajax({
+            url: "/coupon_verify?code=" + code,
+            method: "get",
+            success: (response) => {
+              console.log(response + "coupon verified");
+              if (response.status == true) {
+                $.ajax({
+                  url: "/apply_coupon?code=" + code,
+                  method: "get",
+                  success: (response) => {
+                    console.log(response.discountAmount + "i am discount");
+                    console.log(response.status + "i am status");
+
+                    if (response.status == true) {
+                      console.log("success3", response);
+                      document.querySelector(".couponErr").style.color =
+                        "#19ff11";
+                      document.querySelector(".couponErr").innerHTML =
+                        "Coupon Applied Succesfully";
+                      document.getElementById("total").innerHTML =
+                        total - response.discountAmount;
+                      // couponTotal.innerHTML = `₹ ${
+                      //   total - response.discountAmount
+                    } else {
+                      console.log("failed", response);
+                      document.querySelector(".couponErr").style.color =
+                        "#ff0707";
+                      document.querySelector(".couponErr").innerHTML =
+                        response.reason;
+                    }
+                  },
+                });
+              } else {
+                document.querySelector(".couponErr").style.color = "#ff0707";
+                console.log("failed", response.reason);
+                document.querySelector(".couponErr").innerHTML =
+                  response.reason;
+
+                setTimeout(function () {
+                  document.querySelector(".couponErr").style.display = "none";
+                }, 3000);
+              }
+            },
+          });
+        } else {
+          document.querySelector(".couponErr").style.color = "#ff0707";
+          document.querySelector(".couponErr").innerHTML = response.reason;
+          console.log("failed", response.reason);
+
+          setTimeout(function () {
+            document.querySelector(".couponErr").style.display = "none";
+          }, 3000);
+        }
+      },
+    });
+  }
 
 
 

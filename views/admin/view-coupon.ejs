@@ -1,0 +1,116 @@
+<section>
+    <div class="col-12 ml-2">
+      <div class="card mt-2">
+        <div class="card-header pb-0">
+          <h6>Coupon Management</h6>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                  >
+                    #
+                  </th>
+                  <th
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                  >
+                    Coupon Code
+                  </th>
+                  <th
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                  >
+                    Discount Percent
+                  </th>
+                  <th
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                  >
+                    Max Discount
+                  </th>
+                  <th
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                  >
+                    Expiry
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% coupon.forEach((element,index)=>{ %>
+                <tr>
+                  <td
+                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                  >
+                    <%- index+1 %>
+                  </td>
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm"><%- element.couponName %></h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <%- element.description?.slice(0,40)+'...' %>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h6 class="mb-0 text-sm">
+                      <%= element.discountPercentage%> %
+                    </h6>
+                  </td>
+                  <td>
+                    <h6 class="mb-0 text-sm">₹ <%= element.maxDiscountValue%></h6>
+                  </td>
+                  <td>
+                    <p class="text-xs font-weight-bold mb-0">
+                      <%- getDate(element.expiry) %>
+                    </p>
+                  </td>
+                  <td class="align-middle text-center text-sm">
+                    <div class="ms-auto text-end">
+                      <a
+                        class="btn btn-primary text-gradient px-3 mb-0"
+                        href="javascript:;"
+                        onclick="deleteCoupon('<%- element._id%>')"
+                        ><i class="far fa-trash-alt me-2"></i>Delete</a
+                      >
+                    </div>
+                  </td>
+                </tr>
+                <%})%>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    function deleteCoupon(couponId) {
+      swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: "/admin/coupon_delete/" + couponId,
+              method: "DELETE",
+              success: (response) => {
+                location.reload();
+              },
+            });
+            swal.fire("Deleted!", "Your file has been deleted.", "success");
+          }
+        });
+    }
+  </script>
+  Footer
+  © 2023 GitHu
