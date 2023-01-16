@@ -22,6 +22,7 @@ getCategory:(req, res)=>{
   postCategory:(req, res)=>{
    
       adminCategoryHelper.addCategory(req.body).then((data)=>{
+        console.log(data);
        
         res.redirect('/admin/add_category')
     })  

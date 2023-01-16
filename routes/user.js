@@ -7,7 +7,7 @@ const auths=require('../middlewares/middleware')
 
 router.get("/",controllers.getHome)
 
-router.get('/profile', controllers.getProfile)
+router.get('/profile', controllers.getProfilePage)
 
 router.get("/login",auths.userauth, controllers.getUserLogin)
 
@@ -17,10 +17,6 @@ router.get("/signup",controllers.getSignUp)
  
 router.post("/signup", controllers.postSignUp)
 
-router.get("/shop",auths.userauth,controllers.shopProduct)
-
-router.get("/logout",controllers.getLogout);
-
 router.get('/otpLogin', controllers.getOtpLogin)
 
 router.post('/otpLogin', controllers.postOtpLogin)
@@ -28,6 +24,14 @@ router.post('/otpLogin', controllers.postOtpLogin)
 router.get('/otpPage', controllers.getVerify)
 
 router.post('/otpPage', controllers.postVerify)
+
+router.get('/update_password', controllers.getUpdatePassword)
+
+router.post('/update_password', controllers.postUpdatePassword)
+
+router.get("/shop",auths.userauth,controllers.shopProduct)
+
+router.get("/category",auths.userauth,controllers.getCategory)
 
 router.get("/image/:id", controllers.imageZoom)
 
@@ -70,5 +74,8 @@ router.get('/apply_coupon', controllers.applyCoupon)
 router.get('/coupon_validator', controllers.applyCouponSuccess) 
 
 router.get('/coupon_verify', controllers.couponVerify)
+
+router.get("/logout",controllers.getLogout);
+
 
 module.exports = router;

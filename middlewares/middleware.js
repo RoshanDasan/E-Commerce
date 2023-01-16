@@ -2,12 +2,12 @@
 
   module.exports={
     auth:(function(req,res,next){
-      let admins=req.session.adminloggedIn;
-        if(req.session.adminloggedIn){
+      
+        if(req.session.admin){
           next()
         }else{
 
-          res.render('admin/login',{layout:'adminlayout',admins})
+          res.render('admin/login',{layout:'adminLayout',admins:false})
         }
        
       }),

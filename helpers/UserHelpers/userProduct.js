@@ -28,6 +28,17 @@ module.exports = {
         });
     });
   },
+
+  shopListProducts: (pageNum) => {
+    let perPage = 6
+    return new Promise(async (resolve, reject) => {
+      await user.product.find().skip((pageNum - 1) * perPage).limit(perPage).then((response) => {
+
+        resolve(response)
+      })
+
+    })
+  },
  
 
   postAdress: (userId,data) => {

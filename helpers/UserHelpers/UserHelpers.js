@@ -66,6 +66,29 @@ module.exports = {
     });
   },
 
+  doUpdatePassword:(body)=>
+  {
+    console.log(body);
+    return new Promise(async(resolve, reject) => {
+     let users = await user.user.findOne({ email: body.email });
+
+     if (users) {
+      let hashedPassword = await bcrypt.hash(body.password, 10);
+
+      let change = await user.user.updateOne({email: body.email},{$set:{Password: hashedPassword}}).then((result) => {
+        console.log(result);
+        resolve({update:true});
+      })
+
+     }
+     else{
+      resolve({update:false})
+     }
+
+ 
+    })
+
+  },
 
   //list product
   shopListProduct: () => {
@@ -77,6 +100,15 @@ module.exports = {
           resolve(response);
         });
     });
+  },
+
+  category: (categoryName) => {
+    return new Promise(async (resolve, reject) => {
+      await user.product.find({ category: categoryName }).then((response) => {
+        resolve(response)
+      })
+    })
+
   },
 
   // add to cart
@@ -188,6 +220,17 @@ module.exports = {
       }
       resolve(count);
     });
+  },
+
+
+  getDocCount:()=>
+  {
+    return new Promise(async (resolve, reject) => {
+      await user.product.find().countDocuments().then((documents) => {
+
+        resolve(documents);
+      })
+    })
   },
 
   // total checkout amount

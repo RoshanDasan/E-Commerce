@@ -1,19 +1,42 @@
 const user = require("../../models/connection");
 const multer = require("multer");
 const { response } = require("../../app");
+const { category } = require("../UserHelpers/UserHelpers");
 
 module.exports = {
   //add category
 
   addCategory: (data) => {
     return new Promise(async (resolve, reject) => {
-      const categoryData = new user.category({
-        CategoryName: data.categoryname,
-      });
 
-      await categoryData.save().then((data) => {
-        resolve(data);
-      });
+      console.log(data);
+
+      let cat = await user.category.findOne({ CategoryName: data.categoryname });
+
+      if(!cat)
+      {
+        let category = user.category({
+          CategoryName: data.categoryname,
+          subCategory: data.subCategoryname,
+        })
+
+        await category.save().then((result)=>
+        {
+          resolve(result)
+
+        })
+      }
+         
+      else{
+        let category = await user.category.updateOne({CategoryName: data.categoryname},
+          {$push:{subCategory: data.subCategoryname}}).then((response)=>
+          {
+            resolve(response);
+
+          })
+
+      }
+
     });
   },
 

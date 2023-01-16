@@ -7,6 +7,9 @@
 
             <h3 class="mb-5"><span><h6 style="color: rgb(247, 207, 154);">Admin</h6></span> Sign in</h3>
 
+            <%if (locals.invalid){%>
+              <p id="message" style="color: red;">Invalid username or password</p>
+              <%} %>
          
 
             <form action="/admin/login" method="post">

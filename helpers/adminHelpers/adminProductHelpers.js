@@ -20,6 +20,8 @@ module.exports = {
   //post add product
 
   postAddProduct: (userdata, filename) => {
+    console.log(userdata, filename);
+
     return new Promise((resolve, reject) => {
       ImageUpload = new user.product({
         Productname: userdata.name,
@@ -70,9 +72,11 @@ module.exports = {
   //post editproduct
 
   postEditProduct: (productId, editedData, filename) => {
+    // console.log(filename);
     return new Promise(async (resolve, reject) => {
-      await user.product
-        .updateOne(
+      let image = filename.map((filename)=>filename.filename)
+      console.log(image);
+      await user.product.updateOne(
           { _id: productId },
           {
             $set: {
@@ -81,7 +85,7 @@ module.exports = {
               Quantity: editedData.quantity,
               Price: editedData.price,
               category: editedData.category,
-              Image: filename,
+              Image: image,
             },
           }
         )
@@ -134,5 +138,35 @@ module.exports = {
       resolve(response)
     })
   })
-  }
-};
+  },
+
+  getAllOrders:()=>
+  {
+    return new Promise(async (resolve, reject) => {
+      let order = await user.order.aggregate([
+        {$unwind: '$orders'},
+
+      ]).then((response) => {
+        resolve(response)
+      })
+     
+    })
+  },
+  editOrderStatus:(orderStatus)=>
+  {
+    return new Promise(async (resolve, reject) => {
+      await user.order.updateOne(
+        { 'orders._id': orderStatus.orderId },
+        {
+          $set: {
+            'orders.$.orderConfirm': orderStatus.status
+          }
+        }).then((response)=>
+        {
+          console.log(response);
+        resolve({update:true})
+        })
+  })
+}
+
+}

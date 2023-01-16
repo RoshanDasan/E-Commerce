@@ -19,8 +19,15 @@ getAddProduct: (req, res) =>{
   
    
   postAddProduct: (req, res) =>{
-    adminProductHelpers.postAddProduct(req.body,req.file.filename).then((response)=>{
-     res.redirect('/admin/view_product')
+    console.log(req.body);
+    console.log(req.files);
+  
+    let image = req.files.map(files => (files.filename))
+    // let image = req.file.filename
+    console.log(image);
+    adminProductHelpers.postAddProduct(req.body, image).then((response)=>{
+      console.log(response);
+     res.redirect('/admin/view_product') 
     })
    
   },
@@ -40,12 +47,16 @@ getAddProduct: (req, res) =>{
   //edit view product
   
   editViewProduct:(req,res) =>{
+
+    console.log('----------------------------------------------------------------');
     let admins=req.session.admin
     adminProductHelpers.viewAddCategory().then((response)=>{
   
       var procategory=response
-      adminProductHelpers.  editProduct(req.params.id).then((response)=>{
-        editproduct=response
+      adminProductHelpers.editProduct(req.params.id).then((response)=>{
+      editproduct=response
+
+      console.log(editproduct, '----------------------------------------------------------------');
        
       res.render('admin/edit-viewproduct',{ layout: "adminLayout" ,editproduct,procategory,admins});
   
@@ -59,7 +70,8 @@ getAddProduct: (req, res) =>{
   
   
   postEditAddProduct:(req,res) =>{
-    adminProductHelpers.postEditProduct(req.params.id,req.body,req?.file?.filename).then((response)=>{
+    console.log(req.files);
+    adminProductHelpers.postEditProduct(req.params.id, req.body, req.files).then((response)=>{
      
       res.redirect('/admin/view_product')
     })
@@ -81,11 +93,27 @@ getAddProduct: (req, res) =>{
 
   getOrderList:(req, res)=>
   {
+    let admins=req.session.admin
+
     adminProductHelpers.getOrder(req.params.id).then((response)=>
     {
-      res.render('admin/user-order',{ layout: "adminLayout" ,response})
+      res.render('admin/user-order',{ layout:"adminLayout", admins})
     })
+  },
+
+  getEditOrderStatus:(req,res)=>
+
+  {
+    console.log(req.body)
+    adminProductHelpers.editOrderStatus(req.body).then((response)=>
+    {
+      res.json(response)
+    })
+
+
   }
+
+  
      
 
   }

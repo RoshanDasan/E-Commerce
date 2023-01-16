@@ -5,12 +5,12 @@ const { category } = require('../../models/connection');
 const user = require("../../models/connection");
 
 
-
+let admins
 module.exports = 
 {   
 
-    getViewCoupon: async(req, res)=>
-{
+getViewCoupon: async(req, res)=>
+ {
  let coupon = await couponHelper.getViewCoupon()
   {
     const getDate = (date) => {
@@ -23,7 +23,7 @@ module.exports =
       }` 
 }
 
-res.render('admin/view-coupon', {coupon, getDate, layout: "adminLayout"})
+res.render('admin/view-coupon', {coupon, getDate, layout: "adminLayout",admins})
 
 
   }
@@ -32,7 +32,8 @@ res.render('admin/view-coupon', {coupon, getDate, layout: "adminLayout"})
 
 getAddCoupon:(req, res)=>
 {
-    res.render('admin/add-coupon', {layout: "adminLayout"}) 
+  admins = req.session.admin
+    res.render('admin/add-coupon', {layout: "adminLayout",admins}) 
 },
     
 postAddCoupon:(req, res)=>

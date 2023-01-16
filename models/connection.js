@@ -47,7 +47,8 @@ const userschema= new mongoose.Schema({
 const categorySchema= new mongoose.Schema({
   CategoryName:{
     type:String
-  }
+  },
+  subCategory:Array
 
 })
 
@@ -62,9 +63,8 @@ const categorySchema= new mongoose.Schema({
       type:Number
     },
     Image:{
-      type:String,
+      type:Array,
      
-
     },
     Price:{
   type:Number

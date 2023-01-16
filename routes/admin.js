@@ -53,7 +53,9 @@ router.post("/edit_product/:id",auths.auth,upload.editeduploads,adminproductcont
 
 router.get("/delete_product/:id",auths.auth,adminproductcontroller.deleteViewProduct)
 
-router.get("/order/:id", adminproductcontroller.getOrderList)
+router.get("/order",auths.auth, adminproductcontroller.getOrderList)
+
+router.get('/view_orders',adminController.getAllOrderds)
 
 router.get('/coupons',auths.auth, adminCouponController.getViewCoupon)
 
@@ -61,7 +63,9 @@ router.get('/add_coupons',auths.auth, adminCouponController.getAddCoupon)
 
 router.post('/add_coupons',adminCouponController.postAddCoupon)
 
-router.get("/generate_coupon",adminCouponController.generateCoupon);
+router.get("/generate_coupon",auths.auth,adminCouponController.generateCoupon);
+
+router.put('/orderStatus', adminproductcontroller.getEditOrderStatus)
 
 
 module.exports = router;

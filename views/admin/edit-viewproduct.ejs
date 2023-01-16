@@ -24,9 +24,30 @@
           <label for="">Quantity</label>
           <input type="text" name="quantity" class="form-control" value="<%=editproduct.Quantity%>" />
 
+          
+          <label for="">Image 1</label>
+          <br>
+          <img src="/uploads/<%=editproduct.Image[0]%>" alt="" style="width:100px;height:auto">
+          <br>
+          <input type="file" name="file2" class="form-control" value="<%=editproduct.Image[0]%>"/>
+
+          <label for="">Image 2</label>
+          <br>
+          <img src="/uploads/<%=editproduct.Image[1]%>" alt="" style="width:100px;height:auto">
+          <br>
+          <input type="file" name="file2" class="form-control" value="<%=editproduct.Image[1]%>" />
+
           <label for="">Image</label>
-          <img src="/uploads/<%=editproduct.Image%>" alt="" style="width:100px;height:auto">
-          <input type="file" name="file2" class="form-control" />
+          <br>
+          <img src="/uploads/<%=editproduct.Image[2]%>" alt="" style="width:100px;height:auto">
+          <br>
+          <input type="file" name="file2" class="form-control" value="<%=editproduct.Image[2]%>" />
+
+          <label for="">Image</label>
+          <br>
+          <img src="/uploads/<%=editproduct.Image[3]%>" alt="" style="width:100px;height:auto">
+          <br>
+          <input type="file" name="file2" class="form-control" value="jhsjfhjsafhkjashf"/>
 
           <button type="submit" class="btn btn-success mt-4">Submit</button>
         </form>

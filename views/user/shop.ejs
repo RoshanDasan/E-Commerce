@@ -20,7 +20,7 @@
                                     
                                           <a href="/image"> 
                                               <a href ="/image/<%=response._id %> "> 
-                                              <img class="default-img" src="/uploads/<%= response.Image %>" alt="">
+                                              <img class="default-img" src="/uploads/<%= response.Image[0] %>" alt="">
                                               <!-- <img class="hover-img" src="assets/imgs/shop/product-7-1.jpg" alt=""> -->
                                           </a> 
                                         </a>
@@ -77,22 +77,24 @@
                       <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
                           <nav aria-label="Page navigation example">
                               <ul class="pagination justify-content-start">
-                                  <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">03</a></li>
-                                  <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">16</a></li>
-                                  <li class="page-item"><a class="page-link" href="#"><i class="fi-rs-angle-double-small-right"></i></a></li>
+                                <% for(let i=1;i<=pages;i++){%>
+                                    <li class="page-item active"><a class="page-link" href="/shop?page=<%= i %>"><%= i%></a></li>
+                                <%}%>
+                                 
+                                  <!-- <li class="page-item"><a class="page-link" href="#"><i class="fi-rs-angle-double-small-right"></i></a></li> -->
                               </ul>
                           </nav>
                       </div>
                   </div>
                   <div class="col-lg-3 primary-sidebar sticky-sidebar">
                       <div class="widget-category mb-30">
-                          <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
+                          <h5 class="section-title style-1 mb-30 wow fadeIn animated">Shop By Category</h5>
                           <ul class="categories">
                             <% categories.forEach(function(response) { %>
-                              <li><a href="shop-grid-right.html"><%=response.CategoryName %></a></li>
+                              <li>
+                                
+                                <a href="/category?cname=<%=response.CategoryName%>"><%=response.CategoryName %></a>
+                            </li>
                             <% })  %>
                              
                           </ul>

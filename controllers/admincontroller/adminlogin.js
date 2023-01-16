@@ -6,7 +6,7 @@ const user = require("../../models/connection");
 
 
 
-
+let admins
 
 const adminCredential={
     name:'superAdmin',
@@ -19,7 +19,7 @@ module.exports={
  // get login
 
      getAdminLogin:(req, res)=> {
-      let admins=req.session.admin
+       admins=req.session.admin
         if(req.session.adminloggedIn){
           res.render("admin/admin-dashboard",{layout:"adminLayout",admins})
         }else{
@@ -35,6 +35,8 @@ module.exports={
         if(req.body.email==adminCredential.email && req.body.password==adminCredential.password){
           
         req.session.adminloggedIn=true
+
+        let adminstatus=req.session.adminloggedIn
         
         req.session.admin=adminCredential
        
@@ -44,7 +46,7 @@ module.exports={
         else{
           // adminloginErr=true
         
-        res.render('admin/login',{layout:'adminLayout',adminloginErr:true})
+        res.render('admin/login',{layout:'adminLayout',adminloginErr:true, admins,invalid:true})
         }
        },
        
@@ -52,12 +54,31 @@ module.exports={
 
   getDashboard: (req, res) =>{
     
-   let adminstatus=req.session.adminloggedIn
-  let admins=req.session.admin
+ 
+  admins=req.session.admin
  
     
     res.render("admin/admin-dashboard",{ layout: "adminLayout" ,admins});
     },
+
+    getAllOrderds:(req, res)=>
+  {
+    admins=req.session.admin
+
+    adminHelper.getAllOrders().then((response)=>
+     {
+      let len = response.length
+      
+      let order = response.slice().reverse()
+
+      console.log(order,'----order')  
+      console.log(len);
+
+      res.render('admin/all-orders', { layout: "adminLayout" ,response, admins})
+
+     })
+    
+  },
 
   
 
@@ -65,7 +86,7 @@ module.exports={
 
 getAdminLogOut:(req,res)=>{
   req.session.adminloggedIn=false
-  let admins=req.session.adminloggedIn
+  admins=req.session.adminloggedIn
 
   res.render("admin/login",{layout: "adminLayout",admins})
 },

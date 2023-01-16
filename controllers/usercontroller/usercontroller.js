@@ -7,7 +7,7 @@ const client = require("twilio")(otpLogin.AccountSId, otpLogin.authtoken);
 const user = require("../../models/connection");
 const { log } = require("console");
 
-let total;
+let total,count;
 module.exports = {
   // user home
   getHome: async (req, res) => {
@@ -70,6 +70,29 @@ module.exports = {
     });
   },
 
+  getUpdatePassword:(req, res)=>
+  {
+    res.render("user/update-password");
+  },
+
+  postUpdatePassword: (req, res) => {
+
+    userhelpers.doUpdatePassword(req.body).then((response) => {
+      if (response.update) {
+        console.log('updated');
+        res.redirect("/login");
+        
+      }
+      else
+      {
+        console.log('not updated');
+        res.render('user/update-password',{updateStaus:true});
+
+      }
+      
+    })
+  },
+
   getOtpLogin: (req, res) => {
     res.render("user/otpLogin");
   },
@@ -117,20 +140,51 @@ module.exports = {
       });
   },
 
-  getProfile: async (req, res) => {
-    let user = req.session.user.id;
+  
+
+  getProfilePage: async (req, res) => {
+    let user = req.session.user.id; 
     let users = req.session.user;
+    console.log(users);
     let count = await userhelpers.getCartCount(req.session.user.id);
-    res.render("user/profile", { profile: true, users, count, user });
+    res.render("user/profilee", {  profile: true, users, count, user });
   },
 
-  shopProduct: async (req, res) => {
+  shopProduct: async (req, res) => { 
+
+    console.log(req.query.page)
+
+    let pageNum = req.query.page 
+    let perpage = 6
     let users = req.session.user;
+    let docCount = await userhelpers.getDocCount();
+    let pages = Math.ceil(parseInt(docCount) / perpage)
+
+    console.log(pageNum,'--', perpage,'--', docCount,'--', pages)
+;
+
+
     let categories = await adminCategoryHelper.viewAddCategory();
     let count = await userhelpers.getCartCount(req.session.user.id);
-    await userproductHelpers.shopListProduct().then((response) => {
-      res.render("user/shop", { response, count, users, categories });
+
+    await userproductHelpers.shopListProducts(pageNum).then((response) => {
+      res.render("user/shop", { response, count, users, categories, pageNum,pages });
     });
+  },
+
+  getCategory: async(req, res) => {
+  
+    let users = req.session.user;
+
+    let viewCategory = await adminCategoryHelper.viewAddCategory();
+
+
+    userhelpers.category(req.query.cname).then((response)=>{
+
+      res.render('user/filter-by-category',{ response, users,viewCategory,count})
+    })
+
+
   },
 
   imageZoom: async (req, res) => {
@@ -226,6 +280,7 @@ module.exports = {
   },
 
   postchangeProductQuantity: async (req, res) => {
+    console.log(req.body,'--------------------------------');
     await userhelpers.changeProductQuantity(req.body).then(async (response) => {
       response.total = await userhelpers.totalCheckOutAmount(req.body.user);
 
@@ -370,7 +425,10 @@ postVerifyPayment: (req, res) => {
 
 
 orderDetails:async(req,res)=>{
-     
+
+
+   
+  let users = req.session.user;
   let details=req.query.order
    
   userproductHelpers.viewOrderDetails(details).then((response)=>{   
@@ -384,7 +442,7 @@ orderDetails:async(req,res)=>{
      let orderDetails = response.details
 
     
-    res.render('user/order-details',{products,address,orderDetails})
+    res.render('user/order-details',{products,address,orderDetails,users})
 
    })
    

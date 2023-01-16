@@ -1,0 +1,129 @@
+
+
+    <main class="main">
+        
+        <section class="mt-50 mb-50">
+            <div class="container">
+                <div class="row flex-row-reverse">
+                    <div class="col-lg-9">
+                      
+                        <div class="row product-grid-3">
+                            <% response.forEach(function(response,index) { %>
+
+                            <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+
+
+<div class="product-cart-wrap mb-30">
+                                    <div class="product-img-action-wrap">
+                                        <div class="product-img product-img-zoom">
+                                            <a href="/product_details/<%= response._id%>">
+                                                <img class="default-img" src="/uploads/<%= response.Image %>" alt="">
+                                                <!-- <img class="hover-img" src="assets/imgs/shop/product-7-1.jpg" alt=""> -->
+                                            </a>
+                                        </div>
+                                        <div class="product-action-1">
+                                            <a
+                                              aria-label="Quick view"
+                                              class="action-btn small hover-up"
+                                              data-bs-toggle="modal"
+                                              data-bs-target="#quickViewModal
+                "
+                                              ><i class="fi-rs-search"></i
+                                            ></a>
+                                            <a
+                                              aria-label="Add To Wishlist"
+                                              class="action-btn small hover-up"
+                                              href="shop-wishlist.html"
+                                              tabindex="0"
+                                              ><i class="fi-rs-heart"></i
+                                            ></a>
+                                            <a
+                                              aria-label="Compare"
+                                              class="action-btn small hover-up"
+                                              href="shop-compare.html"
+                                              tabindex="0"
+                                              ><i class="fi-rs-shuffle"></i
+                                            ></a>
+                                          </div>
+                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="product-content-wrap">
+                                        <div class="product-category">
+                                            <a ><%=response.category%></a>
+                                        </div>
+                                        <h2><a ><%=response.Productname%></a></h2>
+                                        <div class="rating-result" title="90%">
+                                            <span>
+                                                <span>95%</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-price">
+                                            ₹<span><%=response.Price%></span>
+                                        
+                                        </div>
+                                        <div class="product-action-1 show">
+                                            <button type="button" aria-label="Add To Cart" class="action-btn hover-up"  onclick="addtocart('<%-response._id%>');Swal.fire({
+                                                position: 'center',
+                                                icon: 'success',
+                                                title: 'Product is successfully added to cart',
+                                                showConfirmButton: false,
+                                                timer: 1500
+                                              })" >  <i class="fi-rs-shopping-bag-add" ></i>  </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <% }) %>
+                        </div>
+                        <!--pagination-->
+                       
+                    </div>
+                    <div class="col-lg-3 primary-sidebar sticky-sidebar">
+
+
+                         <div class="widget-category mb-30">
+                            <h5 class="section-title style-1 mb-30 wow fadeIn animated">Shop By Category</h5>
+                            
+
+                            <ul class="categories">
+                                <% viewCategory.forEach(function(response,index) { %>
+                                <li><a href="/category?cname=<%= response.CategoryName%>"><%= response.CategoryName%></a></li>
+                             <% }) %>
+                                
+                            </ul>
+
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+  
+        function addtocart(proId) {
+            
+        
+          $.ajax({
+                    url: '/add_to_cart/'+proId,
+                    method: 'get',
+                    success: (response) => {
+                      if(response.status){
+                 let count=$('#cart-count').html()
+                 count=parseInt(count)+1
+                 console.log(count);
+                 $('#cart-count').html(count)
+                 
+                      }
+                      
+                    }
+              
+          })
+          
+         }
+      
+      </script>
