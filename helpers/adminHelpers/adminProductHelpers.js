@@ -152,9 +152,34 @@ module.exports = {
      
     })
   },
+
+  getAllProducts:()=>
+  {
+    return new Promise(async(resolve, reject) => {
+      await user.product.find().then((response)=>
+      {
+        resolve(response)
+      }) 
+    })
+  },
+
+  getOrderByDate:()=>
+  {
+     return new Promise(async (resolve, reject) => {
+      const startDate = new Date('2022-01-01');
+      await user.order.find({createdAt:{ $gte: startDate}}).then((response)=>
+      {
+        resolve(response)
+
+      })
+    });
+  },
+
+  
   editOrderStatus:(orderStatus)=>
   {
     return new Promise(async (resolve, reject) => {
+      
       await user.order.updateOne(
         { 'orders._id': orderStatus.orderId },
         {
@@ -163,7 +188,6 @@ module.exports = {
           }
         }).then((response)=>
         {
-          console.log(response);
         resolve({update:true})
         })
   })

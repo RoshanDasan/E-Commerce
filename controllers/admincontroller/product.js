@@ -104,7 +104,6 @@ getAddProduct: (req, res) =>{
   getEditOrderStatus:(req,res)=>
 
   {
-    console.log(req.body)
     adminProductHelpers.editOrderStatus(req.body).then((response)=>
     {
       res.json(response)

@@ -19,7 +19,7 @@
             ></span>
             <div class="text">
               <h6 class="mb-1 card-title">Revenue</h6>
-              <span>$13,456.5</span>
+              <span>₹<%=locals.total%></span>
               <span class="text-sm"> Shipping fees are not included </span>
             </div>
           </article>
@@ -32,8 +32,8 @@
               ><i class="text-success material-icons md-local_shipping"></i
             ></span>
             <div class="text">
-              <h6 class="mb-1 card-title">Orders</h6>
-              <span>53.668</span>
+              <h6 class="mb-1 card-title">Total Orders</h6>
+              <span><%=locals.length%></span>
               <span class="text-sm"> Excluding orders in transit </span>
             </div>
           </article>
@@ -46,34 +46,34 @@
               ><i class="text-warning material-icons md-qr_code"></i
             ></span>
             <div class="text">
-              <h6 class="mb-1 card-title">Products</h6>
-              <span>9.856</span>
+              <h6 class="mb-1 card-title">Total Products</h6>
+              <span><%=locals.totalProducts%></span>
               <span class="text-sm"> In 19 Categories </span>
             </div>
           </article>
         </div>
       </div>
-      <div class="col-lg-3">
+      <!-- <div class="col-lg-3">
         <div class="card card-body mb-4">
           <article class="icontext">
             <span class="icon icon-sm rounded-circle bg-info-light"
               ><i class="text-info material-icons md-shopping_basket"></i
             ></span>
             <div class="text">
-              <h6 class="mb-1 card-title">Monthly Earning</h6>
-              <span>$6,982</span>
+              <h6 class="mb-1 card-title">Total</h6>
+              <span>₹<%=total%></span>
               <span class="text-sm"> Based in your local time. </span>
             </div>
           </article>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="row">
       <div class="col-xl-8 col-lg-12">
         <div class="card mb-4">
           <article class="card-body">
             <h5 class="card-title">Sale statistics</h5>
-            <canvas id="myChart" height="120px"></canvas>
+            <canvas id="myChart1" height="120px"></canvas>
           </article>
         </div>
        
@@ -87,6 +87,10 @@
         </div>
         
       </div>
+
+      <div>
+        <p style="visibility: hidden;" id="days"><%= JSON.stringify(locals.ordersPerDay) %></p>
+      </div>
       
     </div>
     
@@ -94,9 +98,60 @@
   </section>
   <!-- content-main end// -->
   <footer class="main-footer font-xs">
+    <script src="/controllers/admincontroller/adminlogin.js"> </script>
+
+      
     
         <script>
           document.write(new Date());
+
+          
+
+         // Sample data
+         var xValues = ['Sunday','Monday','Tuesdasy','Wednesday','Thursday','Friday','Saturday'];
+         var yValues = [0,5,10,15,20,25,30];
+         var buyed = [];
+         let daysData = JSON.parse(document.getElementById('days').innerHTML);
+
+         
+         
+        
+
+
+
+         for(let i=0;i<xValues.length;i++){
+              if(xValues[i] in daysData){
+                buyed.push(daysData[xValues[i]])
+              }
+              else{
+                buyed.push(0)
+
+              }
+         }
+         
+
+         new Chart("myChart1", {
+          type: "line",
+          data: {
+            labels: xValues,
+            datasets: [{
+              fill: false,
+              lineTension: 0,
+              backgroundColor: "rgba(0,0,255,1.0)",
+              borderColor: "rgba(0,0,255,0.1)",
+              data: buyed
+            }]
+           },
+          options: {
+            legend: {display: false},
+            scales: {
+              yAxes: [{ticks: {min: 6, max:16}}],
+            }
+          }
+        });
+
+
+
         </script>
        
   </footer>

@@ -56,10 +56,52 @@ module.exports={
     
  
   admins=req.session.admin
- 
+  let totalProducts, days=[]
+  let ordersPerDay = {};
+
+
+  adminHelper.getAllProducts().then((Products)=>
+  {
+    totalProducts = Products.length
+  })
+
+  adminHelper.getOrderByDate().then((response)=>
+  {
+    let result = response[0].orders
+    for (let i = 0; i < result.length; i++) {
+      let ans={}
+      ans['createdAt']=result[i].createdAt
+      days.push(ans)
+      ans={}
+      
+    }
+    console.log(days);
+
+
+days.forEach((order) => {
+  const day = order.createdAt.toLocaleDateString('en-US', { weekday: 'long' });
+  ordersPerDay[day] = (ordersPerDay[day] || 0) + 1;
+
+});
+console.log(ordersPerDay);
+
+  })
+
+
+  adminHelper.getAllOrders().then((response)=>
+  {
+
+    var length = response.length
     
-    res.render("admin/admin-dashboard",{ layout: "adminLayout" ,admins});
-    },
+    let total = 0;
+    
+    for (let i = 0; i < length; i++) {
+      total += response[i].orders.totalPrice;
+    }
+    res.render("admin/admin-dashboard",{ layout: "adminLayout" ,admins, length, total, totalProducts,ordersPerDay});
+
+  }) 
+ },
 
     getAllOrderds:(req, res)=>
   {

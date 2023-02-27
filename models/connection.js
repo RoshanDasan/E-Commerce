@@ -136,7 +136,7 @@ const orderSchema = new mongoose.Schema({
                   },
           paymentType:String,
           createdAt: {
-              type: Date,
+              type: Date, 
               default: new Date()
           },
           orderConfirm: {

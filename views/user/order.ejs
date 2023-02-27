@@ -96,11 +96,11 @@
                   class="material-icons md-payment font-xxl text-muted mr-5"
                 ></i>
               
-                <%if(data.item.orderConfirm == 'ordered'){%>
-                  <p style="color: green;">order placed</p>
+                <%if(data.item.orderConfirm == 'cancelled'){%>
+                  <p style="color: red;">order cancelled</p>
              
                    <%}else {%>
-                    <p style="color: red;">canceled</p>
+                    <p ><%=data.item.orderConfirm %></p>
                   <%}%>
               </td>
               <td>
