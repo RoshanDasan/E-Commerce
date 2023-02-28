@@ -10,7 +10,7 @@ const instance = new Razorpay({
   key_secret: "CvzeTNUXZnWdLhBZIMPDLC99",
 });
 
-const PDFDocument = require('pdfkit');
+let easyinvoice = require('easyinvoice');
 const fs = require('fs');
 const { resolve } = require("path");
 
@@ -441,55 +441,93 @@ module.exports = {
     });
   },
 
-  generateInvoice:async(order)=>
+  createData:(details)=>
   {
-    let doc = new PDFDocument();
+    let address = details.address
+    let product = details.products[0][0]
+    let orderDetails = details.details
+    console.log('address',address);
+    console.log('product',product);
+    console.log('orderdetails',orderDetails);
 
-
-    // Set the document properties
-    doc.info['Title'] = `Invoice-`;
-    doc.info['Author'] = 'Your Company Name';
-    doc.info['Subject'] = 'Invoice';
-
-    // Write the invoice header
-    doc.fontSize(20).text(`Invoice #`, { align: 'center' });
-    doc.moveDown();
-    doc.fontSize(10).text(`Order Date: `);
-    doc.text(`Customer Name: `);
-    doc.text(`Customer Email: `);
-    doc.text(`Customer Address: `);
-    doc.moveDown();
-
-    // Write the invoice table header
-    doc.fontSize(12).text('Item', { width: 200, align: 'left' });
-    doc.text('Price', { width: 100, align: 'right' });
-    doc.text('Quantity', { width: 100, align: 'right' });
-    doc.text('Total', { width: 100, align: 'right' });
-    doc.moveDown();
-
-    // Write the invoice table rows
-    let totalPrice = 0;
-    // order.items.forEach((item) => {
-    //   const itemPrice = item.price * item.quantity;
-    //   doc.fontSize(10).text(item.name, { width: 200, align: 'left' });
-    //   doc.text(`$${item.price.toFixed(2)}`, { width: 100, align: 'right' });
-    //   doc.text(`${item.quantity}`, { width: 100, align: 'right' });
-    //   doc.text(`$${itemPrice.toFixed(2)}`, { width: 100, align: 'right' });
-    //   doc.moveDown();
-    //   totalPrice += itemPrice;
-    // });
-
-    // Write the invoice total
-    doc.fontSize(12).text(`Total: $${totalPrice.toFixed(2)}`, { align: 'right' });
-
-    // Save the PDF invoice to a file
-    const filename = `Invoice-${order.id}.pdf`;
-    doc.pipe(fs.createWriteStream(filename));
-    doc.end();
-
-
-    return filename
-
+    var data = {
+      // Customize enables you to provide your own templates
+      // Please review the documentation for instructions and examples
+      customize: {
+        //  "template": fs.readFileSync('template.html', 'base64') // Must be base64 encoded html
+      },
+      images: {
+        // The logo on top of your invoice
+        logo: "https://public.easyinvoice.cloud/img/logo_en_original.png",
+        // The invoice background
+        background: "https://public.easyinvoice.cloud/img/watermark-draft.jpg",
+      },
+      // Your own data
+      sender: {
+        company: "RoshanCart",
+        address: "Washington DC",
+        zip: "4567 CD",
+        city: "Los santos",
+        country: "America",
+       
+      },
+      // Your recipient
+      client: {
     
+        company: address.fname,
+        address: address.street,
+        zip: address.pincode,
+        city: address.city,
+        country: "India",
+      },
+
+      information: {
+        number: address.mobile,
+        date: "12-12-2021",
+        "due-date": "31-12-2021",
+      },
+
+      products: [
+        {
+          quantity: product.quantity,
+          description: product.productsName,
+          "tax-rate": 6,
+          price: product.productsPrice,
+        },
+      ],
+      // The message you would like to display on the bottom of your invoice
+      "bottom-notice": "Thank you for your order from RoshanCart",
+      // Settings to customize your invoice
+      settings: {
+        currency: "INR", // See documentation 'Locales and Currency' for more info. Leave empty for no currency.
+        // "locale": "nl-NL", // Defaults to en-US, used for number formatting (See documentation 'Locales and Currency')
+        // "tax-notation": "gst", // Defaults to 'vat'
+        // "margin-top": 25, // Defaults to '25'
+        // "margin-right": 25, // Defaults to '25'
+        // "margin-left": 25, // Defaults to '25'
+        // "margin-bottom": 25, // Defaults to '25'
+        // "format": "A4", // Defaults to A4, options: A3, A4, A5, Legal, Letter, Tabloid
+        // "height": "1000px", // allowed units: mm, cm, in, px
+        // "width": "500px", // allowed units: mm, cm, in, px
+        // "orientation": "landscape", // portrait or landscape, defaults to portrait
+      },
+      // Translate your invoice to your preferred language
+      translate: {
+        // "invoice": "FACTUUR",  // Default to 'INVOICE'
+        // "number": "Nummer", // Defaults to 'Number'
+        // "date": "Datum", // Default to 'Date'
+        // "due-date": "Verloopdatum", // Defaults to 'Due Date'
+        // "subtotal": "Subtotaal", // Defaults to 'Subtotal'
+        // "products": "Producten", // Defaults to 'Products'
+        // "quantity": "Aantal", // Default to 'Quantity'
+        // "price": "Prijs", // Defaults to 'Price'
+        // "product-total": "Totaal", // Defaults to 'Total'
+        // "total": "Totaal" // Defaults to 'Total'
+      },
+    };
+
+    return data;
   }
+
+  
 };

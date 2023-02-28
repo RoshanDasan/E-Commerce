@@ -52,20 +52,20 @@ module.exports={
        
 //get dashboard
 
-  getDashboard: (req, res) =>{
+  getDashboard:async (req, res) =>{
     
  
   admins=req.session.admin
   let totalProducts, days=[]
-  let ordersPerDay = {};
+  let ordersPerDay = {}; 
 
 
-  adminHelper.getAllProducts().then((Products)=>
+  await adminHelper.getAllProducts().then((Products)=>
   {
     totalProducts = Products.length
   })
 
-  adminHelper.getOrderByDate().then((response)=>
+ await adminHelper.getOrderByDate().then((response)=>
   {
     let result = response[0].orders
     for (let i = 0; i < result.length; i++) {
@@ -80,7 +80,7 @@ module.exports={
 
 days.forEach((order) => {
   const day = order.createdAt.toLocaleDateString('en-US', { weekday: 'long' });
-  ordersPerDay[day] = (ordersPerDay[day] || 0) + 1;
+  ordersPerDay[day] = (ordersPerDay[day] || 0) + 1; 
 
 });
 console.log(ordersPerDay);
@@ -88,7 +88,7 @@ console.log(ordersPerDay);
   })
 
 
-  adminHelper.getAllOrders().then((response)=>
+ await adminHelper.getAllOrders().then((response)=>
   {
 
     var length = response.length

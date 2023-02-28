@@ -6,6 +6,7 @@ const otpLogin = require("../../OTP/otpLogin");
 const client = require("twilio")(otpLogin.AccountSId, otpLogin.authtoken);
 const user = require("../../models/connection");
 const { log } = require("console");
+const path = require('path');
 
 let total, count;
 module.exports = {
@@ -412,12 +413,13 @@ module.exports = {
     let users = req.session.user;
     let details = req.query.order;
 
-    userproductHelpers.viewOrderDetails(details).then((response) => {
+    userproductHelpers.viewOrderDetails(details).then(async (response) => {
 
       let products = response.products[0];
       let address = response.address;
       let orderDetails = response.details;
-      console.log(products,'----', address,'-----', orderDetails);
+
+      let data = await userproductHelpers.createData(response)
 
 
       res.render("user/order-details", {
@@ -425,6 +427,7 @@ module.exports = {
         address,
         orderDetails,
         users,
+        data
       });
     });
   },
@@ -432,14 +435,11 @@ module.exports = {
   getInvoice:(req, res)=>
   {
     let orderId = req.params.id
-
+    
     userproductHelpers.viewOrderDetails(orderId).then((result)=>
     {
-      let filename = userproductHelpers.generateInvoice(result)
-      const str = JSON.stringify(filename)
-      console.log(typeof str);
-
-      res.redirect('/order_details')
+      console.log(result);
+     
     })
   }
 };
