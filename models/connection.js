@@ -92,6 +92,27 @@ const categorySchema= new mongoose.Schema({
   ],
  })
 
+ const wishlistSchema= new mongoose.Schema({
+
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+  },
+
+
+  wishlistItems: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
+      
+    },
+  ],
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
+  
+})
+
  const AddressSchema=new  mongoose.Schema(
   {
     user:{
@@ -171,7 +192,8 @@ module.exports={
   cart:mongoose.model('cart',cartSchema),
   order:mongoose.model('order',orderSchema),
   address:mongoose.model('address',AddressSchema),
-  coupen:mongoose.model('coupen',couponSchema)
+  coupen:mongoose.model('coupen',couponSchema),
+  wishlist:mongoose.model("wishlist",wishlistSchema)
 
 }
 

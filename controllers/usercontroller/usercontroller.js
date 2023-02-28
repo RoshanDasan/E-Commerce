@@ -8,7 +8,7 @@ const user = require("../../models/connection");
 const { log } = require("console");
 const path = require('path');
 
-let total, count;
+let total, count, wishcount;
 module.exports = {
   // user home
   getHome: async (req, res) => {
@@ -231,6 +231,51 @@ module.exports = {
     });
   },
 
+  getWishlist: async(req, res) => {
+    wishcount = await userhelpers.getWishCount(req.session.user.id)
+   userhelpers.addToWishlist(req.params.prodId, req.session.user.id).then((data) => {
+     res.json({ status: true });
+   });
+ },
+ viewWishlist:async(req,res)=>{
+
+  let users = req.session.user.id;
+  let userId = req.session.user;
+   let wishlistItems = await userhelpers.viewWishlist(req.session.user.id);
+   console.log(wishlistItems,'-------------------------');
+   res.render("user/wishlist",{userId,users,count,wishlistItems,wishcount})
+ },
+
+ deleteFromWishlist: async (req, res)=>
+ {
+   let deleteData = await userhelpers.deleteWishlist(req.body)
+   if(deleteData)
+   {
+    res.json(true)
+   }
+
+
+
+  
+ },
+
+ getViewCart: async (req, res) => {
+
+   let userId = req.session.user;
+    total = await userhelpers.totalCheckOutAmount(req.session.user.id);
+   let count = await userhelpers.getCartItemsCount(req.session.user.id);
+
+   let cartItems = await userhelpers.viewCart(req.session.user.id);
+
+   res.render("user/view-cart", {
+     cartItems,
+     userId,
+     userSession,
+     profileId,
+     count,
+     total,
+   });
+ },
   checkOutPage: async (req, res) => {
     let users = req.session.user.id;
 
@@ -432,15 +477,6 @@ module.exports = {
     });
   },
 
-  getInvoice:(req, res)=>
-  {
-    let orderId = req.params.id
-    
-    userproductHelpers.viewOrderDetails(orderId).then((result)=>
-    {
-      console.log(result);
-     
-    })
-  }
+
 };
  

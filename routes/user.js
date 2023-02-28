@@ -37,7 +37,13 @@ router.get("/image/:id", controllers.imageZoom)
 
 router.get("/add-to-cart/:id",auths.userauth,controllers.addToCart)
 
-router.get("/cart",auths.userauth,controllers.listCart)
+router.get("/cart",auths.userauth,controllers.listCart) 
+
+router.get("/add_to_wishlist/:prodId",auths.userauth,controllers.getWishlist);
+
+router.get('/view_wishlist',auths.userauth,controllers.viewWishlist);
+
+router.delete("/wishlist",controllers.deleteFromWishlist)
 
 router.put('/change_product_quantity', auths.userauth, controllers.postchangeProductQuantity)
 
@@ -70,8 +76,6 @@ router.get('/order_details',controllers.orderDetails)
 router.get('/order_cancel/:id', controllers.getCancelOrder)
 
 router.get('/order_return/:id', controllers.getReturnOrder)
-
-router.get('/order_invoice/:id',controllers.getInvoice)
 
 router.get('/apply_coupon', controllers.applyCoupon)
 

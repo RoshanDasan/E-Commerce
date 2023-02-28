@@ -1,0 +1,58 @@
+
+<main class="main">
+    <section class="mt-50 mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table shopping-summery text-center">
+                            <thead>
+                                <tr class="main-heading">
+                                    <th scope="col" colspan="2">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Action</th>
+                                    <th scope="col">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% wishlistItems.forEach(function(wishlistItems){%>
+                                <tr>
+                                    <td class="image product-thumbnail"><img src="/uploads/<%=wishlistItems.wishlistItems.Image %>" alt="#"></td>
+                                    <td class="product-des product-name">
+                                        <h5 class="product-name"><a href="shop-product-right.html"><%=wishlistItems.wishlistItems.Productname%></a></h5>
+                                    </td>
+                                    <td class="price" data-title="Price"><span><%=wishlistItems.wishlistItems.Price%></span></td>
+                                    
+                                    <td class="text-right" data-title="Cart">
+                                        <button class="btn btn-sm"><i class="fi-rs-shopping-bag mr-5"></i>Add to cart</button>
+                                    </td>
+                                    <td class="action" data-title="Remove"><a onclick="removeWishList('<%=wishlistItems._id%>','<%=wishlistItems.wishlistItems._id%>')"><i class="fi-rs-trash"></i></a></td>
+                                </tr>
+                            <%}) %>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    function removeWishList(wishlistId, productId) {
+    $.ajax({
+          url: '/wishlist',
+          data: {
+            wishlistId: wishlistId,
+            productId: productId
+          },
+          method: 'DELETE',
+          success: (response) => {
+            if (response) {
+              location.reload()
+            }    
+          }
+        })
+}
+</script>

@@ -443,7 +443,7 @@ module.exports = {
 
   createData:(details)=>
   {
-    let address = details.address
+    let address = details.address[0]
     let product = details.products[0][0]
     let orderDetails = details.details
     console.log('address',address);
@@ -458,9 +458,9 @@ module.exports = {
       },
       images: {
         // The logo on top of your invoice
-        logo: "https://public.easyinvoice.cloud/img/logo_en_original.png",
+        logo: "https://freelogocreator.com/user_design/logos/2023/02/28/120325-medium.png",
         // The invoice background
-        background: "https://public.easyinvoice.cloud/img/watermark-draft.jpg",
+        // background: "https://public.easyinvoice.cloud/img/watermark-draft.jpg",
       },
       // Your own data
       sender: {
@@ -526,6 +526,7 @@ module.exports = {
       },
     };
 
+    console.log(data);
     return data;
   }
 

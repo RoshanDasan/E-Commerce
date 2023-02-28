@@ -29,9 +29,22 @@
                                     
                                       </div>
                                       <div class="product-action-1">
-                                          <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal">
-<i class="fi-rs-search"></i></a>
-                                          <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                          <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="firs-search"></i></a>
+                                          <button
+                    type="button"
+                    aria-label="Add To Wishlist"
+                    class="action-btn hover-up"
+                    onclick="addToWishlist('<%-response._id%>')"
+                    Swal.fire({
+                      position: 'center',
+                      icon: 'success',
+                      title: 'Product is successfully added to wishlist',
+                      showConfirmButton: false,
+                      timer: 1500
+                    })
+                  >
+                    <i class="fi-rs-heart"></i>
+                  </button>
                                           <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                       </div>
                                       <div class="product-badges product-badges-position product-badges-mrg">
@@ -126,6 +139,20 @@
 
     
    }
+
+   function addToWishlist(prodId){
+    $.ajax({
+      url:"/add_to_wishlist/"+prodId,
+      method:"get",
+      success:(response)=>{
+        if (response.status) {
+          let wishlistCount = $("#wishlist-count").html();
+          wishlistCount = parseInt(wishlistCount) + 1;
+          $("#wishlist-count").html(wishlistCount);
+        }
+      }
+    })
+  }
 
 </script>
 
