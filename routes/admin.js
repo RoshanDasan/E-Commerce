@@ -13,9 +13,7 @@ const { doLogin } = require("../helpers/UserHelpers/UserHelpers");
 const upload=require('../multer/multer')
 const auths=require('../middlewares/middleware')
 
-
-
-
+  
 
 router.get("/",auths.auth,adminController.getDashboard)
 
@@ -66,6 +64,10 @@ router.post('/add_coupons',adminCouponController.postAddCoupon)
 router.get("/generate_coupon",auths.auth,adminCouponController.generateCoupon);
 
 router.put('/orderStatus', adminproductcontroller.getEditOrderStatus)
+
+router.get('/sales_report',adminController.getSalesReport)
+
+router.post('/sales_report', adminController.postSalesReport)
 
 
 module.exports = router;

@@ -1,0 +1,103 @@
+<div class="main_container m-5">
+
+    <div class="d-flex justify-content-center m-4">
+        <button type="button" class="btn btn-danger btn_print me-3"
+            value="Download as Pdf">Download as PDF</button>
+        <button type="button" class="btn btn-danger btn_print me-3" onclick="export_data()"
+            value="Export to excel">Download as Excel</button>
+   
+    <div>
+<form action="/admin/sales_report" method="POST">
+
+<div> <input type="date" name="startdate" id="startdate"></div>
+ 
+  <div><input type="date" name="enddate" id="enddate" ></div>
+
+  <button class="btn btn-primary p-3 m-3" type="submit">submit</button>
+
+</form>
+</div> 
+   
+   <!-- <input class="ms-1" type="text" name="daterange" value="01/01/2022 - 12/01/2023"/> -->
+   
+    </div>
+
+
+
+<table class="table table-striped" id="container_content">
+    <thead>
+      <tr>
+        <th scope="col">OrderId</th>
+        <th scope="col">user Name</th>
+        <th scope="col">Item Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Payment Method</th>
+        <th scope="col">Delivered Date</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% Details.forEach((order)=>{ %>
+      <tr>
+        <td><%=order._id%></td>
+        <td><%=order.shippingAddress.fname%></td>
+        <td><%=order.productsDetails[0].productsName%></td>
+        <td><%=order.productsDetails[0].quantity%></td>
+        <td><%=order.productsDetails[0].productsPrice%></td>
+        <td><%=order.paymentmode%></td>
+        <td><%=order.createdAt%></td>
+
+      </tr>
+      <%})%>
+
+     
+    </tbody>
+  </table>
+
+</div>
+<br>
+<br>
+<hr>
+<!-- <h5 class="text-right">Total Earnings: &nbsp; <span class="fw-bold">24,0000</span> </h5> -->
+
+<hr>
+
+</div>
+
+
+<script>
+
+$(document).ready(function ($) {
+        $(document).on('click', '.btn_print', function (event) {
+            event.preventDefault();
+            var element = document.getElementById('container_content');
+            let randomNumber = Math.floor(Math.random() * (10000000000 - 1)) + 1;
+            var opt = {
+                margin: 0,
+                filename: 'SalesReport' + randomNumber + '.pdf',
+                html2canvas: { scale: 10 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        });
+    });
+
+
+
+
+    function export_data() {
+        let data = document.getElementById('container_content');
+        var fp = XLSX.utils.table_to_book(data, { sheet: 'vishal' });
+        XLSX.write(fp, {
+            bookType: 'xlsx',
+            type: 'base64'
+        });
+        XLSX.writeFile(fp, 'test.xlsx');
+    }
+
+    function sortByDate()
+    {
+       
+    }
+</script>

@@ -29,6 +29,10 @@ router.get('/update_password', controllers.getUpdatePassword)
 
 router.post('/update_password', controllers.postUpdatePassword)
 
+router.get("/enter_new_pwd",auths.userauth,controllers.getEnterNewPwd)
+
+router.put("/enter_new_pwd",auths.userauth,controllers.updatePassword)
+
 router.get("/shop",auths.userauth,controllers.shopProduct)
 
 router.get("/category",auths.userauth,controllers.getCategory)

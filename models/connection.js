@@ -151,6 +151,7 @@ const orderSchema = new mongoose.Schema({
           totalQuantity: Number,
           productsDetails: Array,
           shippingAddress: Object,
+          paymentmode: String,
           status: {
               type: Boolean,
               default: true

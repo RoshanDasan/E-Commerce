@@ -8,7 +8,7 @@
               Thanks for your Order,
               <span style="color: #6c5f6c"><%=address[0].fname%></span>!
             </h5>
-            <p style="visibility: hidden;" id="roshan"><%= JSON.stringify(locals.data) %></p>
+            <p style="display: none;" id="roshan"><%= JSON.stringify(locals.data) %></p>
             <!-- onclick="invoiceCreator()" -->
             <%if(orderDetails.orderConfirm == 'delivered'){%>
 
@@ -135,6 +135,8 @@
                     </div>
                   </div>
                 </div>
+
+               
 
                 <%}%> <%if(orderDetails.orderConfirm == 'delivered'){%>
                 <button onclick="returnOrder('<%=orderDetails._id%>')">

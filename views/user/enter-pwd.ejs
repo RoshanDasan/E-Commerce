@@ -1,0 +1,188 @@
+<div class="container d-flex flex-column">
+    <div class="row align-items-center justify-content-center
+        min-vh-100 g-0">
+      <div class="col-12 col-md-8 col-lg-4 border-top border-3 border-primary">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="mb-4">
+              <h5>Reset password</h5>
+              <p class="mb-2">Enter your old password to reset the password
+              </p>
+            </div>
+            <form id="update">
+              <div class="mb-3">
+                <label for="pwd" class="form-label">Old Pasword</label>
+                <input 
+                type="password" 
+                id="pwd" 
+                class="form-control" 
+                name="password" 
+                placeholder="Enter Your Old password"
+                required="">
+              </div>
+              <div class="mb-3">
+                <label for="pwd" class="form-label">New Pasword</label>
+                <input 
+                type="password" 
+                id="password2" 
+                class="form-control" 
+                name="password2" 
+                placeholder="Enter Your New password"
+                onkeyup="validatePassword()"
+                  required="">
+                  <span id="pass-error" class="validation-label"></span>
+
+              </div>
+              <div class="mb-3">
+                <label for="pwd" class="form-label">Re Enter Pasword</label>
+                <input 
+                type="password" 
+                id="cnfrm-password" 
+                class="form-control" 
+                name="cnfrm-password" 
+                placeholder="Re Enter Your New password"
+                onkeyup="validatePassword()"
+                  required="">
+                  <span id="pass-error" class="validation-label"></span>
+
+              </div>
+              <div class="mb-3 d-grid">
+                <!-- return validateForm(); validatePassword()-->
+                <button onclick="return validateForm(); newPassword('<%=locals.user%>');" class="btn btn-primary">Click me</button>
+                  Reset Password
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  function newPassword(profileId) {
+    console.log(profileId);
+    $('#update').submit((e) =>{
+        e.preventDefault();
+        $.ajax({
+        url: '/enter_new_pwd?proId='+profileId,
+        method: "PUT",
+        data:$('#update').serialize(),
+        success: (response) => {
+          if(response){
+            
+            location.href=`/profile/${profileId}`
+          }
+        },
+        });
+    })
+}
+</script>
+
+<script>
+let passError=document.getElementById("pass-error");
+function validatePassword(){
+    
+    // let password = document.getElementById("pwd2").value;
+    // let passwordInput = document.getElementById("pwd2")
+    // let oldpassword = document.getElementById("pwd").value;
+    // let oldpasswordinput= document.getElementById("pwd")
+    // let cnfrmPassword = document.getElementById("cnfrm-password").value;
+    // let cnfrmPasswordInput= document.getElementById("cnfrm-password")
+    
+    //     if(password.length != 0){
+    //         if(password == oldpassword){
+    //             passError.innerHTML = "Please enter different password";
+    //             passError.style.color = "red";
+    //             passwordInput.style.border = "solid 2px red";
+    //             cnfrmPasswordInput.style.border = "solid 2px red";
+    //             return false
+    //         }
+    //         else if (!password.match(/[a-zA-Z]/)) {
+    //           passError.innerHTML = "Password must contain atleast 1 letter";
+    //           passError.style.color = "red";
+    //           passwordInput.style.border = "solid 2px red";
+    //           return false;
+    //         }
+    //         else if (!password.match(/^.{8,}$/)) {
+    //           passError.innerHTML = "Password min-length 8";
+    //           passError.style.color = "red";
+    //           passwordInput.style.border = "solid 2px red";
+    //           return false;
+    //         }
+    //         else if (!password.match(/^(?=.*[\W_])[\w\W]/)) {
+    //           passError.innerHTML = "Password must contain atleast one special character";
+    //           passError.style.color = "red";
+    //           passwordInput.style.border = "solid 2px red";
+    //           return false;
+    //         }
+    //         else{
+    //             return true
+    
+    
+    //         }
+    //     }
+    //     else{
+            
+    //         message.textContent = "";
+    //     }
+
+    
+    let password = document.getElementById("password2").value;
+    let passwordInput = document.getElementById("password2")
+    let cnfrmPassword = document.getElementById("cnfrm-password").value;
+    let cnfrmPasswordInput= document.getElementById("cnfrm-password")
+    
+        if(password.length != 0){
+            if(password == cnfrmPassword){
+                passError.innerHTML = "Passwords match";
+                passError.style.color = "green";
+                passwordInput.style.border = "solid 2px green";
+                cnfrmPasswordInput.style.border = "solid 2px green";
+                return true
+            }
+            else if (!password.match(/[a-zA-Z]/)) {
+              passError.innerHTML = "Password must contain atleast 1 letter";
+              passError.style.color = "red";
+              passwordInput.style.border = "solid 2px red";
+              return false;
+            }
+            else if (!password.match(/^.{8,}$/)) {
+              passError.innerHTML = "Password min-length 8";
+              passError.style.color = "red";
+              passwordInput.style.border = "solid 2px red";
+              return false;
+            }
+            else if (!password.match(/^(?=.*[\W_])[\w\W]/)) {
+              passError.innerHTML = "Password must contain atleast one special character";
+              passError.style.color = "red";
+              passwordInput.style.border = "solid 2px red";
+              return false;
+            }
+            else{
+                passError.innerHTML = "Password don't match";
+                passError.style.color = "red";
+                passwordInput.style.border = "solid 2px red";
+                return false
+    
+    
+            }
+        }
+        else{
+            
+            message.textContent = "";
+        }
+    
+    }
+    function validateForm() {
+  if (
+    !validatePassword
+  ) {
+    submitError.style.display = "block";
+    submitError.innerHTML = "Please fix all errors to submit.";
+    setTimeout(function () {
+      submitError.style.display = "none";
+    }, 3000);
+    return false;
+  }
+}
+</script>

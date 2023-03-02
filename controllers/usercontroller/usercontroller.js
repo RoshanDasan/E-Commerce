@@ -85,6 +85,26 @@ module.exports = {
     });
   },
 
+
+
+getEnterNewPwd:(req,res)=>{
+  let user = req.session.user.id;
+  let users = req.session.user;
+  res.render("user/enter-pwd",{user,users})
+  
+},
+updatePassword:async(req,res)=>{
+
+  
+  console.log(req.query.proId);
+  let passResponse = await userhelpers.verifyPassword(req.body,req.query.proId);
+  if(passResponse){
+    res.json(true)
+  }
+
+},
+
+
   getOtpLogin: (req, res) => {
     res.render("user/otpLogin");
   },

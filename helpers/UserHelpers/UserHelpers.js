@@ -89,6 +89,35 @@ module.exports = {
     });
   },
 
+
+  //reset password
+
+
+  verifyPassword:(userData,userId)=>{
+
+    return new Promise(async(resolve, reject) => {
+
+      let users=await user.user.findOne({_id:userId})
+      console.log(users);
+      await bcrypt
+      .compare(userData.password, users.Password)
+      .then(async (status) => {
+        if(status){
+          let hashedPassword = await bcrypt.hash(userData.password2, 10);
+          await user.user.updateOne(
+            {_id:userId},
+            {$set:{
+              Password:hashedPassword
+            }}
+            ).then((response)=>{
+              console.log(response);
+              resolve(response)
+            })
+        }
+      });
+    })
+  },
+
   //list product
   shopListProduct: () => {
     return new Promise(async (resolve, reject) => {

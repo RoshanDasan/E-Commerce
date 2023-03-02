@@ -1,6 +1,6 @@
 const user = require("../../models/connection");
 const multer = require("multer");
-const { response } = require("../../app");
+const { response, report } = require("../../app");
 const ObjectId = require("mongodb").ObjectId;
 
 module.exports = {
@@ -74,9 +74,10 @@ module.exports = {
   postEditProduct: (productId, editedData, filename) => {
     // console.log(filename);
     return new Promise(async (resolve, reject) => {
-      let image = filename.map((filename)=>filename.filename)
+      let image = filename.map((filename) => filename.filename);
       console.log(image);
-      await user.product.updateOne(
+      await user.product
+        .updateOne(
           { _id: productId },
           {
             $set: {
@@ -107,91 +108,154 @@ module.exports = {
     });
   },
 
-  getOrder:(userId)=>
-  {
-   
-  return new Promise(async (resolve, reject) => {
-
-    await user.order.aggregate([{
-      $match:
-        { user: ObjectId(userId) }
-    },
-    {
-      $unwind: '$orders'
-    },
-    {
-      $sort: { 'orders:createdAt': -1 }
-    },
-    {
-      $project: {
-        item: '$orders'
-
-      }
-    },   
-    {
-      $project: {
-        item:1,       
-       
-      },
-    },
-    ]).then((response) => {
-      resolve(response)
-    })
-  })
-  },
-
-  getAllOrders:()=>
-  {
+  getOrder: (userId) => {
     return new Promise(async (resolve, reject) => {
-      let order = await user.order.aggregate([
-        {$unwind: '$orders'},
-
-      ]).then((response) => {
-        resolve(response)
-      })
-     
-    })
-  },
-
-  getAllProducts:()=>
-  {
-    return new Promise(async(resolve, reject) => {
-      await user.product.find().then((response)=>
-      {
-        resolve(response)
-      }) 
-    })
-  },
-
-  
-  getOrderByDate:()=>
-  {
-     return new Promise(async (resolve, reject) => {
-      const startDate = new Date('2022-01-01');
-      await user.order.find({createdAt:{ $gte: startDate}}).then((response)=>
-      {
-        resolve(response)
-
-      })
+      await user.order
+        .aggregate([
+          {
+            $match: { user: ObjectId(userId) },
+          },
+          {
+            $unwind: "$orders",
+          },
+          {
+            $sort: { "orders:createdAt": -1 },
+          },
+          {
+            $project: {
+              item: "$orders",
+            },
+          },
+          {
+            $project: {
+              item: 1,
+            },
+          },
+        ])
+        .then((response) => {
+          resolve(response);
+        });
     });
   },
 
-  
-  editOrderStatus:(orderStatus)=>
-  {
+  getAllOrders: () => {
     return new Promise(async (resolve, reject) => {
-      
-      await user.order.updateOne(
-        { 'orders._id': orderStatus.orderId },
-        {
-          $set: {
-            'orders.$.orderConfirm': orderStatus.status
-          }
-        }).then((response)=>
-        {
-        resolve({update:true})
-        })
-  })
-}
+      let order = await user.order
+        .aggregate([{ $unwind: "$orders" }])
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
 
-}
+  getAllProducts: () => {
+    return new Promise(async (resolve, reject) => {
+      await user.product.find().then((response) => {
+        resolve(response);
+      });
+    });
+  },
+
+  getOrderByDate: () => {
+    return new Promise(async (resolve, reject) => {
+      const startDate = new Date("2022-01-01");
+      await user.order
+        .find({ createdAt: { $gte: startDate } })
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
+
+  editOrderStatus: (orderStatus) => {
+    return new Promise(async (resolve, reject) => {
+      await user.order
+        .updateOne(
+          { "orders._id": orderStatus.orderId },
+          {
+            $set: {
+              "orders.$.orderConfirm": orderStatus.status,
+            },
+          }
+        )
+        .then((response) => {
+          resolve({ update: true });
+        });
+    });
+  },
+
+  getCodCount: () => {
+    return new Promise(async (resolve, reject) => {
+      let response = await user.order.aggregate([
+        {
+          $unwind: "$orders",
+        },
+        {
+          $match: {
+            "orders.paymentmode": "COD",
+          },
+        },
+      ]);
+      resolve(response);
+    });
+  },
+
+  getOnlineCount: () => {
+    return new Promise(async (resolve, reject) => {
+      let response = await user.order.aggregate([
+        {
+          $unwind: "$orders",
+        },
+        {
+          $match: {
+            "orders.paymentmode": "online",
+          },
+        },
+      ]);
+      resolve(response);
+    });
+  },
+
+  getSalesReport: async () => {
+    return new Promise(async (resolve, reject) => {
+      let response = await user.order.aggregate([
+        {
+          $unwind: "$orders",
+        },
+        {
+          $match: {
+            "orders.orderConfirm": "delivered",
+          },
+        },
+      ]);
+      resolve(response);
+    });
+  },
+  postReport: (date) => {
+    let start = new Date(date.startdate);
+let end = new Date(date.enddate);
+
+return new Promise(async(resolve, reject) => {
+ await user.order.aggregate([
+  {
+    $unwind: "$orders",
+  },
+  {
+    $match: {
+      $and: [
+        { "orders.orderConfirm": "delivered" },
+        {"orders.createdAt": { $gte: start, $lte: end }}
+        
+      ]
+    }
+  }
+])
+  .exec()
+  .then((response) => {
+    console.log(response);
+    resolve(response)
+  })
+})
+
+  },
+};
