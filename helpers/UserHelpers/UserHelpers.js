@@ -98,7 +98,6 @@ module.exports = {
     return new Promise(async(resolve, reject) => {
 
       let users=await user.user.findOne({_id:userId})
-      console.log(users);
       await bcrypt
       .compare(userData.password, users.Password)
       .then(async (status) => {
@@ -106,13 +105,15 @@ module.exports = {
           let hashedPassword = await bcrypt.hash(userData.password2, 10);
           await user.user.updateOne(
             {_id:userId},
-            {$set:{
+            { $set:{
               Password:hashedPassword
             }}
             ).then((response)=>{
-              console.log(response);
               resolve(response)
             })
+        }else
+        {
+          resolve(false)
         }
       });
     })
@@ -136,6 +137,19 @@ module.exports = {
         resolve(response);
       });
     });
+  },
+
+  // banner
+
+  getBannetData:()=>
+  {
+    return new Promise(async(resolve, reject) => {
+      await user.banner.find().then((response)=>
+      {
+        console.log(response);
+        resolve(response)
+      })
+    })
   },
 
   addToWishlist: async(proId, userId) => {
@@ -626,7 +640,7 @@ module.exports = {
             $unwind: "$orders",
           },
           {
-            $sort: { "orders:createdAt": -1 },
+            $sort: { "orders.createdAt": -1 },
           },
           {
             $project: {
@@ -735,11 +749,13 @@ module.exports = {
   },
 
   getUserDetails: (userId) => {
-    return new Promise(async (resolve, reject) => {
-      await user.address.find({ user: userId }).then((response) => {
-        resolve(response);
-      });
-    });
+    return new Promise(async(resolve, reject) => {
+      await user.user.findById({_id:userId}).then((user)=>{
+        
+        resolve(user)
+      })
+      
+    })
   },
 
   deleteAddress: (Id) => {

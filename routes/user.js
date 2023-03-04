@@ -7,14 +7,12 @@ const auths=require('../middlewares/middleware')
 
 router.get("/",controllers.getHome)
 
-router.get('/profile', controllers.getProfilePage)
-
 router.get("/login",auths.userauth, controllers.getUserLogin)
 
 router.post("/login", controllers.postUserLogin ) 
- 
+
 router.get("/signup",controllers.getSignUp)
- 
+
 router.post("/signup", controllers.postSignUp)
 
 router.get('/otpLogin', controllers.getOtpLogin)
@@ -24,6 +22,8 @@ router.post('/otpLogin', controllers.postOtpLogin)
 router.get('/otpPage', controllers.getVerify)
 
 router.post('/otpPage', controllers.postVerify)
+
+router.get('/profile', controllers.getProfilePage)
 
 router.get('/update_password', controllers.getUpdatePassword)
 
@@ -86,6 +86,10 @@ router.get('/apply_coupon', controllers.applyCoupon)
 router.get('/coupon_validator', controllers.applyCouponSuccess) 
 
 router.get('/coupon_verify', controllers.couponVerify)
+
+router.post('/search',auths.userauth,controllers.getSearch)
+
+router.post('/sort',auths.userauth,controllers.postSort)
 
 router.get("/logout",controllers.getLogout);
 

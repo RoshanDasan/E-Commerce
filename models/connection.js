@@ -185,6 +185,33 @@ const couponSchema = new mongoose.Schema({
   },
 });
 
+const bannerSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  link: {
+    type: String,
+    required: true
+  },
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now
+  }
+});
+
 
 module.exports={
   user :mongoose.model('user',userschema),
@@ -194,7 +221,8 @@ module.exports={
   order:mongoose.model('order',orderSchema),
   address:mongoose.model('address',AddressSchema),
   coupen:mongoose.model('coupen',couponSchema),
-  wishlist:mongoose.model("wishlist",wishlistSchema)
+  wishlist:mongoose.model("wishlist",wishlistSchema),
+  banner :mongoose.model('Banner', bannerSchema),
 
 }
 

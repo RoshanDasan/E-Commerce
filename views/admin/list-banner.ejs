@@ -1,0 +1,42 @@
+<div class="card-body">
+    <div class="table-responsive">
+      <div class="table-responsive">
+        <table class="table align-middle table-nowrap mb-0">
+          <thead class="table-light">
+            
+            <tr>
+               
+              <th class="align-middle" scope="col">title</th>
+              <th class="align-middle" scope="col">Created Date</th>
+              <th class="align-middle" scope="col">image</th>
+              <th class="align-middle" scope="col"></th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <% response?.forEach(function(response) { %>
+            <tr>
+              
+              <td><a href="#" class="fw-bold"> <%=response.title%></a></td>
+        
+              <td><%=response.created_at%></td>
+              <td>
+          <img src="/uploads/<%=response?.image%>" alt="" style="width:100px;height:auto ">
+              </td>
+              <td>
+               
+                  <!-- <button onclick="cancelorder('<%=response._id%>')" class="btn btn-xs">Cancel</button> -->
+                  <a href="/admin/edit_banner?banner=<%=response._id%>" class="btn btn-primary"> Edit Banner </a>
+              
+              </td>
+             
+            </tr>
+            <% }) %> 
+           
+          </tbody>
+        </table>
+      </div>
+    </div>
+ 
+  </div>

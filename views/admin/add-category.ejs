@@ -6,13 +6,20 @@
         <form
           action="/admin/add_category"
           method="POST"
+          id="myform"
          
         >
           <label for="">Category Name</label>
-          <input type="text" name="categoryname" class="form-control" />
+          <input type="text" name="categoryname" id="category" class="form-control" onkeyup="categoryValidate()" required="" />
+          <span id="category-error" class="validation-label"></span>
+          <br>
+          
 
           <label for="">Sub Category Name</label>
-          <input type="text" name="subCategoryname" class="form-control" />
+          <input type="text" name="subCategoryname" id="subCategory" class="form-control" onkeyup="subCategoryValidate()" required="" />
+          <span id="sub-category-error" class="validation-label"></span>
+          <br>
+
 
           <button type="submit" class="btn btn-success mt-4">Submit</button>
         </form>
@@ -54,3 +61,68 @@
     </div>
   </div>
 </section>
+
+<script>
+  let regex = /^[^ ].*/
+  let categoryError = document.getElementById('category-error')
+  let subCategoryError = document.getElementById('sub-category-error')
+  let myform = document.getElementById('myform')
+
+
+  function categoryValidate()
+  {
+    let name = document.getElementById("category").value;
+    let nameInput = document.getElementById("category");
+    if (name.length == 0) {
+      categoryError.innerHTML = "Category is required";
+      categoryError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    } if (!name.match(regex)) {
+      categoryError.innerHTML = "Write valid name";
+      categoryError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    }
+    categoryError.innerHTML = "";
+    categoryError.style.color = "green";
+    nameInput.style.border = "solid 2px green";
+    return true;
+
+  }
+
+  function subCategoryValidate()
+  {
+    var name = document.getElementById("subCategory").value;
+    var nameInput = document.getElementById("subCategory");
+    if (name.length == 0) {
+      subCategoryError.innerHTML = "Sub-Category is required";
+      subCategoryError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    } if (!name.match(regex)) {
+      subCategoryError.innerHTML = "Write valid name";
+      categoryError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    }
+    subCategoryError.innerHTML = "";
+    subCategoryError.style.color = "green";
+    nameInput.style.border = "solid 2px green";
+    return true;
+
+  }
+
+  myform.addEventListener('submit',(event)=>
+  {
+    event.preventDefault();
+    if(!categoryValidate() || !subCategoryValidate())
+    {
+      return false;
+    }
+    else
+    {
+      myform.submit();
+    }
+  })
+</script>

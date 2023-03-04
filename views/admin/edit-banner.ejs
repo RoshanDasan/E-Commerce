@@ -1,0 +1,21 @@
+<section class="">
+    <div class="container d-flex justify-content-center">
+      <div class="row w-75 mt-5">
+        <div class="col-md-12">
+          <h2 class="text-center">Edit Banner</h2>
+          <form action="/admin/edit_banner?editbanner=<%=response._id%>" method="POST" enctype="multipart/form-data">
+            <label for="">Title</label>
+            <input type="text" name="title" class="form-control" value="<%=response.title%>" />
+            <label for="">Description</label>
+            <input type="text" name="description" class="form-control" value="<%=response.description%>" />
+            <label for="">Link</label>
+            <input type="text" name="link" class="form-control" value="<%=response.link%>" />
+            <label for="">Image</label>
+          <img src="/uploads/<%=response?.image%>" alt="" style="width:100px;height:auto ">
+            <input type="file" name="image1" class="form-control" />
+            <button type="submit" class="btn btn-success mt-4">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>

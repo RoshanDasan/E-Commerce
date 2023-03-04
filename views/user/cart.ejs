@@ -6,65 +6,83 @@
    
     <main class="main">
        
-        <section class="mt-50 mb-50">
+        <section class="">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="table shopping-summery text-center clean">
-                                <thead>
-                                    <tr class="main-heading">
-                                    
-                                        <th scope="col">Image</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Subtotal</th>
-                                        <th scope="col">Remove</th>
-                                    </tr>
-                                </thead>
-                             
-                                <tbody>
-                                    
-                                    <% cartItems?.forEach(function(cartItems){%>
-                                      
-                                    <tr>
-                                   
-                                       
-                                        <td > <img src="/uploads/<%=cartItems.carted.Image %>" ></td>
-                                        <td class="product-des product-name">
-                                            <h5 class="product-name"><a href="shop-product-right.html"><%=cartItems.carted.Productname%></a></h5>
-                                            <p class="font-xs"><%=cartItems.carted.category%></p> 
-                                            <p class="font-xs"><%=cartItems.carted.ProductDescription%></p> 
-                                           
-                                        </td>
-                                        <td class="price" cartItemss-title="Price"><span><%=cartItems.carted.Price%> </span></td>
-                                        <td class="text-center" cartItemss-title="Stock">
 
-                                            <div class="detail-qty border radius  m-auto">
-                                               <div><button class="cart-item-count mr-5" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',-1)">-</button></div>
-                                                <span id="<%= cartItems.item %>"><%= cartItems.quantity%></span>
-                                                <div>  <button class="cart-item-count ml-5" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',1)">+</button></div> 
-                                            </div>
-                                        </td>
-                                        <td class="text-right" cartItemss-title="total">
-                                            
-                                        </td>
-                                        <!-- <td class="action" cartItemss-title="Remove"><a href="#" class="text-muted"><i class="fi-rs-trash"></i></a></td> -->
-                                        <td class="action" cartItemss-title="Remove"><button class="text-muted" onclick="return removeCart(this),removeItem('<%=cartItems._id%>','<%=cartItems.item %>')"><i class="fi-rs-trash"></i></button></td>
-                                      
-                                    </tr>
+                          <% if (count == 0) { %>
+                            <div class="text-center " style="margin-top: 10rem; margin-bottom: 10rem;">
+                              <h1>My Cart</h1>
+                              <p>Your cart is currently empty.</p>
+                              <p>Start adding items to your cart by browsing our products.</p>
+                              <a href="/shop">Browse products</a>
+                
+                            </div>
+
+                                             
+                          <% } else { %>
+                         
+
+                            <table class="table shopping-summery text-center clean">
+                              <thead>
+                                  <tr class="main-heading">
+                                  
+                                      <th scope="col">Image</th>
+                                      <th scope="col">Name</th>
+                                      <th scope="col">Price</th>
+                                      <th scope="col">Quantity</th>
+                                      <th scope="col">Subtotal</th>
+                                      <th scope="col">Remove</th>
+                                  </tr>
+                              </thead>
+                           
+                              <tbody>
+                                  
+                                  <% cartItems?.forEach(function(cartItems){%>
                                     
+                                  <tr>
+                                 
+                                     
+                                      <td > <img src="/uploads/<%=cartItems.carted.Image %>" ></td>
+                                      <td class="product-des product-name">
+                                          <h5 class="product-name"><a href="shop-product-right.html"><%=cartItems.carted.Productname%></a></h5>
+                                          <p class="font-xs"><%=cartItems.carted.category%></p> 
+                                          <p class="font-xs"><%=cartItems.carted.ProductDescription%></p> 
+                                         
+                                      </td>
+                                      <td class="price" cartItemss-title="Price"><span><%=cartItems.carted.Price%> </span></td>
+                                      <td class="text-center" cartItemss-title="Stock">
+
+                                          <div class="detail-qty border radius  m-auto">
+                                             <div><button class="cart-item-count mr-5" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',-1)">-</button></div>
+                                              <span id="<%= cartItems.item %>"><%= cartItems.quantity%></span>
+                                              <div>  <button class="cart-item-count ml-5" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',1)">+</button></div> 
+                                          </div>
+                                      </td>
+                                      <td class="text-right" cartItemss-title="total">
+                                          
+                                      </td>
+                                      <!-- <td class="action" cartItemss-title="Remove"><a href="#" class="text-muted"><i class="fi-rs-trash"></i></a></td> -->
+                                      <td class="action" cartItemss-title="Remove"><button class="text-muted" onclick="return removeCart(this),removeItem('<%=cartItems._id%>','<%=cartItems.item %>')"><i class="fi-rs-trash"></i></button></td>
                                     
-                                    
-                                    <%}) %>
-                             
-                                </tbody>
-                             
-                            </table>
+                                  </tr>
+                                  
+                                  
+                                  
+                                  <%}) %>
+                           
+                              </tbody>
+                           
+                          </table>
+
+
+                          <% } %>
+                          
+                           
                         </div>
                       
-                        <div class="divider center_icon mt-50 mb-50"><i class="fi-rs-fingerprint"></i></div>
                         <div class="row mb-50">
                             <div class="col-lg-6 col-md-12">
                                

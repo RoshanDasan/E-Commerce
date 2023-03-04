@@ -48,15 +48,14 @@ getAddProduct: (req, res) =>{
   
   editViewProduct:(req,res) =>{
 
-    console.log('----------------------------------------------------------------');
     let admins=req.session.admin
     adminProductHelpers.viewAddCategory().then((response)=>{
   
       var procategory=response
       adminProductHelpers.editProduct(req.params.id).then((response)=>{
-      editproduct=response
+        editproduct=response
+        req.session.admin.images = response.Image
 
-      console.log(editproduct, '----------------------------------------------------------------');
        
       res.render('admin/edit-viewproduct',{ layout: "adminLayout" ,editproduct,procategory,admins});
   
@@ -70,6 +69,7 @@ getAddProduct: (req, res) =>{
   
   
   postEditAddProduct:(req,res) =>{
+    console.log(req.session.admin.images);
     console.log(req.files);
     adminProductHelpers.postEditProduct(req.params.id, req.body, req.files).then((response)=>{
      

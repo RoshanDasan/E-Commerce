@@ -19,77 +19,73 @@
               <div class="padding_eight_all bg-white">
                 <div class="heading_s1">
                   <h3 class="mb-30">Create an Account</h3>
-                </div>
-                <p class="mb-50 font-sm">
-                  Your personal data will be used to support your experience
-                  throughout this website, to manage access to your account, and
-                  for other purposes described in our privacy policy
-                </p>
-                <%if (emailStatus==false){%>
-                  <p style="color: red;" class="message">EmailId already exist </p>
-                  <%} %>
-                  
-                <form  action="/signup" method="post">
+          </div>
+        
+  
+                 
+                <form  action="/signup" method="post" id="form">
                   <div class="form-group">
                   
                     <input
                       type="text"
-                      required=""
                       name="username"
                       id="name"
-                      onkeyup=" validateName()"
+                      onkeyup="validateName()"
                       placeholder="Username"
                     />
-                    <span id="name-error" class="validation-label"></span>
+                  <span id="name-error" class="validation-label"></span>
+                    
                       
                   </div>
-                 
                   <div class="form-group">
                     <input
-                      type="text"
-                      required=""
+                      
                       name="email"
-                      onkeyup="validateEmail() "
                       id="email"
                       placeholder="Email"
+                      onkeyup="validateEmail()"
                     />
-                    <span id="email-error" class="validation-label"></span>
+                  <span id="email-error" class="validation-label"></span>
+
                   </div>
-       
                   <div class="form-group">
                     <input
                       type="number"
-                      required=""
-                      id="phone"
-                      onkeyup="validatePhone()"
                       name="phonenumber"
+                      id="phone"
                       placeholder="Phone Number"
+                      onkeyup="validatePhone()"
+
                     />
+                  <span id="phone-error" class="validation-label"></span>
+
                   </div>
-                  <span id="phone-error"></span>
                   <div class="form-group">
                     <input
-                      required=""
                       type="password"
-                      id="password"
-                      onkeyup="validatePassword()"
                       name="password"
+                      id="password"
                       placeholder="Password"
+                      onkeyup="validatePassword()"
+
+                      
                     />
-                   
+
+
                   </div>
-                  
                   <div class="form-group">
                     <input
                       required=""
                       type="password"
-                      name="cnfrmpassword"
-                      onkeyup="validatePassword()"
                       id="cnfrm-password"
+                      name="cnfrm-password"
                       placeholder="Confirm password"
+                      onkeyup="validatePassword()"
+
                     />
-                    <span id="pass-error" class="validation-label"></span>
-                  </div>
+                  <span id="pass-error" class="validation-label"></span>
+
+</div>
                   <div class="login_footer form-group">
                     <div class="chek-form">
                       <div class="custome-checkbox">
@@ -100,45 +96,30 @@
                           id="exampleCheckbox12"
                           value=""
                         />
-                        <label class="form-check-label" for="exampleCheckbox12"
-                          ><span>I agree to terms &amp; Policy.</span></label
-                        >
+                        
                       </div>
                     </div>
-                    <a href="page-privacy-policy.html"
-                      ><i class="fi-rs-book-alt mr-5 text-muted"></i>Lean
-                      more</a
-                    >
+                  
                       
                   </div>
+                  <span id="form-error" class="validation-label"></span>
+                  <br>
                   <div class="form-group d-flex justify-content-center">
                     <button
                       type="submit"
                       class="btn btn-fill-out btn-block hover-up"
                       name="login"
-                      onclick="return validateForm()"
+                      
                     >
-                      Submit &amp; Register
-                    </button>
+                    
+                    Submit &amp; Register
+                  </button>
                   </div>
                 </form>
                 <div class="divider-text-center mt-15 mb-15">
                   <span> or</span>
                 </div>
-                <ul class="btn-login list_none text-center mb-15">
-                  <li>
-                    <a
-                      href="#"
-                      class="btn btn-facebook hover-up mb-lg-0 mb-sm-4"
-                      >Login With Facebook</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#" class="btn btn-google hover-up"
-                      >Login With Google</a
-                    >
-                  </li>
-                </ul>
+                
                 <div class="text-muted text-center">
                   Already have an account ? <a href="/login"> Sign in now</a >
                 </div>
@@ -151,19 +132,13 @@
   </div>
 </section>
 </main>
-
-
-
-
-
-
-
 <script>
-
 var nameError = document.getElementById("name-error");
 var emailError = document.getElementById("email-error");
 var phoneError = document.getElementById("phone-error");
 let passError=document.getElementById("pass-error");
+let formError=document.getElementById("form-error");
+let form=document.getElementById('form')
 
 
 
@@ -229,6 +204,7 @@ function validatePhone(){
     phoneError.style.color = "red";
     phoneInput.style.border = "solid 2px red";
 
+
 return false;
   }
   phoneError.innerHTML = "";
@@ -245,14 +221,7 @@ let cnfrmPassword = document.getElementById("cnfrm-password").value;
 let cnfrmPasswordInput= document.getElementById("cnfrm-password")
 
     if(password.length != 0){
-        if(password == cnfrmPassword){
-            passError.innerHTML = "Passwords match";
-            passError.style.color = "green";
-            passwordInput.style.border = "solid 2px green";
-            cnfrmPasswordInput.style.border = "solid 2px green";
-            return true
-        }
-        else if (!password.match(/[a-zA-Z]/)) {
+         if (!password.match(/[a-zA-Z]/)) {
           passError.innerHTML = "Password must contain atleast 1 letter";
           passError.style.color = "red";
           passwordInput.style.border = "solid 2px red";
@@ -270,44 +239,36 @@ let cnfrmPasswordInput= document.getElementById("cnfrm-password")
           passwordInput.style.border = "solid 2px red";
           return false;
         }
-        else{
-            passError.innerHTML = "Password don't match";
-            passError.style.color = "red";
-            passwordInput.style.border = "solid 2px red";
-            return false
-
-
-        }
     }
     else{
         
         message.textContent = "";
     }
+     if(password == cnfrmPassword && password.length != 0){
+            passError.innerHTML = "Passwords match";
+            passError.style.color = "green";
+            passwordInput.style.border = "solid 2px green";
+            cnfrmPasswordInput.style.border = "solid 2px green";
+            return true
+        }
 }
-function validateForm() {
-  if (
-    !validateName() ||
-    !validateEmail()
-    
-  ) {
-    submitError.style.display = "block";
-    submitError.innerHTML = "Please fix all errors to submit.";
-    setTimeout(function () {
-      submitError.style.display = "none";
-    }, 3000);
-    return false;
-  }
-}
+form.addEventListener('submit',(event)=>
+  {
+    event.preventDefault();
+    if(!validateName() || !validateEmail() || !validatePhone() || !validatePassword())
+    {
+  Swal.fire({
+  icon: 'error',
+  title: 'Enter details correctly!!',
+  
+})
+      return false;
+    }
+    else
+    {
+      form.submit();
+    }
+  })
 
-  setTimeout(function() {
-    document.querySelector('.message').style.display = 'none';
-  }, 3000);
+
 </script>
-
-
-
-
-
-
-
-

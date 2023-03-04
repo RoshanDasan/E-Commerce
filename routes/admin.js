@@ -65,6 +65,16 @@ router.get("/generate_coupon",auths.auth,adminCouponController.generateCoupon);
 
 router.put('/orderStatus', adminproductcontroller.getEditOrderStatus)
 
+router.get("/add_banner",auths.auth, adminController.getAddBanner)
+
+router.post("/add_banner",upload.addBannerupload,auths.auth, adminController.postAddBanner)
+
+router.get("/list_banner",auths.auth, adminController.listBanner)
+
+router.get("/edit_banner",auths.auth, adminController.getEditBanner)
+
+router.post("/edit_banner",upload.editBannerupload,auths.auth, adminController.postEditBanner)
+
 router.get('/sales_report',adminController.getSalesReport)
 
 router.post('/sales_report', adminController.postSalesReport)

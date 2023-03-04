@@ -10,6 +10,18 @@
           <div class="search-style-2">
             
           </div>
+
+          <div class="header-right">
+            <div class="search-style-2">
+              <form action="/search" method="POST"  >
+               
+                <input type="text"  name="search"  id="keyword" placeholder="Search for items..." />
+  
+                <button type="submit"style="display: none;">Submit</button>
+  
+              </form>
+            </div>
+            
           <div class="header-action-right">
             <div class="header-action-2">
               <%if(locals.users){%>
@@ -26,7 +38,7 @@
                     alt="Evara"
                     src="assets/imgs/theme/icons/icon-heart.svg"
                   />
-                  <span class="pro-count blue" style="background-color: black;">0</span>
+                  <span class="pro-count blue" style="background-color: black;"><%=locals.wishcount%></span>
                 </a>
               </div>
               <div class="header-action-icon-2">
@@ -67,16 +79,7 @@
                 <li>
                   <a href="/shop">Shop <i class=""></i></a>
                 </li>
-                <li class="position-static">
-                  <a href="/order">Orders <i class=""></i></a>
-                </li>
-                <li>
-                  <a href="blog-category-grid.html">About <i class=""></i></a>
-                </li>
-
-                <li>
-                  <a href="page-contact.html">Contact</a>
-                </li>
+              
               </ul>
             </nav>
           </div>

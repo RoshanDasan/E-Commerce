@@ -128,9 +128,7 @@ module.exports = {
         },
       ]);
 
-      console.log(productdetails, "-----product");
-
-      console.log("-------", orderData);
+    
       let Address = await user.address.aggregate([
         { $match: { user: ObjectId(orderData.user) } },
 
@@ -146,9 +144,8 @@ module.exports = {
           },
         },
       ]);
-      console.log("-----address", Address);
       const items = Address.map((obj) => obj.item);
-      console.log(items[0], "item-----");
+
       let orderaddress = items[0];
       let status = orderData["payment-method"] === "COD" ? "placed" : "pending";
       let orderstatus =
@@ -164,7 +161,6 @@ module.exports = {
         totalPrice: total,
       };
 
-      console.log(orderdata);
 
       let order = await user.order.findOne({ user: orderData.user });
 
@@ -227,6 +223,7 @@ module.exports = {
           },
         ])
         .then((address) => {
+          console.log(address);
           resolve(address);
         });
     });
@@ -439,6 +436,43 @@ module.exports = {
 
       resolve({ products, address, details });
     });
+  },
+
+  productSearch: (searchData) => {
+    let keyword=searchData.search
+    console.log(keyword);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const products = await user.product.find( { Productname: { $regex:new RegExp(keyword,'i')}});
+
+        if (products.length > 0) {
+        console.log(products);
+          resolve(products);
+        } else {
+          reject('No products found.');
+        }
+      } catch (err) {
+        console.log(err);
+        reject(err);
+      }
+    });
+  },
+
+  postSort: (sortOption) => {
+    return new Promise(async (resolve, reject) => {
+      let products;
+      if (sortOption === 'price-low-to-high') {
+
+        products = await user.product.find().sort({ Price: 1 }).exec();
+      } else if (sortOption === 'price-high-to-low') {
+
+        products = await user.product.find().sort({ Price: -1 }).exec();
+      } else {
+        products = await user.product.find().exec();
+      }
+      resolve(products)
+    })
+
   },
 
   createData:(details)=>

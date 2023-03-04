@@ -31,7 +31,6 @@ module.exports = {
     ) {
       req.session.adminloggedIn = true;
 
-      let adminstatus = req.session.adminloggedIn;
 
       req.session.admin = adminCredential;
 
@@ -63,7 +62,7 @@ module.exports = {
     });
 
     await adminHelper.getOrderByDate().then((response) => {
-      let result = response[0].orders;
+      const result = response[0].orders;
       for (let i = 0; i < result.length; i++) {
         let ans = {};
         ans["createdAt"] = result[i].createdAt;
@@ -131,6 +130,60 @@ module.exports = {
     });
   },
 
+  getAddBanner: (req, res) => {
+    admins = req.session.admin;
+
+    res.render('admin/add-banner', { layout: 'adminLayout',admins })
+  },
+  postAddBanner: (req, res) => {
+
+    adminHelper.addBanner(req.body, req.file.filename).then((response) => {
+
+      res.redirect('/admin/add_banner')
+
+    })
+  },
+
+  //edit banner
+
+  listBanner: (req, res) => {
+
+    adminHelper.listBanner().then((response) => {
+
+      let admins=req.session.admin
+
+      res.render('admin/list-banner', { layout: 'adminLayout', response ,admins})
+
+    })
+
+  },
+
+  //edit banner
+
+
+  getEditBanner: (req, res) => {
+
+    adminHelper.editBanner(req.query.banner).then((response) => {
+      let admins=req.session.admin
+     
+      res.render('admin/edit-banner', { layout: 'adminLayout', response, admins })
+
+    })
+
+  },
+
+  // post edit banner 
+
+
+  postEditBanner: (req, res) => {
+
+    adminHelper.postEditBanner(req.query.editbanner, req.body,req?.file?.filename).then((response) => {
+ res.redirect('/admin/list_banner')
+
+    })
+  },
+
+
   //admin logout
 
   getAdminLogOut: (req, res) => {
@@ -158,15 +211,13 @@ module.exports = {
 
   postSalesReport:(req, res)=>
   {
-    let Detail = [];
     let Details = [];
 
 
     adminHelper.postReport(req.body).then((orderdata)=>
     {
 
-      orderdata.forEach(orders => {Detail.push( orders.orders)})
-      Details = Detail
+      orderdata.forEach(orders => {Details.push( orders.orders)})
 
       res.render('admin/sales-report',{layout: "adminLayout", admins,Details})
     })

@@ -9,12 +9,15 @@
           enctype="multipart/form-data"
         >
           <label for="">Prodcut Name</label>
-          <input type="text" name="name" class="form-control" />
-          <label for="">Description</label>
-          <input type="text" name="description" class="form-control" />
+          <input type="text" name="name" id="name" value="" class="form-control"onkeyup="validateName()" required=""  />
+          <span id="name-error" class="validation-label"></span>
+          <br>
+          <input type="text" name="description" id="discription" class="form-control" onkeyup="validateDiscription()" required=""/>
+          <span id="discription-error" class="validation-label"></span>
+          <br>
 
           <label for="">Price</label>
-          <input type="text" name="price" class="form-control" />
+          <input type="text" name="price" value="1" class="form-control" />
 
           <label for="">Category</label>
           
@@ -25,7 +28,7 @@
           </select>
           
           <label for="">Quantity</label>
-          <input type="text" name="quantity" class="form-control" />
+          <input type="text" name="quantity" value="1" class="form-control" />
 
           <label for="">Image1</label>
           <input type="file" name="file" class="form-control"  />
@@ -47,3 +50,51 @@
     </div>
   </div>
 </section>
+
+<script>
+  let nameError = document.getElementById("name-error");
+  let discritionError = document.getElementById("discription-error");
+  const regex = /^[^ ].*/
+  function validateName() {
+    var name = document.getElementById("name").value;
+    var nameInput = document.getElementById("name");
+  console.log(name);
+    if (name.length == 0) {
+      nameError.innerHTML = "Name is required";
+      nameError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    } if (!name.match(regex)) {
+      nameError.innerHTML = "Write valid name";
+      nameError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    }
+    nameError.innerHTML = "";
+    nameError.style.color = "green";
+    nameInput.style.border = "solid 2px green";
+    return true;
+  }
+
+
+  function validateDiscription() {
+    var name = document.getElementById("discription").value;
+    var nameInput = document.getElementById("discription");
+  console.log(name);
+    if (name.length == 0) {
+      discritionError.innerHTML = "Discription is required";
+      discritionError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    } if (!name.match(regex)) {
+      discritionError.innerHTML = "Write valid discription";
+      discritionError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    }
+    discritionError.innerHTML = "";
+    discritionError.style.color = "green";
+    nameInput.style.border = "solid 2px green";
+    return true;
+  }
+  </script>

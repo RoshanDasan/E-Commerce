@@ -1,43 +1,110 @@
 
-    <style>
-      body {
-        text-align: center;
-        /* padding: 40px 0; */
-        background: #EBF0F5;
-      }
-        h1 {
-          color: #88B04B;
-          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-          font-weight: 900;
-          font-size: 40px;
-          margin-bottom: 10px;
-        }
-        p {
-          color: #404F5E;
-          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-          font-size:20px;
-          margin: 0;
-        }
-      i {
-        color: #9ABC66;
-        line-height: 200px;
-        margin-left:-15px;
-      }
-      .card {
-        background: white;
-        padding: 60px;
-        border-radius: 4px;
-        
-        display: inline-block;
-        margin: 0 auto;
-      }
-    </style>
-    <body>
-      <div class="card">
-      <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
-        <i class="checkmark">✓</i>
-      </div>
-        <h1>Success</h1> 
-        <p>We received your purchase request;<br/> we'll be in touch shortly!</p>
-      </div>
-    </body>
+<body>
+	<div class="container">
+		<h1>Thank You for Your Order!</h1>
+		<p>Your order has been received and will be processed shortly.</p>
+		<div class="order-details">
+			<h2>Order Details</h2>
+			<table>
+				<tr>
+					<td>Order Number:</td>
+					<td>#123456</td>
+				</tr>
+				<tr>
+					<td>Order Date:</td>
+					<td>March 2, 2023</td>
+				</tr>
+				<tr>
+					<td>Shipping Address:</td>
+					<td>John Doe<br>123 Main Street<br>Anytown, USA 12345</td>
+				</tr>
+				<tr>
+					<td>Payment Method:</td>
+					<td>Visa ending in 1234</td>
+				</tr>
+			</table>
+		</div>
+		<div class="cta">
+			<a href="#" class="button">Continue Shopping</a>
+		</div>
+	</div>
+</body>
+
+
+<style>
+
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f7f7f7;
+}
+
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 50px;
+	background-color: #fff;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+	text-align: center;
+}
+
+h1 {
+	margin-top: 0;
+	font-size: 36px;
+	color: #2e2e2e;
+}
+
+p {
+	font-size: 18px;
+	color: #666;
+	margin-bottom: 30px;
+}
+
+.order-details {
+	border-top: 1px solid #ddd;
+	margin-top: 30px;
+	padding-top: 30px;
+}
+
+h2 {
+	font-size: 24px;
+	color: #2e2e2e;
+	margin-bottom: 20px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+td {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+td:first-child {
+	width: 200px;
+	font-weight: bold;
+	color: #666;
+}
+
+.cta {
+	margin-top: 50px;
+}
+
+.button {
+	display: inline-block;
+	padding: 12px 30px;
+	background-color: #4CAF50;
+	color: #fff;
+	font-size: 18px;
+	border-radius: 5px;
+	text-decoration: none;
+	transition: background-color 0.2s ease;
+}
+
+.button:hover {
+	background-color: #3e8e41;
+}
+
+</style>

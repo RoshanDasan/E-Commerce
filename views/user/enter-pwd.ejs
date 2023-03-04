@@ -18,7 +18,7 @@
                 class="form-control" 
                 name="password" 
                 placeholder="Enter Your Old password"
-                required="">
+                >
               </div>
               <div class="mb-3">
                 <label for="pwd" class="form-label">New Pasword</label>
@@ -29,7 +29,7 @@
                 name="password2" 
                 placeholder="Enter Your New password"
                 onkeyup="validatePassword()"
-                  required="">
+                 >
                   <span id="pass-error" class="validation-label"></span>
 
               </div>
@@ -41,14 +41,14 @@
                 class="form-control" 
                 name="cnfrm-password" 
                 placeholder="Re Enter Your New password"
-                onkeyup="validatePassword()"
-                  required="">
+                onkeyup="validateRePassword()"
+                >
                   <span id="pass-error" class="validation-label"></span>
 
               </div>
               <div class="mb-3 d-grid">
                 <!-- return validateForm(); validatePassword()-->
-                <button onclick="return validateForm(); newPassword('<%=locals.user%>');" class="btn btn-primary">Click me</button>
+                <button type="submit" onclick=" newPassword('<%=locals.user%>');" class="btn btn-primary" >Click me</button>
                   Reset Password
                 </button>
               </div>
@@ -68,10 +68,24 @@
         method: "PUT",
         data:$('#update').serialize(),
         success: (response) => {
+          console.log(response);
           if(response){
-            
-            location.href=`/profile/${profileId}`
-          }
+                Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Your password has been updated',
+  showConfirmButton: false,
+  timer: 1500
+})
+// location.href="/profile"
+            }
+            else{
+                Swal.fire({
+  icon: 'error',
+  title: 'Enter old password correctly!!',
+  
+})
+            }
         },
         });
     })
@@ -80,67 +94,17 @@
 
 <script>
 let passError=document.getElementById("pass-error");
+let form = document.getElementById('update')
 function validatePassword(){
-    
-    // let password = document.getElementById("pwd2").value;
-    // let passwordInput = document.getElementById("pwd2")
-    // let oldpassword = document.getElementById("pwd").value;
-    // let oldpasswordinput= document.getElementById("pwd")
-    // let cnfrmPassword = document.getElementById("cnfrm-password").value;
-    // let cnfrmPasswordInput= document.getElementById("cnfrm-password")
-    
-    //     if(password.length != 0){
-    //         if(password == oldpassword){
-    //             passError.innerHTML = "Please enter different password";
-    //             passError.style.color = "red";
-    //             passwordInput.style.border = "solid 2px red";
-    //             cnfrmPasswordInput.style.border = "solid 2px red";
-    //             return false
-    //         }
-    //         else if (!password.match(/[a-zA-Z]/)) {
-    //           passError.innerHTML = "Password must contain atleast 1 letter";
-    //           passError.style.color = "red";
-    //           passwordInput.style.border = "solid 2px red";
-    //           return false;
-    //         }
-    //         else if (!password.match(/^.{8,}$/)) {
-    //           passError.innerHTML = "Password min-length 8";
-    //           passError.style.color = "red";
-    //           passwordInput.style.border = "solid 2px red";
-    //           return false;
-    //         }
-    //         else if (!password.match(/^(?=.*[\W_])[\w\W]/)) {
-    //           passError.innerHTML = "Password must contain atleast one special character";
-    //           passError.style.color = "red";
-    //           passwordInput.style.border = "solid 2px red";
-    //           return false;
-    //         }
-    //         else{
-    //             return true
-    
-    
-    //         }
-    //     }
-    //     else{
-            
-    //         message.textContent = "";
-    //     }
-
-    
+     
     let password = document.getElementById("password2").value;
     let passwordInput = document.getElementById("password2")
     let cnfrmPassword = document.getElementById("cnfrm-password").value;
     let cnfrmPasswordInput= document.getElementById("cnfrm-password")
     
         if(password.length != 0){
-            if(password == cnfrmPassword){
-                passError.innerHTML = "Passwords match";
-                passError.style.color = "green";
-                passwordInput.style.border = "solid 2px green";
-                cnfrmPasswordInput.style.border = "solid 2px green";
-                return true
-            }
-            else if (!password.match(/[a-zA-Z]/)) {
+           
+            if (!password.match(/[a-zA-Z]/)) {
               passError.innerHTML = "Password must contain atleast 1 letter";
               passError.style.color = "red";
               passwordInput.style.border = "solid 2px red";
@@ -166,23 +130,56 @@ function validatePassword(){
     
     
             }
+              passError.innerHTML = "match";
+              passError.style.color = "green";
+              passwordInput.style.border = "solid 2px green";
+              return true
         }
         else{
             
-            message.textContent = "";
+              message.textContent = "";
+            return false
         }
     
     }
-    function validateForm() {
-  if (
-    !validatePassword
-  ) {
-    submitError.style.display = "block";
-    submitError.innerHTML = "Please fix all errors to submit.";
-    setTimeout(function () {
-      submitError.style.display = "none";
-    }, 3000);
-    return false;
-  }
-}
+
+    function validateRePassword()
+    {
+    let password = document.getElementById("password2").value;
+    let passwordInput = document.getElementById("password2")
+    let cnfrmPassword = document.getElementById("cnfrm-password").value;
+    let cnfrmPasswordInput= document.getElementById("cnfrm-password")
+
+    if(password.length != 0)
+    {
+      if(password == cnfrmPassword)
+      {
+        passError.innerHTML = "match";
+              passError.style.color = "green";
+              passwordInput.style.border = "solid 2px green";
+        return true
+      }
+      else
+      {
+        passError.innerHTML = "Password don't match";
+                passError.style.color = "red";
+                passwordInput.style.border = "solid 2px red";
+        return false
+      }
+    }
+    }
+    
+
+   form.addEventListener('submit',(event)=>
+  {
+    event.preventDefault();
+    if(!validatePassword())
+    {
+      return false;
+    }
+    else
+    {
+      form.submit();
+    }
+  })
 </script>

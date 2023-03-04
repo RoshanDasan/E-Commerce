@@ -75,7 +75,6 @@ module.exports = {
     // console.log(filename);
     return new Promise(async (resolve, reject) => {
       let image = filename.map((filename) => filename.filename);
-      console.log(image);
       await user.product
         .updateOne(
           { _id: productId },
@@ -119,7 +118,7 @@ module.exports = {
             $unwind: "$orders",
           },
           {
-            $sort: { "orders:createdAt": -1 },
+            $sort: { "orders.createdAt": -1 },
           },
           {
             $project: {
@@ -184,6 +183,70 @@ module.exports = {
     });
   },
 
+  addBanner: (texts, Image) => {
+
+    return new Promise(async (resolve, reject) => {
+
+      let banner = user.banner({
+        title: texts.title,
+        description: texts.description,
+        link: texts.link,
+        image: Image
+
+      })
+      await banner.save().then((response) => {
+        resolve(response)
+      })
+    })
+  },
+
+  /// list banner
+  listBanner: () => {
+
+    return new Promise(async (resolve, reject) => {
+      await user.banner.find().exec().then((response) => {
+        resolve(response)
+      })
+    })
+  },
+
+  // edit banner
+
+  editBanner: (bannerId) => {
+
+    return new Promise(async (resolve, reject) => {
+
+      let bannerid = await user.banner.findOne({ _id: bannerId }).then((response) => {
+        resolve(response)
+      })
+
+    })
+
+  },
+
+  //post edit banner
+
+  postEditBanner: (bannerid, texts, Image) => {
+
+    return new Promise(async (resolve, reject) => {
+
+      let response = await user.banner.updateOne({ _id: bannerid },
+        {
+          $set: {
+
+            title: texts.title,
+            description: texts.description,
+            // created_at: updated_at,
+            link: texts.link,
+            image: Image
+          }
+
+        })
+      resolve(response)
+    })
+
+  },
+
   getCodCount: () => {
     return new Promise(async (resolve, reject) => {
       let response = await user.order.aggregate([
@@ -233,10 +296,10 @@ module.exports = {
   },
   postReport: (date) => {
     let start = new Date(date.startdate);
-let end = new Date(date.enddate);
+  let end = new Date(date.enddate);
 
-return new Promise(async(resolve, reject) => {
- await user.order.aggregate([
+  return new Promise(async(resolve, reject) => {
+  await user.order.aggregate([
   {
     $unwind: "$orders",
   },

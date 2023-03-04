@@ -111,6 +111,18 @@
                             <% })  %>
                              
                           </ul>
+
+                          <form id="sort-form" method="POST" action="/sort">
+                            <div class="sort-container">
+                              <label for="sort-select">Sort by:</label>
+                              <select id="sort-select" name="selectedValue" onchange="this.form.submit()">
+                                <option value=""><a href="#">Price:</a></option>
+
+                                <option value="price-low-to-high"><a href="#">Price: Low to High</a></option>
+                                <option  value="price-high-to-low"><a href="#">Price: High to Low</a></option>
+                              </select>
+                            </div>
+                          </form>
                       </div>
           
                   </div>
