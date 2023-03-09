@@ -9,7 +9,7 @@ const adminCouponController = require('../controllers/admincontroller/adminCoupo
 var router = express.Router();
 const user = require("../models/connection");
 const multer= require('multer');
-const { doLogin } = require("../helpers/UserHelpers/UserHelpers");
+const { doLogin } = require("../helpers/UserHelpers/userRegisterHelper");
 const upload=require('../multer/multer')
 const auths=require('../middlewares/middleware')
 

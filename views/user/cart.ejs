@@ -31,7 +31,8 @@
                                   
                                       <th scope="col">Image</th>
                                       <th scope="col">Name</th>
-                                      <th scope="col">Price</th>
+                                      <th scope="col">Original Price</th>
+                                      <th scope="col">Offer Price</th>
                                       <th scope="col">Quantity</th>
                                       <th scope="col">Subtotal</th>
                                       <th scope="col">Remove</th>
@@ -40,7 +41,7 @@
                            
                               <tbody>
                                   
-                                  <% cartItems?.forEach(function(cartItems){%>
+                                  <% cartItems?.forEach(function(cartItems, count=0){%>
                                     
                                   <tr>
                                  
@@ -53,6 +54,7 @@
                                          
                                       </td>
                                       <td class="price" cartItemss-title="Price"><span><%=cartItems.carted.Price%> </span></td>
+                                      <td class="price" cartItemss-title="Price"><span><%=cartItems.carted.offerPrice%> </span></td>
                                       <td class="text-center" cartItemss-title="Stock">
 
                                           <div class="detail-qty border radius  m-auto">
@@ -62,10 +64,15 @@
                                           </div>
                                       </td>
                                       <td class="text-right" cartItemss-title="total">
-                                          
+                                
+
+                                        <%=subtotal[count].total%>
+                                       
+                                     
+
                                       </td>
                                       <!-- <td class="action" cartItemss-title="Remove"><a href="#" class="text-muted"><i class="fi-rs-trash"></i></a></td> -->
-                                      <td class="action" cartItemss-title="Remove"><button class="text-muted" onclick="return removeCart(this),removeItem('<%=cartItems._id%>','<%=cartItems.item %>')"><i class="fi-rs-trash"></i></button></td>
+                                      <td class="action" cartItemss-title="Remove"><button class="text-muted" onclick="removeItem('<%=cartItems._id%>','<%=cartItems.item %>')"><i class="fi-rs-trash"></i></button></td>
                                     
                                   </tr>
                                   
@@ -85,11 +92,7 @@
                       
                         <div class="row mb-50">
                             <div class="col-lg-6 col-md-12">
-                               
-                                <% subtotal?.forEach(function(subtotal){%>
-                                    <span><%=subtotal.total%> </span>
-                                  
-                                    <%}) %>
+                            
                                 
                                 <div class="mb-30 mt-50">
                                     <div class="heading_s1 mb-3">
@@ -205,6 +208,18 @@
 
 
 function removeItem(cartId, prodId) {
+  event.preventDefault()
+     Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!',
+  timer: 3000 
+}).then((result) => {
+  if (result.isConfirmed) {
     $.ajax({
           url: '/delete_cart_item',
           data: {
@@ -218,34 +233,16 @@ function removeItem(cartId, prodId) {
             }    
           }
         })
-}
-
-
-
-function removeCart(form)
-{
-    event.preventDefault()
-     Swal.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!',
-  timer: 3000 
-}).then((result) => {
-  if (result.isConfirmed) {
-    form.submit()
-    // Swal.fire(
-    //   'Deleted!',
-    //   'Your file has been deleted.',
-    //   'success'
-    // )
+ 
   }
 })
 return false
+   
 }
+
+
+
+
 
 
 

@@ -67,10 +67,20 @@ const categorySchema= new mongoose.Schema({
      
     },
     Price:{
-  type:Number
+    type:Number
     },
     category:{
       type:String
+    },
+    offerPrice:{
+      type:Number,
+      default: function() {
+        return this.Price - (this.Price * this.offerPercentage / 100);
+      }
+    },
+    offerPercentage:{
+      type:Number,
+      default:0
     }
     
 

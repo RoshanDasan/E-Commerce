@@ -1,6 +1,4 @@
 const user = require("../../models/connection");
-const multer = require("multer");
-const { response } = require("../../app");
 
 module.exports = {
   //get user

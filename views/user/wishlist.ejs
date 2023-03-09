@@ -2,6 +2,7 @@
 <main class="main">
     <section class="mt-50 mb-50">
         <div class="container">
+         
 
           <% if (wishcount==0) { %>
 
@@ -20,6 +21,10 @@
 </html>
 
           <% } else { %>
+
+
+
+
             <div class="row">
               <div class="col-12">
                   <div class="table-responsive">
@@ -27,9 +32,10 @@
                           <thead>
                               <tr class="main-heading">
                                   <th scope="col" colspan="2">Product</th>
-                                  <th scope="col">Price</th>
-                                  <th scope="col">Action</th>
-                                  <th scope="col">Remove</th>
+                                  <th scope="col">Original Price</th>
+                                  <th scope="col">Offer Price</th>
+                                  <th scope="col"></th>
+                                  <th scope="col"></th>
                               </tr>
                           </thead>
                           <tbody>
@@ -40,9 +46,24 @@
                                       <h5 class="product-name"><a href="shop-product-right.html"><%=wishlistItems.wishlistItems.Productname%></a></h5>
                                   </td>
                                   <td class="price" data-title="Price"><span><%=wishlistItems.wishlistItems.Price%></span></td>
+
+                                  <td class="price" data-title="Price"><span><%=wishlistItems.wishlistItems.offerPrice%></span></td>
                                   
                                   <td class="text-right" data-title="Cart">
-                                      <button class="btn btn-sm"><i class="fi-rs-shopping-bag mr-5"></i>Add to cart</button>
+
+                                    <% if (wishlistItems.wishlistItems.Quantity === 0) { %>
+                                      <p class="text-danger">Item currently out of stock</p>
+                                    <% } else { %>
+                                      <button type="button" aria-label="Add To Cart" class="action-btn btn-dark hover-up round-black-btn small-btn"  onclick="addtocart('<%-wishlistItems._id%>'),Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Item Added Successfully To Cart',
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                      })" >  Add to cart </button> 
+                                    <% } %>
+                                    
+                                    
                                   </td>
                                   <td class="action" data-title="Remove"><a onclick="removeWishList('<%=wishlistItems._id%>','<%=wishlistItems.wishlistItems._id%>')"><i class="fi-rs-trash"></i></a></td>
                               </tr>
@@ -96,4 +117,166 @@
     });
   }
 
+  
+  function addtocart(proId) {
+
+$.ajax({
+          url: '/add-to-cart/'+proId,
+          method: 'GET',
+          success: (response) => {
+            if(response.status){
+                console.log(response.status);
+                location.reload()      
+            }
+            
+          }
+    
+})
+
+
+}
+
 </script>
+
+<style>
+  .cart-wrap {
+	padding: 40px 0;
+	font-family: 'Open Sans', sans-serif;
+}
+.main-heading {
+	font-size: 19px;
+	margin-bottom: 20px;
+}
+.table-wishlist table {
+    width: 100%;
+}
+.table-wishlist thead {
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 5px;
+}
+.table-wishlist thead tr th {
+    padding: 8px 0 18px;
+    color: #484848;
+    font-size: 15px;
+    font-weight: 400;
+}
+.table-wishlist tr td {
+    padding: 25px 0;
+    vertical-align: middle;
+}
+.table-wishlist tr td .img-product {
+    width: 72px;
+    float: left;
+    margin-left: 8px;
+    margin-right: 31px;
+    line-height: 63px;
+}
+.table-wishlist tr td .img-product img {
+	width: 100%;
+}
+.table-wishlist tr td .name-product {
+    font-size: 15px;
+    color: #484848;
+    padding-top: 8px;
+    line-height: 24px;
+    width: 50%;
+}
+.table-wishlist tr td.price {
+    font-weight: 600;
+}
+.table-wishlist tr td .quanlity {
+    position: relative;
+}
+
+.total {
+	font-size: 24px;
+	font-weight: 600;
+	color: #8660e9;
+}
+.display-flex {
+	display: flex;
+}
+.align-center {
+	align-items: center;
+}
+.round-black-btn {
+	border-radius: 25px;
+    background: #212529;
+    color: #fff;
+    padding: 5px 20px;
+    display: inline-block;
+    border: solid 2px #212529; 
+    transition: all 0.5s ease-in-out 0s;
+    cursor: pointer;
+    font-size: 14px;
+}
+.round-black-btn:hover,
+.round-black-btn:focus {
+	background: transparent;
+	color: #212529;
+	text-decoration: none;
+}
+.mb-10 {
+    margin-bottom: 10px !important;
+}
+.mt-30 {
+    margin-top: 30px !important;
+}
+.d-block {
+    display: block;
+}
+.custom-form label {
+    font-size: 14px;
+    line-height: 14px;
+}
+.pretty.p-default {
+    margin-bottom: 15px;
+}
+.pretty input:checked~.state.p-primary-o label:before, 
+.pretty.p-toggle .state.p-primary-o label:before {
+    border-color: #8660e9;
+}
+.pretty.p-default:not(.p-fill) input:checked~.state.p-primary-o label:after {
+    background-color: #8660e9 !important;
+}
+.main-heading.border-b {
+    border-bottom: solid 1px #ededed;
+    padding-bottom: 15px;
+    margin-bottom: 20px !important;
+}
+.custom-form .pretty .state label {
+    padding-left: 6px;
+}
+.custom-form .pretty .state label:before {
+    top: 1px;
+}
+.custom-form .pretty .state label:after {
+    top: 1px;
+}
+.custom-form .form-control {
+    font-size: 14px;
+    height: 38px;
+}
+.custom-form .form-control:focus {
+    box-shadow: none;
+}
+.custom-form textarea.form-control {
+    height: auto;
+}
+.mt-40 {
+    margin-top: 40px !important; 
+}
+.in-stock-box {
+	background: #ff0000;
+	font-size: 12px;
+	text-align: center;
+	border-radius: 25px;
+	padding: 4px 15px;
+	display: inline-block;  
+    color: #fff;
+}
+.trash-icon {
+    font-size: 20px;
+    color: #212529;
+}
+</style>

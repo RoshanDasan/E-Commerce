@@ -9,30 +9,30 @@
                     </div>
                     <form  action="" id="checkout-form">
                         <div class="form-group">
-                            <input type="text" required="" name="fname" placeholder="First name *">
+                            <input type="text" required="true" name="fname" placeholder="First name *">
                         </div>
                        
                         <div class="form-group">
-                            <input required="" type="text" name="street" placeholder="Street Name">
+                            <input required="true" type="text" name="street" placeholder="Street Name">
                         </div>
                         
                         <div class="form-group">
-                            <input type="text" name="apartment" required="" placeholder="Apartment *">
+                            <input type="text" name="apartment" required="true" placeholder="Apartment *">
                         </div>
                         <div class="form-group">
-                            <input type="text" name="city" required="" placeholder="City">
+                            <input type="text" name="city" required="true" placeholder="City">
                         </div>
                         <div class="form-group">
-                            <input required="" type="text" name="state" placeholder="State">
+                            <input required="true" type="text" name="state" placeholder="State">
                         </div>
                         <div class="form-group">
-                            <input required="" type="text" name="pincode" placeholder="Pincode">
+                            <input required="true" type="text" name="pincode" placeholder="Pincode">
                         </div>
                         <div class="form-group">
-                            <input required="" type="text" name="mobile" placeholder="Mobile">
+                            <input required="true" type="text" name="mobile" placeholder="Mobile">
                         </div>
                         <div class="form-group">
-                            <input required="" type="text" name="email" placeholder="email">
+                            <input required="true" type="text" name="email" placeholder="email">
                         </div>
                         <div class="form-group">
                             <input   name="userId"  value="<%= user.id%>"  type="hidden"  >
@@ -40,7 +40,13 @@
                         
                         <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                        
-                    <button type="submit" class="btn btn-dark">Add address </button> <span><a href="/profile" class="btn btn-primary">cancel</a></span>
+                    <button type="submit" class="btn btn-dark" onclick="Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Item Added Successfully To Cart',
+                        showConfirmButton: false,
+                        timer: 2000
+                      })">Add address </button> <span><a href="/profile" class="btn btn-primary">cancel</a></span>
                     </form>
                     
                 </div>

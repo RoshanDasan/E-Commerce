@@ -1,30 +1,44 @@
-<h1>address</h1>
+<h1 class="text-center m-5">Your Address</h1>
+
+<% if (addressLength == 0) { %>
+    <div class="text-center " style="margin-top: 5rem; margin-bottom: 5rem;">
+       
+        <h5>No Address added yet</h5>
+      
+        <a href="/add_address" class="btn btn-dark m-4">Add an Address now</a>
+
+      </div>
+    <%} else { %>
+   
+           
 <% response.forEach(function(response) { %>
-<div class="col-md-6 container">
-    <div class="order_review">
-        <div class="mb-20">
+    <div class="col-md-6 container">
+        <div class="order_review">
+            <div class="mb-20">
+        
     
-
-                <h4><%=response.item.fname%>:<%=response.item.lname%></h4>
-                <h5><%=response.item.street%></h6>
-                    <h5><%=response.item.apartment%></h6>
-                        <h5><%=response.item.city%></h5>
-                        <h5><%=response.item.state%></h5>
-                        <h5><%=response.item.pincode%></h5>
-                    <h5><%=response.item.mobile%></h5>
-                    <h5><%=response.item.email%></h5>
-
-
-            <button class="btn" onclick="deleteAddress('<%=response._id%>','<%=response.item._id%>')">Delete</button>       
+                    <h4><%=response.item.fname%>:<%=response.item.lname%></h4>
+                    <h5><%=response.item.street%></h6>
+                        <h5><%=response.item.apartment%></h6>
+                            <h5><%=response.item.city%></h5>
+                            <h5><%=response.item.state%></h5>
+                            <h5><%=response.item.pincode%></h5>
+                        <h5><%=response.item.mobile%></h5>
+                        <h5><%=response.item.email%></h5>
+    
+    
+                <button class="btn mt-4" onclick="deleteAddress('<%=response._id%>','<%=response.item._id%>')">Delete This Address</button>       
+            </div>
+            
+            
         </div>
-        
-        
     </div>
-</div>
-<br>
-<% }) %> 
-
-
+    <br>
+    <% }) %> 
+    
+    
+    <% } %>
+ 
 
 <script>
     

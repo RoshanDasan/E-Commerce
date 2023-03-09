@@ -24,30 +24,33 @@
           <label for="">Quantity</label>
           <input type="text" name="quantity" class="form-control" value="<%=editproduct.Quantity%>" />
 
+          <label for="">Give an offer for this product</label>
+          <input type="text" name="offer" class="form-control" value="<%=editproduct.offerPercentage%>" />
+
           
           <label for="">Image 1</label>
           <br>
           <img src="/uploads/<%=editproduct.Image[0]%>"  alt="" style="width:100px;height:auto">
           <br>
-          <input type="file" name="file1" class="form-control" value="<%=editproduct.Image[0]%>"/>
+          <input type="file" name="file1" class="form-control" />
 
           <label for="">Image 2</label>
           <br>
           <img src="/uploads/<%=editproduct.Image[1]%>" alt="" style="width:100px;height:auto">
           <br>
-          <input type="file" name="file2" class="form-control" value="" />
+          <input type="file" name="file1" class="form-control" />
 
           <label for="">Image</label>
           <br>
           <img src="/uploads/<%=editproduct.Image[2]%>" alt="" style="width:100px;height:auto">
           <br>
-          <input type="file" name="file3" class="form-control"/>
+          <input type="file" name="file1" class="form-control"/>
 
           <label for="">Image</label>
           <br>
           <img src="/uploads/<%=editproduct.Image[3]%>" alt="" style="width:100px;height:auto">
           <br>
-          <input type="file" name="file4" class="form-control"/>
+          <input type="file" name="file1" class="form-control"/>
 
           <button type="submit" class="btn btn-success mt-4">Submit</button>
         </form>

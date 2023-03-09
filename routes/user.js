@@ -1,5 +1,4 @@
 var express = require("express");
-const usercontroller = require("../controllers/usercontroller/usercontroller");
 var router = express.Router();
 const controllers=require('../controllers/usercontroller/usercontroller')
 const auths=require('../middlewares/middleware')
@@ -51,7 +50,7 @@ router.delete("/wishlist",controllers.deleteFromWishlist)
 
 router.put('/change_product_quantity', auths.userauth, controllers.postchangeProductQuantity)
 
-router.get("/check_out",auths.userauth,controllers.checkOutPage)  
+router.get("/check_out",auths.userauth,controllers.checkOutPage) 
 
 router.post('/check_out',controllers.postcheckOutPage)
 

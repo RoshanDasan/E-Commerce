@@ -7,6 +7,7 @@
           action="/admin/add_product"
           method="POST"
           enctype="multipart/form-data"
+          id="myform"
         >
           <label for="">Prodcut Name</label>
           <input type="text" name="name" id="name" value="" class="form-control"onkeyup="validateName()" required=""  />
@@ -54,7 +55,10 @@
 <script>
   let nameError = document.getElementById("name-error");
   let discritionError = document.getElementById("discription-error");
+  let myform = document.getElementById('myform');
   const regex = /^[^ ].*/
+
+
   function validateName() {
     var name = document.getElementById("name").value;
     var nameInput = document.getElementById("name");
@@ -97,4 +101,18 @@
     nameInput.style.border = "solid 2px green";
     return true;
   }
+
+  myform.addEventListener('submit',(event)=>
+  {
+    event.preventDefault();
+    
+    if(!validateName() || !validateDiscription())
+    {
+      return false;
+    }
+    else
+    {
+      myform.submit();
+    }
+  })
   </script>

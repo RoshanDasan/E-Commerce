@@ -42,7 +42,7 @@ const editBanner = multer.diskStorage({
 
 module.exports={
     uploads:multer({storage:Storage}).array('file', 4),
-    editeduploads:multer({storage:editedStorage}).array(['file1','file2','file3','file4'], 4),
+    editeduploads:multer({storage:editedStorage}).array('file1', 4),
     addBannerupload:multer({storage:addBanner}).single('image'),
     editBannerupload:multer({storage:editBanner}).single('image1'),
 

@@ -1,7 +1,4 @@
 const user = require("../../models/connection");
-const multer = require("multer");
-const { response } = require("../../app");
-const { category } = require("../UserHelpers/UserHelpers");
 
 module.exports = {
   //add category
@@ -9,7 +6,6 @@ module.exports = {
   addCategory: (data) => {
     return new Promise(async (resolve, reject) => {
 
-      console.log(data);
 
       let cat = await user.category.findOne({ CategoryName: data.categoryname });
 
