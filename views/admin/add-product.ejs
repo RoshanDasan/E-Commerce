@@ -29,19 +29,22 @@
           </select>
           
           <label for="">Quantity</label>
-          <input type="text" name="quantity" value="1" class="form-control" />
+          <input type="text" name="quantity" value="1" class="form-control" required/      
+          oninvalid="this.setCustomValidity('Please select an image file.')"
+          onchange="this.setCustomValidity('')">
+
 
           <label for="">Image1</label>
-          <input type="file" name="file" class="form-control"  />
+          <input type="file" name="file" class="form-control" accept="image/*"  required/>
 
-          <label for="">Image2</label>
-          <input type="file" name="file" class="form-control" />
+          <!-- <label for="">Image2</label>
+          <input type="file" name="file" class="form-control" accept="image/*" required/>
 
           <label for="">Image3</label>
-          <input type="file" name="file" class="form-control" />
+          <input type="file" name="file" class="form-control" accept="image/*" required/>
 
           <label for="">Image4</label>
-          <input type="file" name="file" class="form-control" />
+          <input type="file" name="file" class="form-control" accept="image/*" required/> -->
 
        
 
@@ -53,6 +56,8 @@
 </section>
 
 <script>
+
+
   let nameError = document.getElementById("name-error");
   let discritionError = document.getElementById("discription-error");
   let myform = document.getElementById('myform');
@@ -116,3 +121,30 @@
     }
   })
   </script>
+
+<style>
+
+body {
+	font-family: Arial, sans-serif;
+}
+
+h1 {
+	text-align: center;
+}
+
+form {
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+
+
+</style>

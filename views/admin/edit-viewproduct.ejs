@@ -3,38 +3,88 @@
     <div class="row w-75 mt-5">
       <div class="col-md-12">
         <h2 class="text-center">Edit Product</h2>
-        <form action="/admin/edit_product/<%=editproduct._id %>" method="POST" enctype="multipart/form-data">
+        <form
+          action="/admin/edit_product/<%=editproduct._id %>"
+          method="POST"
+          enctype="multipart/form-data"
+        >
           <label for="">Prodcut Name</label>
-          <input type="text" name="name" class="form-control" value="<%=editproduct.Productname%>" />
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            value="<%=editproduct.Productname%>"
+          />
           <label for="">Description</label>
-          <input type="text" name="description" class="form-control" value="<%=editproduct.ProductDescription%>" />
+          <input
+            type="text"
+            name="description"
+            class="form-control"
+            value="<%=editproduct.ProductDescription%>"
+          />
 
           <label for="">Price</label>
-          <input type="text" name="price" class="form-control" value="<%=editproduct.Price%>" />
+          <input
+            type="text"
+            name="price"
+            class="form-control"
+            value="<%=editproduct.Price%>"
+          />
 
-          
           <label for="cars">Category</label>
-         
-          <select class="form-select" name="category" id="cars">
+
+          <select
+            class="form-select"
+            name="category"
+            id="cars"
+          >
+          <option><%=editproduct.category%></option>
             <% procategory.forEach(function(procategory) { %>
-            <option><%=procategory.CategoryName%> </option>
+            <% if (procategory.CategoryName == editproduct.category) { %>
+          <% } else { %>
+            <option><%=procategory.CategoryName%></option>
+
+          <% } %>
+          
             <% } )%>
           </select>
-        
+
           <label for="">Quantity</label>
-          <input type="text" name="quantity" class="form-control" value="<%=editproduct.Quantity%>" />
+          <input
+            type="text"
+            name="quantity"
+            class="form-control"
+            value="<%=editproduct.Quantity%>"
+          />
 
           <label for="">Give an offer for this product</label>
-          <input type="text" name="offer" class="form-control" value="<%=editproduct.offerPercentage%>" />
+          <input
+            type="text"
+            name="offer"
+            class="form-control"
+            value="<%=editproduct.offerPercentage%>"
+          />
 
-          
           <label for="">Image 1</label>
-          <br>
-          <img src="/uploads/<%=editproduct.Image[0]%>"  alt="" style="width:100px;height:auto">
-          <br>
-          <input type="file" name="file1" class="form-control" />
+          <br />
+          <img
+            src="/uploads/<%=editproduct.Image[0]%>"
+            alt=""
+            style="width: 100px; height: auto"
+            id="picturePreview"
+          />
+          <br />
+          <input
+            type="file"
+            name="file1"
+            class="form-control"
+            id="pictureInput"
+          />
 
-          <label for="">Image 2</label>
+          <p id="imagesrc" style="display: none">
+            /uploads/<%=editproduct.Image%>
+          </p>
+          <!-- <label for="">Image 2</label>
           <br>
           <img src="/uploads/<%=editproduct.Image[1]%>" alt="" style="width:100px;height:auto">
           <br>
@@ -50,7 +100,7 @@
           <br>
           <img src="/uploads/<%=editproduct.Image[3]%>" alt="" style="width:100px;height:auto">
           <br>
-          <input type="file" name="file1" class="form-control"/>
+          <input type="file" name="file1" class="form-control"/> -->
 
           <button type="submit" class="btn btn-success mt-4">Submit</button>
         </form>
@@ -58,3 +108,8 @@
     </div>
   </div>
 </section>
+
+<script>
+
+ 
+</script>

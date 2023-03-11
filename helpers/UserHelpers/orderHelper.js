@@ -1,14 +1,78 @@
-const { response } = require("../../app.js");
+const { response, use } = require("../../app.js");
 const user = require("../../models/connection");
 const ObjectId = require("mongodb").ObjectId;
 const Razorpay = require("razorpay");
 const razorpay = require("../../OTP/razorpay");
+const { resolve } = require("path");
 const instance = new Razorpay({
   key_id: "rzp_test_35L6RvxfjNKTJy",
   key_secret: "CvzeTNUXZnWdLhBZIMPDLC99",
 });
 
 module.exports = {
+
+  // find the product id by lookup method
+
+  getProId: (userData) => {
+    console.log(userData);
+    return new Promise(async (resolve, reject) => {
+      const updatedCart = await user.cart.aggregate([
+        {
+          $match: {
+            user: ObjectId(userData.user),
+          },
+        },
+        {
+          $unwind: "$cartItems",
+        },
+        {
+          $project: {
+            item: "$cartItems.productId",
+            quantity: "$cartItems.Quantity",
+          },
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "item",
+            foreignField: "_id",
+            as: "productdetails",
+          },
+        },
+        {
+          $unwind: "$productdetails",
+        },
+        {
+          $project: {
+            image: "$productdetails.Image",
+            category: "$productdetails.category",
+            _id: "$productdetails._id",
+            productsName: "$productdetails.Productname",
+            productsPrice: "$productdetails.Price",
+            productsOfferPrice: "$productdetails.offerPrice",
+            productsOffer: "$productdetails.offerPercentage",
+            quantity: 1,
+          },
+        },
+      
+      ]);
+      resolve(updatedCart);
+    });
+  },
+
+  // change quantity
+  ChangeQuantity:(proId)=>
+  {
+    let id = proId.map((id)=> id._id)
+    return new Promise(async(resolve, reject) => {
+      await user.product.updateMany(  { _id: { $in: id } },
+      { $inc: { Quantity: -1 } } ).then((response)=>
+      {
+        resolve(response)
+      })
+    })
+  },
+  
   // get order list by user
 
   getOrderList: (userId) => {
@@ -90,6 +154,55 @@ module.exports = {
         });
     });
   },
+
+  //get wallet amount
+  getWallet:(userId)=>
+  {
+    return new Promise(async(resolve, reject) => {
+      await user.user.findOne({_id:userId}).then((response)=>
+      {
+        resolve(response.wallet)
+      })
+    })
+  },
+
+  // add amout to wallet after returning the product
+
+  addToWallet:(orderId)=>
+  {
+    return new Promise(async(resolve, reject) => {
+      let orderDetails = await user.order.findOne({ "orders._id": orderId })
+      let userId = orderDetails.user
+      let totalPrice = orderDetails.orders[0].totalPrice
+
+      
+        await user.user.updateOne(
+          { _id: userId },
+          { $inc: { wallet: totalPrice } }
+        ).then((response)=>
+        {
+          resolve(response)
+        })
+
+    })
+    },
+
+    // decreament wallet amout after purchase using wallet amount
+    reduceWallet:(userId, amount)=>
+    {
+      return new Promise(async(resolve, reject) => {
+        await user.user.updateOne(
+          { _id: userId },
+          { $inc: { wallet: -amount } }
+        ).then((response)=>
+        {
+          resolve(response)
+        })
+      })
+    },
+      
+  
+
 
   // total checkout amount
 
@@ -259,11 +372,18 @@ module.exports = {
         },
       ]);
       const items = Address.map((obj) => obj.item);
-
+      let status, orderstatus;
       let orderaddress = items[0];
-      let status = orderData["payment-method"] === "COD" ? "placed" : "pending";
-      let orderstatus =
-        orderData["payment-method"] === "COD" ? "success" : "pending";
+      if(orderData["payment-method"] === "COD" || orderData["payment-method"] === "wallet")
+      {
+        status = "placed"
+        orderstatus = 'success'
+      }else
+      {
+        status = 'pending'
+        orderstatus = 'pending'
+      }
+      
       let orderdata = {
         name: orderaddress.fname,
         paymentStatus: status,

@@ -176,3 +176,40 @@
 
 
                                
+<script>
+  
+    function addtocart(proId) {
+  
+      $.ajax({
+                url: '/add-to-cart/'+proId,
+                method: 'GET',
+                success: (response) => {
+                  if(response.status){
+                      console.log(response.status);
+                      location.reload()      
+                  }
+                  
+                }
+          
+      })
+  
+      
+     }
+  
+     function addToWishlist(prodId){
+      $.ajax({
+        url:"/add_to_wishlist/"+prodId,
+        method:"get",
+        success:(response)=>{
+          if (response.status) {
+            let wishlistCount = $("#wishlist-count").html();
+            wishlistCount = parseInt(wishlistCount) + 1;
+            $("#wishlist-count").html(wishlistCount);
+          }
+        }
+      })
+    }
+  
+  </script>
+  
+  

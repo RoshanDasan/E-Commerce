@@ -1,168 +1,246 @@
-<header class="header-area header-style-3 header-height-2 " >
- 
-  <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
-    <div class="container">
-      <div class="header-wrap">
-        <div class="logo logo-width-1">
-          <h4>Roshan<span style="color: antiquewhite;">Cart</span></h4>
-        </div>
-        <div class="header-right">
-          <div class="search-style-2">
-            
-          </div>
-
-          <div class="header-right">
-            <div class="search-style-2">
-              <form action="/search" method="POST"  >
-               
-                <input type="text"  name="search"  id="keyword" placeholder="Search for items..." />
-  
-                <button type="submit"style="display: none;">Submit</button>
-  
-              </form>
-            </div>
-            
-          <div class="header-action-right">
-            <div class="header-action-2">
-              <%if(locals.users){%>
+<header class="header-area header-style-1 header-height-2">
+  <div class="header-top header-top-ptb-1 d-none d-lg-block">
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-xl-3 col-lg-4">
+                  <div class="header-info">
+                      <ul>
+                          <li><i class="fi-rs-smartphone"></i> <a href="#"></a></li>
+                          <li></i><a  href="#"></a></li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="col-xl-6 col-lg-4">
+                  <div class="text-center">
+                      <div id="news-flash" class="d-inline-block">
+                       
+                      </div>
+                  </div>
+              </div>
+              <div class="col-xl-3 col-lg-4">
+                  <div class="header-info header-info-right">
+                      <ul>
+                          <li>
+                           
+                          </li>
+                          <%if(locals.users){%>
              
-                <i class="fi-rs-user"></i><a href="/profile"><%=users.userName%></a>
-                 <%}else {%>
-                <li><i class="fi-rs-user"></i><a href="/login">Log In</a></li>
-                <%}%>
-              <div class="header-action-icon-2">
-              
-                <a href="/view_wishlist">
-                  <img
-                    class="svgInject"
-                    alt="Evara"
-                    src="assets/imgs/theme/icons/icon-heart.svg"
-                  />
-                  <span class="pro-count blue" style="background-color: black;"><%=locals.wishcount%></span>
-                </a>
+                            <i class="fi-rs-user"></i><a href="/profile"><%=users.userName%></a>
+                             <%}else {%>
+                            <li><i class="fi-rs-user"></i><a href="/login">Log In</a></li>
+                            <%}%>
+                      </ul>
+                  </div>
               </div>
-              <div class="header-action-icon-2">
-                <a class="mini-cart-icon" href="/cart">
-                  <img
-                    alt="Evara"
-                    src="assets/imgs/theme/icons/icon-cart.svg"
-                  />
-                  <span class="pro-count blue" style="background-color: black"><%=locals.count%></span>
-                </a>
-               
-              </div>
-            </div>
           </div>
-        </div>
       </div>
-    </div>
+  </div>
+  <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+      <div class="container">
+          <div class="header-wrap">
+              <div class="logo logo-width-1">
+                <h4>Roshan<span style="color: antiquewhite;">Cart</span></h4>
+              </div>
+              <div class="header-right">
+                  <div class="search-style-2">
+                 
+
+                      <form action="/search" method="POST">
+                        
+                       
+                        <input type="text"  name="search"  id="keyword" placeholder="Search for items..." />
+                        <button type="submit"style="display: none;">Submit</button>
+
+
+                      </form>
+                  </div>
+                  <div class="header-action-right">
+                      <div class="header-action-2">
+                          <div class="header-action-icon-2">
+                              <a href="/view_wishlist">
+                                  <img class="svgInject" alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
+                                  <span class="pro-count blue"><%=locals.wishcount%></span>
+                              </a>
+                          </div>
+                          <div class="header-action-icon-2">
+                              <a class="mini-cart-icon" href="/cart">
+                                  <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
+                                  <span class="pro-count blue"><%=locals.count%></span>
+                              </a>
+                              <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                              
+                               
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
   <div class="header-bottom header-bottom-bg-color sticky-bar">
-    <div class="container">
-      <div class="header-wrap header-space-between position-relative main-nav">
-        <div class="logo logo-width-1 d-block d-lg-none">
-          <a href="index.html"
-            ><img src="assets/imgs/theme/logo.svg" alt="logo"
-          /></a>
-        </div>
-        <div class="header-nav d-none d-lg-flex">
-          
-          <div
-            class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block"
-          >
-            <nav>
-              <ul>
-                <li>
-                  <!-- active aakanam -->
-                  <a class="" href="/">Home <i class=""></i></a>
-                </li>
-                <li>
-                  <a href="/shop">Shop <i class=""></i></a>
-                </li>
-              
-              </ul>
-            </nav>
-          </div>
-        </div>
-        
-        <p class="mobile-promotion">
-          Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%
-        </p>
-        <div class="header-action-right d-block d-lg-none">
-          <div class="header-action-2">
-            <div class="header-action-icon-2">
-              <a href="shop-wishlist.html">
-                <img alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg" />
-                <span class="pro-count white">4</span>
-              </a>
-            </div>
-            <div class="header-action-icon-2">
-              <a class="mini-cart-icon" href="shop-cart.html">
-                <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg" />
-                <span class="pro-count white">2</span>
-              </a>
-              <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                <ul>
-                  <li>
-                    <div class="shopping-cart-img">
-                      <a href="shop-product-right.html"
-                        ><img
-                          alt="Evara"
-                          src="assets/imgs/shop/thumbnail-3.jpg"
-                      /></a>
-                    </div>
-                    <div class="shopping-cart-title">
-                      <h4>
-                        <a href="shop-product-right.html"
-                          >Plain Striola Shirts</a
-                        >
-                      </h4>
-                      <h3><span>1 × </span>$800.00</h3>
-                    </div>
-                    <div class="shopping-cart-delete">
-                      <a href="#"><i class="fi-rs-cross-small"></i></a>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="shopping-cart-img">
-                      <a href="shop-product-right.html"
-                        ><img
-                          alt="Evara"
-                          src="assets/imgs/shop/thumbnail-4.jpg"
-                      /></a>
-                    </div>
-                    <div class="shopping-cart-title">
-                      <h4>
-                        <a href="shop-product-right.html">Macbook Pro 2022</a>
-                      </h4>
-                      <h3><span>1 × </span>$3500.00</h3>
-                    </div>
-                    <div class="shopping-cart-delete">
-                      <a href="#"><i class="fi-rs-cross-small"></i></a>
-                    </div>
-                  </li>
-                </ul>
-                <div class="shopping-cart-footer">
-                  <div class="shopping-cart-total">
-                    <h4>Total <span>$383.00</span></h4>
-                  </div>
-                  <div class="shopping-cart-button">
-                    <a href="shop-cart.html">View cart</a>
-                    <a href="shop-checkout.html">Checkout</a>
-                  </div>
-                </div>
+      <div class="container">
+          <div class="header-wrap header-space-between position-relative">
+              <div class="logo logo-width-1 d-block d-lg-none">
+                <h4>Roshan<span style="color: antiquewhite;">Cart</span></h4>
+
               </div>
-            </div>
-            <div class="header-action-icon-2 d-block d-lg-none">
-              <div class="burger-icon burger-icon-white">
-                <span class="burger-icon-top"></span>
-                <span class="burger-icon-mid"></span>
-                <span class="burger-icon-bottom"></span>
+              <div class="header-nav d-none d-lg-flex">
+             
+                  <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
+                      <nav>
+                          <ul>
+                              <li><a class="active" href="/">Home <i class="fi-rs-angle-down"></i></a>
+                              
+                              </li>
+                              <li>
+                                  <a href=#">About</a>
+                              </li>
+                              <li><a href="/shop">Shop <i class="fi-rs-angle-down"></i></a>
+                              
+                              </li>
+                           
+                           
+                          
+                              <li>
+                                  <a href="#">Contact</a>
+                              </li>
+                          </ul>
+                      </nav>
+                  </div>
               </div>
-            </div>
+              <div class="hotline d-none d-lg-block">
+              </div>
+              <p class="mobile-promotion">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</p>
+              <div class="header-action-right d-block d-lg-none">
+                  <div class="header-action-2">
+                      <div class="header-action-icon-2">
+                          <a href="/view_wishlist">
+                              <img alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
+                              <span class="pro-count white"><%=locals.wishcount%></span>
+                          </a>
+                      </div>
+                      <div class="header-action-icon-2">
+                          <a class="mini-cart-icon" href="/cart">
+                              <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
+                              <span class="pro-count white"><%=locals.count%></span>
+                          </a>
+                          <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                              <ul>
+                                  <li>
+                                      <div class="shopping-cart-img">
+                                          <a href="shop-product-right.html"><img alt="Evara" src="assets/imgs/shop/thumbnail-3.jpg"></a>
+                                      </div>
+                                      <div class="shopping-cart-title">
+                                          <h4><a href="shop-product-right.html">Plain Striola Shirts</a></h4>
+                                          <h3><span>1 × </span>$800.00</h3>
+                                      </div>
+                                      <div class="shopping-cart-delete">
+                                          <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                      </div>
+                                  </li>
+                                  <li>
+                                      <div class="shopping-cart-img">
+                                          <a href="shop-product-right.html"><img alt="Evara" src="assets/imgs/shop/thumbnail-4.jpg"></a>
+                                      </div>
+                                      <div class="shopping-cart-title">
+                                          <h4><a href="shop-product-right.html">Macbook Pro 2022</a></h4>
+                                          <h3><span>1 × </span>$3500.00</h3>
+                                      </div>
+                                      <div class="shopping-cart-delete">
+                                          <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                      </div>
+                                  </li>
+                              </ul>
+                              <div class="shopping-cart-footer">
+                                  <div class="shopping-cart-total">
+                                      <h4>Total <span>$383.00</span></h4>
+                                  </div>
+                                  <div class="shopping-cart-button">
+                                      <a href="shop-cart.html">View cart</a>
+                                      <a href="shop-checkout.html">Checkout</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="header-action-icon-2 d-block d-lg-none">
+                          <div class="burger-icon burger-icon-white">
+                              <span class="burger-icon-top"></span>
+                              <span class="burger-icon-mid"></span>
+                              <span class="burger-icon-bottom"></span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
   </div>
 </header>
+
+<div class="mobile-header-active mobile-header-wrapper-style">
+  <div class="mobile-header-wrapper-inner">
+      <div class="mobile-header-top">
+          <div class="mobile-header-logo">
+            <h4>Roshan<span style="color: antiquewhite;">Cart</span></h4>
+          </div>
+          <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+              <button class="close-style search-close">
+                  <i class="icon-top"></i>
+                  <i class="icon-bottom"></i>
+              </button>
+          </div>
+      </div>
+      <div class="mobile-header-content-area">
+          <div class="mobile-search search-style-3 mobile-header-border">
+              <form action="#">
+                  <input type="text" placeholder="Search for items…">
+                  <button type="submit"><i class="fi-rs-search"></i></button>
+              </form>
+          </div>
+          <div class="mobile-menu-wrap mobile-header-border">
+          
+              <!-- mobile menu start -->
+              <nav>
+                  <ul class="mobile-menu">
+                      <li class="menu-item-has-children"><span class="menu-expand"></span><a href="/">Home</a>
+                       
+                      </li>
+                      <li class="menu-item-has-children"><span class="menu-expand"></span><a href="/shop">shop</a>
+                       
+                      </li>
+                      <li >
+                        <%if(locals.users){%>
+             
+                            <i class="fi-rs-user"></i><a href="/profile"><%=users.userName%></a>
+                             <%}else {%>
+                            <i class="fi-rs-user"></i><a href="/login">Log In</a>
+                            <%}%>
+                       
+                      </li>
+                    
+                   
+                 
+                  </ul>
+              </nav>
+              <!-- mobile menu end -->
+          </div>
+     
+          <div class="mobile-social-icon">
+              <h5 class="mb-15 text-grey-4">Follow Us</h5>
+              <a href="#"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
+              <a href="#"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
+              <a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
+              <a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
+              <a href="#"><img src="assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+

@@ -46,30 +46,31 @@ module.exports = {
 
   getDashboard: async (req, res) => {
     admins = req.session.admin;
-    let totalProducts,
-      days = [];
+    let totalProducts,days = [];
     let ordersPerDay = {};
     let paymentCount = [];
 
-    await adminHelper.getAllProducts().then((Products) => {
-      totalProducts = Products.length;
-    });
+    let Products = await adminHelper.getAllProducts();
+    totalProducts = Products.length;
+      
+  
 
     await orderHelper.getOrderByDate().then((response) => {
-      const result = response[0].orders;
+      let result = response
       for (let i = 0; i < result.length; i++) {
-        let ans = {};
-        ans["createdAt"] = result[i].createdAt;
-        days.push(ans);
-        ans = {};
+        for (let j = 0; j < result[i].orders.length; j++) {
+          let ans = {}
+          ans["createdAt"] = result[i].orders[j].createdAt;
+          days.push(ans);
+          
+        }
+    
       }
 
       days.forEach((order) => {
-        const day = order.createdAt.toLocaleDateString("en-US", {
-          weekday: "long",
-        });
+         let day = order.createdAt.toLocaleDateString("en-US", {weekday: "long"});
         ordersPerDay[day] = (ordersPerDay[day] || 0) + 1;
-      });
+      })
     });
 
     let getCodCount = await adminHelper.getCodCount();
@@ -199,6 +200,13 @@ module.exports = {
 
   postSalesReport: (req, res) => {
     let Details = [];
+    const getDate = (date) => {
+      let orderDate = new Date(date);
+      let day = orderDate.getDate();
+      let month = orderDate.getMonth() + 1;
+      let year = orderDate.getFullYear();
+      return `${isNaN(day) ? "00" : day}-${isNaN(month) ? "00" : month}-${ isNaN(year) ? "0000" : year}`;
+    };
 
     adminHelper.postReport(req.body).then((orderdata) => {
       orderdata.forEach((orders) => {
@@ -208,7 +216,7 @@ module.exports = {
       res.render("admin/sales-report", {
         layout: "adminLayout",
         admins,
-        Details,
+        Details,getDate
       });
     });
   },

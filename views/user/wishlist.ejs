@@ -54,7 +54,7 @@
                                     <% if (wishlistItems.wishlistItems.Quantity === 0) { %>
                                       <p class="text-danger">Item currently out of stock</p>
                                     <% } else { %>
-                                      <button type="button" aria-label="Add To Cart" class="action-btn btn-dark hover-up round-black-btn small-btn"  onclick="addtocart('<%-wishlistItems._id%>'),Swal.fire({
+                                      <button type="button" aria-label="Add To Cart" class="action-btn btn-dark hover-up round-black-btn small-btn"  onclick="addtocart('<%-wishlistItems.item%>'),Swal.fire({
                                         position: 'center',
                                         icon: 'success',
                                         title: 'Item Added Successfully To Cart',

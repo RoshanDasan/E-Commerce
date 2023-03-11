@@ -8,23 +8,26 @@ const adminCategoryHelper = require("../../helpers/adminHelpers/adminCategoryHel
 const otpLogin = require("../../OTP/otpLogin");
 const client = require("twilio")(otpLogin.AccountSId, otpLogin.authtoken);
 const user = require("../../models/connection");
+const { response } = require("../../app");
 
 let total, count, wishcount;
 module.exports = {
   // user home
   getHome: async (req, res) => {
     let bannerData = await shopHelpers.getBannetData();
+    console.log(bannerData);
 
     if (req.session.loggedIn) {
       let users = req.session.user;
       count = await cartAndWishlistHelpers.getCartCount(req.session.user.id);
-      wishcount = await cartAndWishlistHelpers.getWishCount(req.session.user.id);
-      await shopHelpers.shopListProduct().then((products) => {
-        res.render("user/user", { users, count, products, bannerData, wishcount });
-      });
+      wishcount = await cartAndWishlistHelpers.getWishCount(
+        req.session.user.id
+      );
+
+      res.render("user/user", { users, count, bannerData, wishcount });
     } else {
       let products = await shopHelpers.shopListProduct();
-      res.render("user/user", { products, bannerData });
+      res.render("user/user", { bannerData });
     }
   },
   // get user login
@@ -65,12 +68,18 @@ module.exports = {
   postSignUp: (req, res) => {
     userhelpers.doSignUp(req.body).then((response) => {
       var emailStatus = response.status;
-      if (emailStatus == true) {
+      if (emailStatus) {
         res.redirect("/login");
       } else {
         res.render("user/signup", { emailStatus });
       }
     });
+  },
+
+  getLogout: (req, res) => {
+    req.session.user = null;
+    req.session.userloggedIn = false;
+    res.render("user/login");
   },
 
   getUpdatePassword: (req, res) => {
@@ -87,10 +96,12 @@ module.exports = {
     });
   },
 
-  getEnterNewPwd: (req, res) => {
+  getEnterNewPwd: async (req, res) => {
     let user = req.session.user.id;
     let users = req.session.user;
-    res.render("user/enter-pwd", { user, users,count,wishcount });
+    wishcount = await cartAndWishlistHelpers.getWishCount(req.session.user.id);
+
+    res.render("user/enter-pwd", { user, users, count, wishcount });
   },
 
   updatePassword: async (req, res) => {
@@ -197,7 +208,8 @@ module.exports = {
         response,
         users,
         viewCategory,
-        count,wishcount
+        count,
+        wishcount,
       });
     });
   },
@@ -206,11 +218,19 @@ module.exports = {
     let user = req.session.user.id;
     let users = req.session.user;
     let count = await cartAndWishlistHelpers.getCartCount(req.session.user.id);
-    let image = await shopHelpers.imageZoom(req.params.id)
-    let relatedProducts = await shopHelpers.getProductByCategory(image.category)
+    let image = await shopHelpers.imageZoom(req.params.id);
+    let relatedProducts = await shopHelpers.getProductByCategory(
+      image.category
+    );
 
-      res.render("user/imagezoom", { image, count, user, users, wishcount, relatedProducts });
-   
+    res.render("user/imagezoom", {
+      image,
+      count,
+      user,
+      users,
+      wishcount,
+      relatedProducts,
+    });
   },
 
   // get add-to-cart
@@ -236,7 +256,8 @@ module.exports = {
     let subtotal = await orderHelpers.subtotal(req.session.user.id);
     console.log(subtotal);
 
-    cartAndWishlistHelpers.listAddToCart(req.session.user.id)
+    cartAndWishlistHelpers
+      .listAddToCart(req.session.user.id)
       .then((cartItems) => {
         res.render("user/cart", {
           cartItems,
@@ -264,6 +285,7 @@ module.exports = {
     let wishlistItems = await cartAndWishlistHelpers.viewWishlist(
       req.session.user.id
     );
+    console.log(wishlistItems);
 
     res.render("user/wishlist", {
       users,
@@ -303,7 +325,8 @@ module.exports = {
           users,
           viewCategory,
           user,
-          count,wishcount
+          count,
+          wishcount,
         });
       })
       .catch((err) => {
@@ -311,7 +334,9 @@ module.exports = {
           err,
           viewCategory,
           user,
-          users,count,wishcount
+          users,
+          count,
+          wishcount,
         });
       });
   },
@@ -320,12 +345,18 @@ module.exports = {
     let sortOption = req.body["selectedValue"];
     let viewCategory = await adminCategoryHelper.viewAddCategory();
     shopHelpers.postSort(sortOption).then((response) => {
-      res.render("user/filter-by-category", { response, viewCategory,count,wishcount });
+      res.render("user/filter-by-category", {
+        response,
+        viewCategory,
+        count,
+        wishcount,
+      });
     });
   },
 
   getViewCart: async (req, res) => {
-    let userId = req.session.user;
+    let user = req.session.user.id;
+    let users = req.session.user;
     total = await orderHelpers.totalCheckOutAmount(req.session.user.id);
     let count = await cartAndWishlistHelpers.getCartCount(req.session.user.id);
     wishcount = await cartAndWishlistHelpers.getWishCount(req.session.user.id);
@@ -334,7 +365,8 @@ module.exports = {
 
     res.render("user/view-cart", {
       cartItems,
-      userId,
+      user,
+      users,
       userSession,
       profileId,
       count,
@@ -344,28 +376,55 @@ module.exports = {
   },
 
   checkOutPage: async (req, res) => {
-    let users = req.session.user.id;
+    let user = req.session.user.id;
+    let users = req.session.user;
+    
+    let walletAmount;
 
-    let cartItems = await cartAndWishlistHelpers.listAddToCart(req.session.user.id);
+    let cartItems = await cartAndWishlistHelpers.listAddToCart(
+      req.session.user.id
+    );
     let total = await orderHelpers.totalCheckOutAmount(req.session.user.id);
+    let checkWallet = await orderHelpers.getWallet(req.session.user.id);
+
+    if (checkWallet >= total) {
+      walletAmount = true;
+    } else {
+      walletAmount = false;
+    }
 
     orderHelpers.checkOutpage(req.session.user.id).then((response) => {
-      let addressLength = response.length
-      res.render("user/checkout", { users, cartItems, total, response, addressLength,count,wishcount });
+      let addressLength = response.length;
+      res.render("user/checkout", {
+        users,
+        user,
+        cartItems,
+        total,
+        response,
+        addressLength,
+        count,
+        wishcount,
+        walletAmount,
+      });
     });
   },
 
   postcheckOutPage: async (req, res) => {
     let total = await orderHelpers.totalCheckOutAmount(req.session.user.id);
-    await orderHelpers.placeOrder(req.body, total).then((response) => {
+    let proId = await orderHelpers.getProId(req.body);
+    await orderHelpers.ChangeQuantity(proId);
+    await orderHelpers.placeOrder(req.body, total).then(async (result) => {
       if (req.body["payment-method"] == "COD") {
         res.json({ codstatus: true });
-      } else {
-        orderHelpers
+      } else if (req.body["payment-method"] == "online") {
+        await orderHelpers
           .generateRazorpay(req.session.user.id, total)
           .then((order) => {
             res.json(order);
           });
+      } else {
+        res.json({ codstatus: true });
+        await orderHelpers.reduceWallet(req.session.user.id, total);
       }
     });
   },
@@ -409,15 +468,20 @@ module.exports = {
     };
 
     orderHelpers.getOrderList(req.session.user.id).then((response) => {
-      
-      res.render("user/order", { response, users, user,count,wishcount,getDate });
+      res.render("user/order", {
+        response,
+        users,
+        user,
+        count,
+        wishcount,
+        getDate,
+      });
     });
   },
 
   getChangeNumber: async (req, res) => {
     let user = req.session.user.id;
     let users = req.session.user;
-    
 
     res.render("user/change-number", { user, users, count, wishcount });
   },
@@ -437,19 +501,31 @@ module.exports = {
         res.redirect("/profile");
       });
     } else {
-      res.render("user/change-number", { incorrectNum: true , count,wishcount, users,userId});
+      res.render("user/change-number", {
+        incorrectNum: true,
+        count,
+        wishcount,
+        users,
+        userId,
+      });
     }
   },
 
-  getViewAddress:async (req, res) => {
+  getViewAddress: async (req, res) => {
     let user = req.session.user.id;
     let users = req.session.user;
     let count = await cartAndWishlistHelpers.getCartCount(req.session.user.id);
     wishcount = await cartAndWishlistHelpers.getWishCount(req.session.user.id);
     shopHelpers.getAddress(req.session.user.id).then((response) => {
-
-      let addressLength = response.length
-      res.render("user/view-address", { response, user, users, count, wishcount, addressLength });
+      let addressLength = response.length;
+      res.render("user/view-address", {
+        response,
+        user,
+        users,
+        count,
+        wishcount,
+        addressLength,
+      });
     });
   },
 
@@ -467,22 +543,17 @@ module.exports = {
       });
   },
 
-  getReturnOrder: (req, res) => {
-    orderHelpers
+  getReturnOrder: async (req, res) => {
+    await orderHelpers
       .returnOrder(req.params.id, req.session.user.id)
-      .then((response) => {
+      .then(async (response) => {
+        await orderHelpers.addToWallet(req.params.id);
         res.json(response);
       });
   },
 
   GetSuccessPage: (req, res) => {
-    res.render("user/order_success",{count,wishcount});
-  },
-
-  getLogout: (req, res) => {
-    req.session.user = null;
-    req.session.userloggedIn = false;
-    res.render("user/login");
+    res.render("user/order_success", { count, wishcount });
   },
 
   applyCoupon: async (req, res) => {
@@ -496,20 +567,16 @@ module.exports = {
 
   applyCouponSuccess: (req, res) => {
     let code = req.query.code;
-    shopHelpers
-      .couponValidator(code, req.session.user.id)
-      .then((response) => {
-        res.json(response);
-      });
+    shopHelpers.couponValidator(code, req.session.user.id).then((response) => {
+      res.json(response);
+    });
   },
 
   couponVerify: (req, res) => {
     let code = req.query.code;
-    shopHelpers
-      .couponVerify(code, req.session.user.id)
-      .then((response) => {
-        res.json(response);
-      });
+    shopHelpers.couponVerify(code, req.session.user.id).then((response) => {
+      res.json(response);
+    });
   },
 
   postVerifyPayment: (req, res) => {
@@ -533,7 +600,9 @@ module.exports = {
       let day = orderDate.getDate();
       let month = orderDate.getMonth() + 1;
       let year = orderDate.getFullYear();
-      return `${isNaN(day) ? "00" : day}-${isNaN(month) ? "00" : month}-${ isNaN(year) ? "0000" : year}`;
+      return `${isNaN(day) ? "00" : day}-${isNaN(month) ? "00" : month}-${
+        isNaN(year) ? "0000" : year
+      }`;
     };
 
     orderHelpers.viewOrderDetails(details).then(async (response) => {
@@ -548,7 +617,10 @@ module.exports = {
         address,
         orderDetails,
         users,
-        data,count,wishcount,getDate
+        data,
+        count,
+        wishcount,
+        getDate,
       });
     });
   },

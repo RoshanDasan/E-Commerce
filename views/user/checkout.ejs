@@ -48,6 +48,24 @@
       COD
     </label>
   </div>
+  <% if (walletAmount) { %>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="payment-method" value="wallet">
+      <label class="form-check-label" for="flexRadioDefault1">
+        Pay with wallet
+      </label>
+    </div>
+  <% } else { %>
+    <p class="text-danger">low balance</p>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="payment-method" value="wallet" disabled>
+      <label class="form-check-label" for="flexRadioDefault1">
+        Pay with wallet
+      </label>
+    </div>
+  <% } %>
+  
+
   <div class="form-check">
     <input class="form-check-input" type="radio" name="payment-method" value="online"  >
     <label class="form-check-label" for="flexRadioDefault1">

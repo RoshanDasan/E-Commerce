@@ -69,14 +69,10 @@ module.exports = {
   //post editproduct
   postEditProduct: (productId, editedData, filename) => {
     return new Promise(async (resolve, reject) => {
-      let image = filename.map((filename) => filename.filename);
       let offerPrice = editedData.price;
-      console.log(editedData.price);
       if (editedData.offer != 0) {
         offerPrice = Math.floor(editedData.price-(editedData.price*editedData.offer/100));
-        console.log(offerPrice);
       }
-      console.log(offerPrice);
 
       await user.product
         .updateOne(
@@ -90,7 +86,7 @@ module.exports = {
               category: editedData.category,
               offerPercentage: editedData.offer,
               offerPrice: offerPrice,
-              Image: image,
+              Image: filename,
             },
           }
         )
@@ -132,7 +128,6 @@ module.exports = {
       let banner = user.banner({
         title: texts.title,
         description: texts.description,
-        link: texts.link,
         image: Image
 
       })
@@ -178,7 +173,6 @@ module.exports = {
 
             title: texts.title,
             description: texts.description,
-            link: texts.link,
             image: Image
           }
 

@@ -75,7 +75,7 @@ module.exports =
 
   getOrderByDate: () => {
     return new Promise(async (resolve, reject) => {
-      const startDate = new Date("2022-01-01");
+      const startDate = new Date();
       await user.order
         .find({ createdAt: { $gte: startDate } })
         .then((response) => {

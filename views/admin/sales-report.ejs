@@ -1,12 +1,16 @@
 <div class="main_container m-5">
+  <div class="text-center">
+    <button type="button" class="btn btn-primary btn_print m-3"
+    value="Download as Pdf">Download as PDF</button>
+  
+    <button type="button" class="btn btn-primary btn_print m-3" onclick="export_data()"
+    value="Export to excel">Download as Excel</button>
 
-        <button type="button" class="btn btn-danger btn_print me-3"
-            value="Download as Pdf">Download as PDF</button>
-          
-        <button type="button" class="btn btn-danger btn_print me-3" onclick="export_data()"
-            value="Export to excel">Download as Excel</button>
+  </div>
+
+    
    
-    <div>
+<div style="margin-top: -5em;">
 <form action="/admin/sales_report" method="POST" id="salesReport">
 
 <div> <input type="date" name="startdate" id="startdate" ></div>
@@ -16,12 +20,11 @@
   <span id="date-error2" style="display: none; color: red;">Invalid End Date</span>
   <br>
 
-  <button class="btn btn-primary p-3 m-3" type="submit" id="submit-button">submit</button>
+  <button class="btn btn-primary " type="submit" id="submit-button">submit</button>
 
 </form>
 </div> 
    
-   <!-- <input class="ms-1" type="text" name="daterange" value="01/01/2022 - 12/01/2023"/> -->
    
     </div>
 
@@ -62,12 +65,11 @@
 </div>
 <br>
 <br>
-<hr>
-<!-- <h5 class="text-right">Total Earnings: &nbsp; <span class="fw-bold">24,0000</span> </h5> -->
 
-<hr>
 
 </div>
+
+
 
 
 <script>
@@ -146,3 +148,37 @@ $(document).ready(function ($) {
 
 
 </script>
+
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 1em;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  table thead tr {
+    background-color: #088178;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+  }
+  table th,
+  table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  table tbody tr {
+    border-bottom: 1px solid #ddd;
+  }
+  table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  table tbody tr:last-of-type {
+    border-bottom: 2px solid #3c8dbc;
+  }
+</style>

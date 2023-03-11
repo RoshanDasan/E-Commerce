@@ -89,7 +89,7 @@
       </div>
 
       <div>
-        <p style="visibility: hidden;" id="days"><%= JSON.stringify(locals.ordersPerDay) %></p>
+        <p  id="days"><%= JSON.stringify(locals.ordersPerDay) %></p>
         <p style="visibility: hidden;" id="payment"><%= JSON.stringify(locals.paymentCount) %></p>
 
       </div>
@@ -151,13 +151,7 @@
 
 
 
-        </script>
-       
-      </footer>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-
-  
-<script>
+    
   var xValue = ["Online","COD"];
   var yValue = [];
          let paymentData = JSON.parse(document.getElementById('payment').innerHTML);

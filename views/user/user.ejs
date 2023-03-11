@@ -1,166 +1,21 @@
 <!-- Quick view -->
 <section>
- 
-  
-  <div
-    class="modal fade custom-modal"
-    id="quickViewModal"
-    tabindex="-1"
-    aria-labelledby="quickViewModalLabel"
-    aria-hidden="true"
-  >
-   
-  </div>
 
-  <div class="mobile-header-active mobile-header-wrapper-style">
-    <div class="mobile-header-wrapper-inner">
-      <div class="mobile-header-top">
-        <div class="mobile-header-logo">
-          <a href="index.html"
-            ><img src="assets/imgs/theme/logo.svg" alt="logo"
-          /></a>
-        </div>
-        <div
-          class="mobile-menu-close close-style-wrap close-style-position-inherit"
-        >
-          <button class="close-style search-close">
-            <i class="icon-top"></i>
-            <i class="icon-bottom"></i>
-          </button>
-        </div>
-      </div>
-      <div class="mobile-header-content-area">
-        <div class="mobile-search search-style-3 mobile-header-border">
-          <form action="#">
-            <input type="text" placeholder="Search for items…" />
-            <button type="submit"><i class="fi-rs-search"></i></button>
-          </form>
-        </div>
-        <div class="mobile-menu-wrap mobile-header-border">
-          <div class="main-categori-wrap mobile-header-border">
-            <a class="categori-button-active-2" href="#">
-              <span class="fi-rs-apps"></span> Browse Categories
-            </a>
-            <div class="categori-dropdown-wrap categori-dropdown-active-small">
-              <ul>
-                <li>
-                  <a href="shop-grid-right.html"
-                    ><i class="evara-font-dress"></i>Women's Clothing</a
-                  >
-                </li>
-                <li>
-                  <a href="shop-grid-right.html"
-                    ><i class="evara-font-tshirt"></i>Men's Clothing</a
-                  >
-                </li>
-                <li>
-                  <a href="shop-grid-right.html"
-                    ><i class="evara-font-smartphone"></i> Cellphones</a
-                  >
-                </li>
-                <li>
-                  <a href="shop-grid-right.html"
-                    ><i class="evara-font-desktop"></i>Computer & Office</a
-                  >
-                </li>
-                <li>
-                  <a href="shop-grid-right.html"
-                    ><i class="evara-font-cpu"></i>Consumer Electronics</a
-                  >
-                </li>
-                <li>
-                  <a href="shop-grid-right.html"
-                    ><i class="evara-font-home"></i>Home & Garden</a
-                  >
-                </li>
-                <li>
-                  <a href="shop-grid-right.html"
-                    ><i class="evara-font-high-heels"></i>Shoes</a
-                  >
-                </li>
-                <li>
-                  <a href="shop-grid-right.html"
-                    ><i class="evara-font-teddy-bear"></i>Mother & Kids</a
-                  >
-                </li>
-                <li>
-                  <a href="shop-grid-right.html"
-                    ><i class="evara-font-kite"></i>Outdoor fun</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- mobile menu start -->
-          <nav>
-            <ul class="mobile-menu">
-              <li class="menu-item-has-children">
-                <span class="menu-expand"></span><a href="/">Home</a>
-              </li>
-              <li class="menu-item-has-children">
-                <span class="menu-expand"></span><a href="/shop">Shop</a>
-              </li>
-              <li class="menu-item-has-children">
-                <span class="menu-expand"></span><a href="#">Orders</a>
-              </li>
-              <li class="menu-item-has-children">
-                <span class="menu-expand"></span
-                ><a href="blog-category-fullwidth.html">About</a>
-              </li>
-              <li class="menu-item-has-children">
-                <span class="menu-expand"></span
-                ><a href="blog-category-fullwidth.html">Contact</a>
-              </li>
-
-              
-            </ul>
-          </nav>
-          <!-- mobile menu end -->
-        </div>
-        <div class="mobile-header-info-wrap mobile-header-border">
-          <div class="single-mobile-header-info mt-30">
-            <a href="page-contact.html"> Our location </a>
-          </div>
-          <div class="single-mobile-header-info">
-            <a href="page-login-register.html">Log In / Sign Up </a>
-          </div>
-          <div class="single-mobile-header-info">
-            <a href="#">(+01) - 2345 - 6789 </a>
-          </div>
-        </div>
-        <div class="mobile-social-icon">
-          <h5 class="mb-15 text-grey-4">Follow Us</h5>
-          <a href="#"
-            ><img src="assets/imgs/theme/icons/icon-facebook.svg" alt=""
-          /></a>
-          <a href="#"
-            ><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""
-          /></a>
-          <a href="#"
-            ><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""
-          /></a>
-          <a href="#"
-            ><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt=""
-          /></a>
-          <a href="#"
-            ><img src="assets/imgs/theme/icons/icon-youtube.svg" alt=""
-          /></a>
-        </div>
-      </div>
-    </div>
-  </div>
   <main class="main">
    <!-- banner -->
 
    <section class="home-slider position-relative pt-50">
     <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
-        <div class="single-hero-slider single-animation-wrap">
+
+  
+        <% bannerData.forEach(function(bannerData) { %>
+          <div class="single-hero-slider single-animation-wrap">
             <div class="container">
                 <div class="row align-items-center slider-animated-1">
                     <div class="col-lg-5 col-md-6">
                         <div class="hero-slider-content-2">
-                            <h4 class="animated"><%=bannerData[0].title%></h4>
-                            <h2 class="animated fw-900">Supper value deals</h2>
+                            <h4 class="animated"><%=bannerData.title%></h4>
+                            <h2 class="animated fw-900"><%=bannerData.description%></h2>
                             <h1 class="animated fw-900 text-brand">On all products</h1>
                             <p class="animated">Save more with coupons & up to 70% off</p>
                             <a class="animated btn btn-brush btn-brush-3" href="/uploads/<%= bannerData.Image %>"> Shop Now </a>
@@ -168,52 +23,18 @@
                     </div>
                     <div class="col-lg-7 col-md-6">
                         <div class="single-slider-img single-slider-img-1">
-                            <img class="animated slider-1-1" src="/uploads/<%=bannerData[0].image %>" alt="">
+                            <img class="animated slider-1-1" src="/uploads/<%=bannerData.image %>" alt="">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="single-hero-slider single-animation-wrap">
-            <div class="container">
-                <div class="row align-items-center slider-animated-1">
-                    <div class="col-lg-5 col-md-6">
-                        <div class="hero-slider-content-2">
-                            <h4 class="animated">Hot promotions</h4>
-                            <h2 class="animated fw-900">Fashion Trending</h2>
-                            <h1 class="animated fw-900 text-7">Great Collection</h1>
-                            <p class="animated">Save more with coupons & up to 20% off</p>
-                            <a class="animated btn btn-brush btn-brush-2" href="shop-product-right.html"> Discover Now </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-6">
-                        <div class="single-slider-img single-slider-img-1">
-                            <img class="animated slider-1-2" src="assets/imgs/slider/slider-1.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="single-hero-slider single-animation-wrap">
-            <div class="container">
-                <div class="row align-items-center slider-animated-1">
-                    <div class="col-lg-5 col-md-6">
-                        <div class="hero-slider-content-2">
-                            <h4 class="animated">Upcoming Offer</h4>
-                            <h2 class="animated fw-900">Big Deals From</h2>
-                            <h1 class="animated fw-900 text-8">Manufacturer</h1>
-                            <p class="animated">Clothing, Shoes, Bags, Wallets...</p>
-                            <a class="animated btn btn-brush btn-brush-1" href="shop-product-right.html"> Shop Now </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-6">
-                        <div class="single-slider-img single-slider-img-1">
-                            <img class="animated slider-1-3" src="assets/imgs/slider/slider-3.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+          
+        <% }) %>
+   
+      
+     
+    
     </div>
     <div class="slider-arrow hero-slider-1-arrow"></div>
 </section>

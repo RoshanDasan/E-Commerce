@@ -22,17 +22,17 @@
       <tr>
         <th class="th-sm">Name
         </th>
-        <th class="th-sm">Position
+        <th class="th-sm">Id
         </th>
-        <th class="th-sm">Office
+        <th class="th-sm">Status
         </th>
-        <th class="th-sm">Age
+        <th class="th-sm">Mobile
         </th>
-        <th class="th-sm">Start date
+        <th class="th-sm">Order date
         </th>
-        <th class="th-sm">Salary
+        <th class="th-sm">
         </th>
-        <th class="th-sm">.
+        <th class="th-s m">
         </th>
       </tr>
     </thead>
@@ -58,12 +58,19 @@
            Change order status
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            
-           <button onclick="orderStatus('<%=user.orders._id%>','order-placed')">Order placed</button>
-           <button onclick="orderStatus('<%=user.orders._id%>','order-dispatched')">Order Dispatched</button>
-           <button onclick="orderStatus('<%=user.orders._id%>','out-for-delivery')">Out for Delivery</button>
-           <button onclick="orderStatus('<%=user.orders._id%>','delivered')">Delivered</button>
-           <button onclick="orderStatus('<%=user.orders._id%>','cancelled')">Cancel</button>
+
+
+            <div class="text-center "><button class="rounded-pill border border-dark rounded-lg" onclick="orderStatus('<%=user.orders._id%>','order-placed')">Order placed</button> </div>
+            <br>
+            <div class="text-center "><button class="rounded-pill border border-dark rounded-lg" onclick="orderStatus('<%=user.orders._id%>','order-dispatched')">Order Dispatched</button> </div>
+            <br>
+            <div class="text-center "><button class="rounded-pill border border-dark rounded-lg" onclick="orderStatus('<%=user.orders._id%>','out-for-delivery')">Out for Delivery</button> </div>
+            <br>
+            <div class="text-center "><button class="rounded-pill border border-dark rounded-lg" onclick="orderStatus('<%=user.orders._id%>','delivered')">Delivered</button> </div>
+            <br>
+            <div class="text-center "><button class="rounded-pill border border-dark rounded-lg" onclick="orderStatus('<%=user.orders._id%>','cancelled')">Cancel</button> </div>
+           
+          
            
           </div>
         </div></td>
@@ -119,3 +126,38 @@ function orderStatus(orderId, status)
 // });
 
 </script>
+
+
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 1em;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  table thead tr {
+    background-color: #088178;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+  }
+  table th,
+  table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  table tbody tr {
+    border-bottom: 1px solid #ddd;
+  }
+  table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  table tbody tr:last-of-type {
+    border-bottom: 2px solid #3c8dbc;
+  }
+</style>

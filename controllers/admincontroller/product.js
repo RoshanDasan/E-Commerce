@@ -59,8 +59,27 @@ module.exports = {
   //posteditaddproduct
 
   postEditAddProduct: (req, res) => {
+    const images = [];
+    if (req.files.length != 0) {
+      Object.keys(req?.files).forEach((key) => {
+        if (Array.isArray(req.files[key])) {
+          req?.files[key]?.forEach((file) => {
+            images.push(file.filename);
+          });
+        } else {
+          images.push(req?.files[key]?.filename);
+        }
+      });
+    }else
+    {
+      images.push(req.session.admin.images)
+      req.session.admin.images = null
+
+    }
+
+
     adminProductHelpers
-      .postEditProduct(req.params.id, req.body, req?.files)
+      .postEditProduct(req.params.id, req.body, images)
       .then((response) => {
         res.redirect("/admin/view_product");
       });
