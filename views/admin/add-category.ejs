@@ -21,7 +21,7 @@
           <br>
 
 
-          <button type="submit" class="btn btn-success mt-4">Submit</button>
+          <button type="submit" class="btn btn-info text-white mt-4">Submit</button>
         </form>
       </div>
     </div>
@@ -48,8 +48,8 @@
                 <td><%= viewCategory.CategoryName %></td>
 
                 <td>
-                  <a href="/admin/edit_category/<%= viewCategory._id %>" class="btn btn-xs btn-danger"> Edit</a>
-                  <a href="/admin/delete_category/<%= viewCategory._id %>" class="btn btn-xs btn-danger"> Delete</a>
+                  <a href="/admin/edit_category/<%= viewCategory._id %>" class="btn btn-info text-white"> Edit</a>
+                  <a href="/admin/delete_category/<%= viewCategory._id %>" class="btn btn-danger text-white"> Delete</a>
                 </td>
               </tr>
               <% }) %>
@@ -131,58 +131,31 @@
   })
 </script>
 
+
+
 <style>
+
   body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
   }
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 10px;
-    box-sizing: border-box;
-  }
+  
   h1 {
-    margin-top: 0;
     text-align: center;
-    font-weight: bold;
-    font-size: 36px;
-    /* color: #333; */
   }
+  
   form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f5f5f5;
+    max-width: 500px;
+    margin: 0 auto;
     padding: 20px;
+    border: 1px solid #ccc;
     border-radius: 5px;
   }
+  
   label {
     display: block;
-    margin-bottom: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    /* color: #333; */
+    margin-bottom: 5px;
   }
-  input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    margin-bottom: 20px;
-    font-size: 16px;
-  }
-  button[type="submit"] {
-    padding: 10px 20px;
-    background-color: #088178;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
   
-
-</style>
+  
+  
+  </style>

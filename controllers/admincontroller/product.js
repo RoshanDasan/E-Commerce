@@ -1,3 +1,5 @@
+const { json } = require("express");
+const { response } = require("../../app");
 const adminProductHelpers = require("../../helpers/adminHelpers/adminProductHelpers");
 const orderHelper = require("../../helpers/adminHelpers/orderHelper");
 
@@ -43,7 +45,7 @@ module.exports = {
     adminProductHelpers.viewAddCategory().then((response) => {
       var procategory = response;
       adminProductHelpers.editProduct(req.params.id).then((response) => {
-        editproduct = response;
+        let editproduct = response;
         req.session.admin.images = response.Image;
 
         res.render("admin/edit-viewproduct", {
@@ -59,31 +61,64 @@ module.exports = {
   //posteditaddproduct
 
   postEditAddProduct: (req, res) => {
-    const images = [];
-    if (req.files.length != 0) {
-      Object.keys(req?.files).forEach((key) => {
-        if (Array.isArray(req.files[key])) {
-          req?.files[key]?.forEach((file) => {
-            images.push(file.filename);
-          });
-        } else {
-          images.push(req?.files[key]?.filename);
-        }
-      });
-    }else
-    {
-      images.push(req.session.admin.images)
-      req.session.admin.images = null
+  
+
+    let images = [];
+
+
+
+    if (!req.files.image1) {
+    
+      images.push(req.body.image1)
+    } else {
+      images.push(req.files.image1[0].originalname)
+
+    }
+    if (!req.files.image2) {
+      images.push(req.body.image2)
+
+    } else {
+      images.push(req.files.image2[0].originalname)
+
+
+    }
+    if (!req.files.image3) {
+      images.push(req.body.image3)
+
+    } else {
+      images.push(req.files.image3[0].originalname)
+
+    }
+    if (!req.files.image4) {
+      images.push(req.body.image4)
+
+    } else {
+      images.push(req.files.image4[0].originalname)
 
     }
 
+      console.log(images);
 
-    adminProductHelpers
+        adminProductHelpers
       .postEditProduct(req.params.id, req.body, images)
       .then((response) => {
         res.redirect("/admin/view_product");
       });
+
   },
+
+  // list and unlist product
+
+  UnlistProduct:async (req, res)=>
+  {
+    let condition = JSON.parse(req.body.condition)
+    let proId = req.body.proId
+    await adminProductHelpers.unlistProduct(proId, condition).then((response)=>
+    {
+      res.json(true)
+    })
+  },
+
 
   //delete view product
 
@@ -93,14 +128,6 @@ module.exports = {
     });
   },
 
-  // order
-  getOrderList: (req, res) => {
-    let admins = req.session.admin;
-
-    orderHelper.getOrder(req.params.id).then((response) => {
-      res.render("admin/user-order", { layout: "adminLayout", admins });
-    });
-  },
 
   // for edit the status of order
   getEditOrderStatus: (req, res) => {

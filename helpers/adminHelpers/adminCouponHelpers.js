@@ -6,7 +6,7 @@ module.exports = {
     getViewCoupon:()=>
     {
       return new Promise(async(resolve, reject) => {
-        let coupon = await user.coupen.find().then((response)=>
+        await user.coupen.find().then((response)=>
         {
             resolve(response)
             
@@ -38,6 +38,23 @@ module.exports = {
         }
       });
 
+    },
+
+    deleteCoupon:(couponId)=>
+    {
+      return new Promise(async(resolve, reject) => {
+        try {
+
+          await user.coupen.deleteOne({_id:couponId}).then((response)=>
+          {
+            resolve(response)
+          })
+          
+        } catch (error) {
+
+          reject(error)
+        }
+      })
     }
 
  

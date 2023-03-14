@@ -6,7 +6,7 @@ module.exports = {
   // adding to wishlist
 
   addToWishlist: async (proId, userId) => {
-    const proObj = {
+    let proObj = {
       productId: proId,
     };
 
@@ -114,17 +114,15 @@ module.exports = {
 
   // add to cart
 
-  addToCartItem: (proId, userId) => {
-    proObj = {
+  addToCartItem: (proId, userId, count) => {
+    let proObj = {
       productId: proId,
       Quantity: 1,
     };
     return new Promise(async (resolve, reject) => {
       let carts = await user.cart.findOne({ user: userId });
       if (carts) {
-        let productExist = carts.cartItems.findIndex(
-          (cartItems) => cartItems.productId == proId
-        );
+        let productExist = carts.cartItems.findIndex((cartItems) => cartItems.productId == proId);
 
         if (productExist != -1) {
           user.cart
@@ -148,7 +146,7 @@ module.exports = {
               }
             )
             .then((response) => {
-              resolve({ response, status: true });
+              resolve({ count, status: true });
             });
         }
       } else {

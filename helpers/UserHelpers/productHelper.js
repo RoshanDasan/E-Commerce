@@ -33,8 +33,8 @@ module.exports = {
   // change the product quantity
 
   changeProductQuantity: (data) => {
-    count = parseInt(data.count);
-    quantity = parseInt(data.quantity);
+    let count = parseInt(data.count);
+    let quantity = parseInt(data.quantity);
     return new Promise((resolve, reject) => {
       if (count == -1 && quantity == 1) {
         user.cart

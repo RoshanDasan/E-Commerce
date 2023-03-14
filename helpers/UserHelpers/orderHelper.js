@@ -14,7 +14,6 @@ module.exports = {
   // find the product id by lookup method
 
   getProId: (userData) => {
-    console.log(userData);
     return new Promise(async (resolve, reject) => {
       const updatedCart = await user.cart.aggregate([
         {
@@ -458,6 +457,24 @@ module.exports = {
           resolve(address);
         });
     });
+  },
+
+  // add coupon in user schema
+
+  addCouponToUser:(couponName, userId)=>
+  {
+    let coupon = {
+      couponName:couponName
+      }
+    return new Promise(async(resolve, reject) => {
+      await user.user.updateOne({_id:userId},
+        {$push:{coupons:coupon}}).then((response)=>
+        {
+          console.log(response);
+          resolve(response)
+        })
+    })
+
   },
 
   // view order details

@@ -40,33 +40,39 @@
                           </thead>
                           <tbody>
                               <% wishlistItems.forEach(function(wishlistItems){%>
-                              <tr>
-                                  <td class="image product-thumbnail"><img src="/uploads/<%=wishlistItems.wishlistItems.Image %>" alt="#"></td>
-                                  <td class="product-des product-name">
-                                      <h5 class="product-name"><a href="shop-product-right.html"><%=wishlistItems.wishlistItems.Productname%></a></h5>
-                                  </td>
-                                  <td class="price" data-title="Price"><span><%=wishlistItems.wishlistItems.Price%></span></td>
+                                <% if (wishlistItems.wishlistItems.unlist) { %>
 
-                                  <td class="price" data-title="Price"><span><%=wishlistItems.wishlistItems.offerPrice%></span></td>
-                                  
-                                  <td class="text-right" data-title="Cart">
-
-                                    <% if (wishlistItems.wishlistItems.Quantity === 0) { %>
-                                      <p class="text-danger">Item currently out of stock</p>
                                     <% } else { %>
-                                      <button type="button" aria-label="Add To Cart" class="action-btn btn-dark hover-up round-black-btn small-btn"  onclick="addtocart('<%-wishlistItems.item%>'),Swal.fire({
-                                        position: 'center',
-                                        icon: 'success',
-                                        title: 'Item Added Successfully To Cart',
-                                        showConfirmButton: false,
-                                        timer: 2000
-                                      })" >  Add to cart </button> 
+                                    
+                                        <tr>
+                                            <td class="image product-thumbnail"><img src="/uploads/<%=wishlistItems.wishlistItems.Image[0] %>" alt="#"></td>
+                                            <td class="product-des product-name">
+                                                <h5 class="product-name"><a href="shop-product-right.html"><%=wishlistItems.wishlistItems.Productname%></a></h5>
+                                            </td>
+                                            <td class="price" data-title="Price"><span><%=wishlistItems.wishlistItems.Price%></span></td>
+          
+                                            <td class="price" data-title="Price"><span><%=wishlistItems.wishlistItems.offerPrice%></span></td>
+                                            
+                                            <td class="text-right" data-title="Cart">
+          
+                                              <% if (wishlistItems.wishlistItems.Quantity === 0) { %>
+                                                <p class="text-danger">Item currently out of stock</p>
+                                              <% } else { %>
+                                                <button type="button" aria-label="Add To Cart" class="action-btn btn-dark hover-up round-black-btn small-btn"  onclick="addtocart('<%-wishlistItems.item%>'),Swal.fire({
+                                                  position: 'center',
+                                                  icon: 'success',
+                                                  title: 'Item Added Successfully To Cart',
+                                                  showConfirmButton: false,
+                                                  timer: 2000
+                                                })" >  Add to cart </button> 
+                                              <% } %>
+                                              
+                                              
+                                            </td>
+                                            <td class="action" data-title="Remove"><a onclick="removeWishList('<%=wishlistItems._id%>','<%=wishlistItems.wishlistItems._id%>')"><i class="fi-rs-trash"></i></a></td>
+                                        </tr>
                                     <% } %>
-                                    
-                                    
-                                  </td>
-                                  <td class="action" data-title="Remove"><a onclick="removeWishList('<%=wishlistItems._id%>','<%=wishlistItems.wishlistItems._id%>')"><i class="fi-rs-trash"></i></a></td>
-                              </tr>
+                       
                           <%}) %>
                              
                           </tbody>

@@ -145,40 +145,6 @@ module.exports = {
 
   // coupon helpers
 
-  // apply coupon
-  applyCoupon: (code, total) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let coupon = await user.coupen.findOne({ couponName: code });
-        if (coupon) {
-          //checking coupon Valid
-
-          if (new Date(coupon.expiry) - new Date() > 0) {
-            //checkingExpiry
-            if (total >= coupon.minPurchase) {
-              //checking max offer value
-              let discountAmount = (total * coupon.discountPercentage) / 100;
-              if (discountAmount > coupon.maxDiscountValue) {
-                discountAmount = coupon.maxDiscountValue;
-                resolve({ status: true, discountAmount: discountAmount });
-              } else {
-                resolve({ status: true, discountAmount: discountAmount });
-              }
-            } else {
-              resolve({
-                status: false,
-                reason: `Minimum purchase value is ${coupon.minPurchase}`,
-              });
-            }
-          } else {
-            resolve({ status: false, reason: "coupon Expired" });
-          }
-        }
-      } catch (error) {
-        throw error;
-      }
-    });
-  },
 
   // validate a coupon
 
@@ -193,25 +159,10 @@ module.exports = {
               _id: userId,
               "coupons.couponName": code,
             });
-            if (!userCouponExists) {
-              couponObj = {
-                couponName: code,
-                user: false,
-              };
-              user.user
-                .updateOne(
-                  { _id: userId },
-                  {
-                    $push: {
-                      coupons: couponObj,
-                    },
-                  }
-                )
-                .then(() => {
-                  resolve({ status: true });
-                });
-            } else {
+            if (userCouponExists) {
               resolve({ status: false, reason: "coupon already used" });
+            } else {
+              resolve({ status: true, reason: "coupon added"});
             }
           } else {
             resolve({ status: false, reason: "coupon expired" });
@@ -246,11 +197,52 @@ module.exports = {
             },
           },
         ]);
+        console.log(usedCoupon);
         if (usedCoupon.length == 1) {
+          resolve({ status: true });
+        }
+        else
+        {
           resolve({ status: true });
         }
       } catch (err) {
         throw err;
+      }
+    });
+  },
+
+  
+  // apply coupon
+  applyCoupon: (code, total) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let coupon = await user.coupen.findOne({ couponName: code });
+        if (coupon) {
+          //checking coupon Valid
+
+          if (new Date(coupon.expiry) - new Date() > 0) {
+            //checkingExpiry
+            if (total >= coupon.minPurchase) {
+              //checking max offer value
+              let discountAmount = (total * coupon.discountPercentage) / 100;
+              if (discountAmount > coupon.maxDiscountValue) {
+                discountAmount = coupon.maxDiscountValue;
+                resolve({ status: true, discountAmount: discountAmount, discount:coupon.discountPercentage, code:code });
+              } else {
+                resolve({ status: true, discountAmount: discountAmount ,  discount:coupon.discountPercentage, code:code});
+              }
+            } else {
+              resolve({
+                status: false,
+                reason: `Minimum purchase value is ${coupon.minPurchase}`,
+              });
+            }
+          } else {
+            resolve({ status: false, reason: "coupon Expired" });
+          }
+        }
+      } catch (error) {
+        throw error;
       }
     });
   },

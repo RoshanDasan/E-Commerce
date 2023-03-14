@@ -25,9 +25,9 @@
                           <% } else { %>
                          
 
-                            <table class="table shopping-summery text-center clean">
+                            <table class="table shopping-summery text-center clean ">
                               <thead>
-                                  <tr class="main-heading">
+                                  <tr class="main-heading" >
                                   
                                       <th scope="col">Image</th>
                                       <th scope="col">Name</th>
@@ -42,11 +42,13 @@
                               <tbody>
                                   
                                   <% cartItems?.forEach(function(cartItems, count=0){%>
+
+                     
                                     
                                   <tr>
                                  
                                      
-                                      <td > <img src="/uploads/<%=cartItems.carted.Image %>" ></td>
+                                      <td > <img src="/uploads/<%=cartItems.carted.Image[0] %>" ></td>
                                       <td class="product-des product-name">
                                           <h5 class="product-name"><a href="shop-product-right.html"><%=cartItems.carted.Productname%></a></h5>
                                           <p class="font-xs"><%=cartItems.carted.category%></p> 
@@ -58,9 +60,9 @@
                                       <td class="text-center" cartItemss-title="Stock">
 
                                           <div class="detail-qty border radius  m-auto">
-                                             <div><button class="cart-item-count mr-5" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',-1)">-</button></div>
-                                              <span id="<%= cartItems.item %>"><%= cartItems.quantity%></span>
-                                              <div>  <button class="cart-item-count ml-5" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',1)">+</button></div> 
+                                             <div><button class="cart-item-count border border-success" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',-1)">-</button></div>
+                                              <div id="<%= cartItems.item %>"><%= cartItems.quantity%></div>
+                                              <div>  <button class="cart-item-count border border-success" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',1)">+</button></div> 
                                           </div>
                                       </td>
                                       <td class="text-right" cartItemss-title="total">
@@ -72,7 +74,7 @@
 
                                       </td>
                                       <!-- <td class="action" cartItemss-title="Remove"><a href="#" class="text-muted"><i class="fi-rs-trash"></i></a></td> -->
-                                      <td class="action" cartItemss-title="Remove"><button class="text-muted" onclick="removeItem('<%=cartItems._id%>','<%=cartItems.item %>')"><i class="fi-rs-trash"></i></button></td>
+                                      <td class="action" cartItemss-title="Remove"><button class="border border-success"  onclick="removeItem('<%=cartItems._id%>','<%=cartItems.item %>')"><i class="fi-rs-trash"></i></button></td>
                                     
                                   </tr>
                                   
@@ -94,69 +96,43 @@
                             <div class="col-lg-6 col-md-12">
                             
                                 
-                                <div class="mb-30 mt-50">
-                                    <div class="heading_s1 mb-3">
-                                        <h4>Apply Coupon</h4>
-                                    </div>
-                                    <div class="total-amount">
-                                        <div class="left">
-                                          <div class="coupon">
-                                            <form action="/cartItems" target="_blank">
-                                              <div class="form-row row justify-content-center">
-                                                <div class="form-group col-lg-6">
-                                                  <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    autocomplete="off"
-                                                    required
-                                                    id="code"
-                                                    placeholder="coupon code"
-                                                  />
-                                                </div>
-                                                <div class="form-group col-lg-6">
-                                                  <button
-                                                    class="btn btn-sm btn-outline-primary bg-light"
-                                                    style="width: 3em; height: 3em"
-                                                    type="button"
-                                                    onclick="couponValidator(this,'<%=total%>')"
-                                                  >
-                                                    <i class="icon-long-arrow-right"></i>
-                                                  </button>
-                                                </div>
-                                              </div>
-                                            </form>
-                                            <span class="couponErr"></span>
-                                          </div>
-                                        </div>
-                                      </div>
-                                </div>
+                    
                             </div>
+                          <% if (count == 0) { %>
+
+                           
+                          <% } else { %>
+
                             <div class="col-lg-6 col-md-12">
-                                <div class="border p-md-4 p-30 border-radius cartItems-totals">
-                                    <div class="heading_s1 mb-3">
-                                        <h4>cartItems Totals</h4>
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cartItems_total_label">cartItems Subtotal</td>
-                                                    <td class="cartItems_total_amount"><span id="subtotal" class="font-lg fw-900 text-brand"><%=total%></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="cartItems_total_label">Shipping</td>
-                                                    <td class="cartItems_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="cartItems_total_label">Total</td>
-                                                    <td class="cartItems_total_amount"><strong><span id="total" class="font-xl fw-900 text-brand "><%= total%></span></strong></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <a href="/check_out" class="btn "> <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</a>
-                                </div>
-                            </div>
+                              <div class="border p-md-4 p-30 border-radius cartItems-totals">
+                                  <div class="heading_s1 mb-3">
+                                      <h4>cartItems Totals</h4>
+                                  </div>
+                                  <div class="table-responsive">
+                                      <table class="table">
+                                          <tbody>
+                                              <tr>
+                                                  <td class="cartItems_total_label">cartItems Subtotal</td>
+                                                  <td class="cartItems_total_amount"><span id="subtotal" class="font-lg fw-900 text-brand"><%=total%></span></td>
+                                              </tr>
+                                              <tr>
+                                                  <td class="cartItems_total_label">Shipping</td>
+                                                  <td class="cartItems_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
+                                              </tr>
+                                              <tr>
+                                                  <td class="cartItems_total_label">Total</td>
+                                                  <td class="cartItems_total_amount"><strong><span id="total" class="font-xl fw-900 text-brand "><%= total%></span></strong></td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                                  <a href="/check_out" class="btn "> <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</a>
+                              </div>
+                          </div>
+
+                          <% } %>
+
+
                         </div>
                     </div>
                 </div>

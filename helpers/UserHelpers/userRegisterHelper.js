@@ -1,28 +1,28 @@
 const user = require("../../models/connection");
 const bcrypt = require("bcrypt");
 
+
 module.exports = {
   //sign up
   doSignUp: (userData) => {
-    let response = {};
+  
     return new Promise(async (resolve, reject) => {
       try {
-        email = userData.email;
-        existingUser = await user.user.findOne({ email });
-        if (existingUser) {
-          response = { status: false };
-          return resolve(response);
+        let email = userData.email;
+        let existingUser = await user.user.findOne({ email });
+        if(existingUser) {
+           resolve({ status: false });
         } else {
-          var hashedPassword = await bcrypt.hash(userData.password, 10);
-          const data = new user.user({
+          let hashedPassword = await bcrypt.hash(userData.password, 10);
+          let data = new user.user({
             username: userData.username,
             Password: hashedPassword,
             email: userData.email,
             phonenumber: userData.phonenumber,
           });
 
-          await data.save(data).then((data) => {
-            resolve({ data, status: true });
+          await data.save().then((data) => {
+            resolve({ status: true });
           });
         }
       } catch (err) {
@@ -44,8 +44,8 @@ module.exports = {
               .compare(userData.password, users.Password)
               .then((status) => {
                 if (status) {
-                  userName = users.username;
-                  id = users._id;
+                  let userName = users.username;
+                  let id = users._id;
                   // response.status
                   resolve({ response, loggedinstatus: true, userName, id });
                 } else {
@@ -58,8 +58,29 @@ module.exports = {
         } else {
           resolve({ loggedinstatus: false });
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     });
+  },
+
+  // get user details for otp login
+
+  getUser:(number)=>
+  {
+    let response = {}
+    return new Promise(async (resolve, reject) => {
+      await user.user.findOne({phonenumber:number}).then((result)=>
+      {
+        if(result)
+        {
+          let userName = result.username
+          let id = result._id
+          resolve({ response, loggedinstatus: true, userName, id });
+        }
+      })
+    })
+
   },
 
   // password update in forgett password

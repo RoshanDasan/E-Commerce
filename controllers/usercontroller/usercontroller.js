@@ -7,40 +7,38 @@ const cartAndWishlistHelpers = require("../../helpers/UserHelpers/cartAndWishlis
 const adminCategoryHelper = require("../../helpers/adminHelpers/adminCategoryHelper");
 const otpLogin = require("../../OTP/otpLogin");
 const client = require("twilio")(otpLogin.AccountSId, otpLogin.authtoken);
-const user = require("../../models/connection");
-const { response } = require("../../app");
+const db = require("../../models/connection");
 
-let total, count, wishcount;
+const userRegisterHelper = require("../../helpers/UserHelpers/userRegisterHelper");
+
+let total, count, wishcount, users, user, mobilenumber;
 module.exports = {
   // user home
   getHome: async (req, res) => {
     let bannerData = await shopHelpers.getBannetData();
-    console.log(bannerData);
 
     if (req.session.loggedIn) {
       let users = req.session.user;
       count = await cartAndWishlistHelpers.getCartCount(req.session.user.id);
-      wishcount = await cartAndWishlistHelpers.getWishCount(
-        req.session.user.id
-      );
+      wishcount = await cartAndWishlistHelpers.getWishCount(req.session.user.id);
 
       res.render("user/user", { users, count, bannerData, wishcount });
     } else {
-      let products = await shopHelpers.shopListProduct();
       res.render("user/user", { bannerData });
     }
   },
-  // get user login
   getUserLogin: (req, res) => {
     if (req.session.loggedIn) {
       res.redirect("/");
     } else {
-      res.render("user/user");
+      res.render("user/login");
     }
   },
   // post user login
   postUserLogin: (req, res) => {
+    console.log(req.body);
     userhelpers.doLogin(req.body).then((response) => {
+      console.log(response);
       req.session.loggedIn = true;
       req.session.user = response;
 
@@ -57,8 +55,8 @@ module.exports = {
   //get signup
 
   getSignUp: (req, res) => {
-    emailStatus = true;
-    if (req.session.userloggedIn) {
+    let emailStatus = true;
+    if (req.session.loggedIn) {
       res.redirect("/login");
     } else {
       res.render("user/signup", { emailStatus });
@@ -67,7 +65,7 @@ module.exports = {
   //post sign up
   postSignUp: (req, res) => {
     userhelpers.doSignUp(req.body).then((response) => {
-      var emailStatus = response.status;
+      let emailStatus = response.status;
       if (emailStatus) {
         res.redirect("/login");
       } else {
@@ -75,10 +73,10 @@ module.exports = {
       }
     });
   },
+  //getuser logout
 
   getLogout: (req, res) => {
-    req.session.user = null;
-    req.session.userloggedIn = false;
+    req.session.loggedIn = null;
     res.render("user/login");
   },
 
@@ -123,7 +121,8 @@ module.exports = {
 
   postOtpLogin: async (req, res) => {
     mobilenumber = req.body.number;
-    let users = await user.user.find({ phonenumber: mobilenumber }).exec();
+    let users = await db.user.findOne({ phonenumber: mobilenumber }).exec();
+
     if (users == false) {
       res.render("user/otpLogin", { userExist: true });
     } else {
@@ -146,18 +145,22 @@ module.exports = {
     res.render("user/otpPage");
   },
 
-  postVerify: (req, res) => {
-    otpNumber = req.body.otp;
+  postVerify: async (req, res) => {
+    let otpNumber = req.body.otp;
+  
+    let getUser = await userRegisterHelper.getUser(mobilenumber)
+    console.log(getUser);
+
     client.verify.v2
       .services(otpLogin.serviceId)
       .verificationChecks.create({ to: `+91 ${mobilenumber}`, code: otpNumber })
-      .then((verification_check) => {
+      .then(async (verification_check) => {
         if (verification_check.status == "approved") {
-          req.session.userloggedIn = true;
+          req.session.user = getUser
+          req.session.loggedIn = true;
+          res.redirect('/')
 
-          userSession = req.session.userloggedIn;
-
-          res.render("user/user", { userSession });
+       
         } else {
           res.render("user/otpPage", { invalidOtp: true });
         }
@@ -176,6 +179,7 @@ module.exports = {
 
   shopProduct: async (req, res) => {
     let pageNum = req.query.page;
+    console.log(pageNum);
     let perpage = 6;
     let users = req.session.user;
     let docCount = await userproductHelpers.getDocCount();
@@ -237,9 +241,9 @@ module.exports = {
 
   addToCart: async (req, res) => {
     cartAndWishlistHelpers
-      .addToCartItem(req.params.id, req.session.user.id)
+      .addToCartItem(req.params.id, req.session.user.id, count)
       .then((response) => {
-        res.json(response.status);
+        res.json(response);
       });
   },
 
@@ -254,7 +258,6 @@ module.exports = {
     total = await orderHelpers.totalCheckOutAmount(req.session.user.id);
 
     let subtotal = await orderHelpers.subtotal(req.session.user.id);
-    console.log(subtotal);
 
     cartAndWishlistHelpers
       .listAddToCart(req.session.user.id)
@@ -282,11 +285,9 @@ module.exports = {
     let users = req.session.user;
     let count = await cartAndWishlistHelpers.getCartCount(req.session.user.id);
     wishcount = await cartAndWishlistHelpers.getWishCount(req.session.user.id);
-    let wishlistItems = await cartAndWishlistHelpers.viewWishlist(
-      req.session.user.id
-    );
-    console.log(wishlistItems);
+    let wishlistItems = await cartAndWishlistHelpers.viewWishlist(req.session.user.id);
 
+    console.log(wishlistItems);
     res.render("user/wishlist", {
       users,
       user,
@@ -378,7 +379,7 @@ module.exports = {
   checkOutPage: async (req, res) => {
     let user = req.session.user.id;
     let users = req.session.user;
-    
+
     let walletAmount;
 
     let cartItems = await cartAndWishlistHelpers.listAddToCart(
@@ -393,6 +394,7 @@ module.exports = {
       walletAmount = false;
     }
 
+    console.log(users.id);
     orderHelpers.checkOutpage(req.session.user.id).then((response) => {
       let addressLength = response.length;
       res.render("user/checkout", {
@@ -410,9 +412,16 @@ module.exports = {
   },
 
   postcheckOutPage: async (req, res) => {
-    let total = await orderHelpers.totalCheckOutAmount(req.session.user.id);
+    console.log(req.body);
+    let total = req.body.total
+    let couponName = req.body.couponCode
+
+    await orderHelpers.addCouponToUser(couponName,req.session.user.id)
+
     let proId = await orderHelpers.getProId(req.body);
+
     await orderHelpers.ChangeQuantity(proId);
+
     await orderHelpers.placeOrder(req.body, total).then(async (result) => {
       if (req.body["payment-method"] == "COD") {
         res.json({ codstatus: true });
@@ -492,7 +501,7 @@ module.exports = {
     let users = req.session.user;
     let userId = req.session.user.id;
 
-    let userdata = await user.user
+    let userdata = await db.user
       .findOne({ _id: userId, phonenumber: data.oldNumber })
       .exec();
 
@@ -556,15 +565,6 @@ module.exports = {
     res.render("user/order_success", { count, wishcount });
   },
 
-  applyCoupon: async (req, res) => {
-    let code = req.query.code;
-    let total = await orderHelpers.totalCheckOutAmount(req.session.user);
-    shopHelpers.applyCoupon(code, total).then((response) => {
-      couponPrice = response.discountAmount ? response.discountAmount : 0;
-      res.json(response);
-    });
-  },
-
   applyCouponSuccess: (req, res) => {
     let code = req.query.code;
     shopHelpers.couponValidator(code, req.session.user.id).then((response) => {
@@ -575,6 +575,15 @@ module.exports = {
   couponVerify: (req, res) => {
     let code = req.query.code;
     shopHelpers.couponVerify(code, req.session.user.id).then((response) => {
+      res.json(response);
+    });
+  },
+
+  applyCoupon: async (req, res) => {
+    let code = req.query.code;
+    let total = await orderHelpers.totalCheckOutAmount(req.session.user);
+    shopHelpers.applyCoupon(code, total).then((response) => {
+      let couponPrice = response.discountAmount ? response.discountAmount : 0;
       res.json(response);
     });
   },

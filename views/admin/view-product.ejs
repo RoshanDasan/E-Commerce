@@ -43,11 +43,21 @@
                   <td><%=response.category%></td> 
                   <td><%=response.Quantity%></td> 
                 
-                  <td><img src='/uploads/<%= response.Image %>' alt="" style="width:50px;height:50px";></td>
+                  <td><img src='/uploads/<%= response.Image[0] %>' alt="" style="width:50px;height:50px";></td>
                   <td>
-                        <a href ="/admin/edit_product/<%=response._id %>"  class="btn btn-success">Edit</a>
+                        <a href ="/admin/edit_product/<%=response._id %>"  class="btn btn-success text-white">Edit</a>
                  
-                        <a href ="/admin/delete_product/<%=response._id %>" class="btn btn-danger"   onclick="return confirm('are you want to Delete <%=response.Productname%>?')">Delete</a>
+                        <!-- <a href ="/admin/delete_product/<%=response._id %>" class="btn btn-danger"   onclick="return confirm('are you want to Delete <%=response.Productname%>?')">Delete</a> -->
+
+                        
+                      <% if (response.unlist) { %>
+                        <button class="btn btn-success text-white" onclick="unlistProduct('<%=response._id %>',false)">List</button>
+                        <% } else { %>
+                          <button class="btn btn-info text-white" onclick="unlistProduct('<%=response._id %>',true)">Unlist</button>
+                        <% } %>
+
+                        
+
                   </td>
     
                  
@@ -62,3 +72,24 @@
     </div>
   </section>
   
+
+  <script>
+    function unlistProduct(proId, condition)
+    {
+      console.log(proId, condition);
+      $.ajax({
+        url:'/admin/unlistProduct/',
+        method: 'PUT',
+        data:{
+          proId:proId,
+          condition:condition
+        },
+        success:(response)=>
+        {
+          console.log(response);
+          location.reload()
+        }
+        
+      })
+    }
+  </script>

@@ -16,9 +16,9 @@ module.exports = {
       };
 
       res.render("admin/view-coupon", {
+        layout: "adminLayout",
         coupon,
         getDate,
-        layout: "adminLayout",
         admins,
       });
     }
@@ -48,4 +48,16 @@ module.exports = {
       res.json(response);
     });
   },
+
+  deleteCoupon:(req, res)=>
+  {
+    console.log(req.params.id);
+    couponHelper.deleteCoupon(req.params.id).then((result)=>
+    {
+      res.json(true)
+    }).catch((result)=>
+    {
+      res.json(false)
+    })
+  }
 };

@@ -67,40 +67,23 @@
 
           <label for="">Image 1</label>
           <br />
-          <img
-            src="/uploads/<%=editproduct.Image[0]%>"
-            alt=""
-            style="width: 100px; height: auto"
-            id="picturePreview"
-          />
-          <br />
-          <input
-            type="file"
-            name="file1"
-            class="form-control"
-            id="pictureInput"
-          />
+          <img src="/uploads/<%=editproduct?.Image[0]%>" alt="" style="width:100px;height:auto ">
+          <img src="/uploads/<%=editproduct?.Image[1]%>" alt="" style="width:100px;height:auto ">
+          <img src="/uploads/<%=editproduct?.Image[2]%>" alt="" style="width:100px;height:auto ">
+          <img src="/uploads/<%=editproduct?.Image[3]%>" alt="" style="width:100px;height:auto ">
+        
+          
+          <input type="file" name="image1" class="form-control" >
+          <input type="file" name="image2" class="form-control" >
+          <input type="file" name="image3" class="form-control" >
+          <input type="file" name="image4" class="form-control" >
 
-          <p id="imagesrc" style="display: none">
-            /uploads/<%=editproduct.Image%>
-          </p>
-          <!-- <label for="">Image 2</label>
-          <br>
-          <img src="/uploads/<%=editproduct.Image[1]%>" alt="" style="width:100px;height:auto">
-          <br>
-          <input type="file" name="file1" class="form-control" />
+          <input style="display: none;" type="text" name="image1" id="" value="<%=editproduct?.Image[0]%>">
+          <input style="display: none;"type="text" name="image2" id="" value="<%=editproduct?.Image[1]%>">
+          <input style="display: none;"type="text" name="image3" id="" value="<%=editproduct?.Image[2]%>">
+          <input style="display: none;"type="text" name="image4" id="" value="<%=editproduct?.Image[3]%>">
 
-          <label for="">Image</label>
-          <br>
-          <img src="/uploads/<%=editproduct.Image[2]%>" alt="" style="width:100px;height:auto">
-          <br>
-          <input type="file" name="file1" class="form-control"/>
-
-          <label for="">Image</label>
-          <br>
-          <img src="/uploads/<%=editproduct.Image[3]%>" alt="" style="width:100px;height:auto">
-          <br>
-          <input type="file" name="file1" class="form-control"/> -->
+          
 
           <button type="submit" class="btn btn-success mt-4">Submit</button>
         </form>

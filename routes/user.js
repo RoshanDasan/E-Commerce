@@ -6,9 +6,7 @@ const auths=require('../middlewares/middleware')
 
 router.get("/",controllers.getHome)
 
-router.get("/login",auths.userauth, controllers.getUserLogin)
-
-router.post("/login", controllers.postUserLogin ) 
+router.route("/login").get(auths.userauth, controllers.getUserLogin).post(controllers.postUserLogin )
 
 router.get("/signup",controllers.getSignUp)
 
@@ -62,29 +60,29 @@ router.post("/add_address",auths.userauth, controllers.postAddresspage)
 
 router.delete('/delete_cart_item',auths.userauth, controllers.getDeleteCart)
 
-router.get('/change_number', controllers.getChangeNumber)
+router.get('/change_number',auths.userauth, controllers.getChangeNumber)
 
 router.post('/change_number', controllers.postChangeNumber)
 
-router.get('/view_address', controllers.getViewAddress)
+router.get('/view_address',auths.userauth, controllers.getViewAddress)
 
 router.delete('/delete_address', controllers.deleteAddress)
 
-router.get('/order',controllers.getOrderList)
+router.get('/order',auths.userauth,controllers.getOrderList)
 
-router.get('/order_success', controllers.GetSuccessPage)
+router.get('/order_success',auths.userauth, controllers.GetSuccessPage)
 
-router.get('/order_details',controllers.orderDetails)
+router.get('/order_details',auths.userauth,controllers.orderDetails)
 
 router.get('/order_cancel/:id', controllers.getCancelOrder)
 
 router.get('/order_return/:id', controllers.getReturnOrder)
 
-router.get('/apply_coupon', controllers.applyCoupon)
-
 router.get('/coupon_validator', controllers.applyCouponSuccess) 
 
 router.get('/coupon_verify', controllers.couponVerify)
+
+router.get('/apply_coupon', controllers.applyCoupon)
 
 router.post('/search',auths.userauth,controllers.getSearch)
 

@@ -1,4 +1,3 @@
-const { response } = require("../../app");
 const adminHelper = require("../../helpers/adminHelpers/adminProductHelpers");
 const orderHelper = require("../../helpers/adminHelpers/orderHelper");
 
@@ -80,8 +79,15 @@ module.exports = {
     let getOnlineCount = await adminHelper.getOnlineCount();
     let onlineCount = getOnlineCount.length;
 
+    let getWalletCount = await adminHelper.getWalletCount();
+    let WalletCount = getWalletCount.length;
+
+
+
     paymentCount.push(onlineCount);
     paymentCount.push(codCount);
+    paymentCount.push(WalletCount);
+
 
     await orderHelper.getAllOrders().then((response) => {
       var length = response.length;

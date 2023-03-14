@@ -7,46 +7,17 @@ const ObjectId = require("mongodb").ObjectId;
 module.exports = 
 {
 
-    // get order
-
-    getOrder: (userId) => {
-        return new Promise(async (resolve, reject) => {
-          await user.order
-            .aggregate([
-              {
-                $match: { user: ObjectId(userId) },
-              },
-              {
-                $unwind: "$orders",
-              },
-              {
-                $sort: { "orders.createdAt": -1 },
-              },
-              {
-                $project: {
-                  item: "$orders",
-                },
-              },
-              {
-                $project: {
-                  item: 1,
-                },
-              },
-            ])
-            .then((response) => {
-              resolve(response);
-            });
-        });
-      },
-
 
         // get all order list
 
   getAllOrders: () => {
     return new Promise(async (resolve, reject) => {
       let order = await user.order
-        .aggregate([{ $unwind: "$orders" }])
+        .aggregate([{ $unwind: "$orders" },
+        { $sort: { "orders.createdAt": -1 } } 
+      ])
         .then((response) => {
+          console.log(response);
           resolve(response);
         });
     });

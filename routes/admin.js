@@ -1,15 +1,10 @@
 var express = require("express");
-const { getMaxListeners } = require("../app");
 const adminController=require('../controllers/admincontroller/adminlogin')
 const admincategorycontroller=require('../controllers/admincontroller/category')
-const adminHelper=require('../helpers/adminHelpers/adminProductHelpers')
 const adminusercontroller=require('../controllers/admincontroller/adminuser')
 const adminproductcontroller=require('../controllers/admincontroller/product')
 const adminCouponController = require('../controllers/admincontroller/adminCoupon')
 var router = express.Router();
-const user = require("../models/connection");
-const multer= require('multer');
-const { doLogin } = require("../helpers/UserHelpers/userRegisterHelper");
 const upload=require('../multer/multer')
 const auths=require('../middlewares/middleware')
 
@@ -51,7 +46,7 @@ router.post("/edit_product/:id",auths.auth,upload.editeduploads,adminproductcont
 
 router.get("/delete_product/:id",auths.auth,adminproductcontroller.deleteViewProduct)
 
-router.get("/order",auths.auth, adminproductcontroller.getOrderList)
+router.put('/unlistProduct', adminproductcontroller.UnlistProduct)
 
 router.get('/view_orders',adminController.getAllOrderds)
 
@@ -62,6 +57,8 @@ router.get('/add_coupons',auths.auth, adminCouponController.getAddCoupon)
 router.post('/add_coupons',adminCouponController.postAddCoupon)
 
 router.get("/generate_coupon",auths.auth,adminCouponController.generateCoupon);
+
+router.delete('/coupon_delete/:id', adminCouponController.deleteCoupon)
 
 router.put('/orderStatus', adminproductcontroller.getEditOrderStatus)
 

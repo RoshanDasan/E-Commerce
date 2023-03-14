@@ -67,13 +67,16 @@
   
 
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="payment-method" value="online"  >
+    <input class="form-check-input" type="radio" name="payment-method" value="online" >
     <label class="form-check-label" for="flexRadioDefault1">
       Online payment
     </label>
   </div>
   <div class="form-group">
-      <input   name="user"  value="<%=users%>"  type="hidden"  >
+      <input   name="user"  value="<%=users.id%>" type="hidden" >
+      <input   name="total" id="total1"  value="<%=total%>" type="hidden" >
+      <input   type="hidden" name="couponCode" id="codes" value="0">
+
   </div>
 </div>
 <button type="submit"  class="btn btn-fill-out btn-block mt-30">Proceed to payment</button>
@@ -114,7 +117,7 @@
                     <tr>
                        
                             
-                        <td class="image product-thumbnail"><img src="/uploads/<%=cartItems.carted.Image %>"  ></td>
+                        <td class="image product-thumbnail"><img src="/uploads/<%=cartItems.carted.Image[0] %>"  ></td>
                         <td>
                             
                             <h5><a href="shop-product-full.html"><%=cartItems.carted.Productname%></a></h5> <span class="product-qty"> x<%=cartItems.quantity%></span>
@@ -134,11 +137,11 @@
                     </tr>
                     <tr>
                       <th>Your Special Offer</th>
-                      <td colspan="2"><%= cartItems[0].carted.productsOffer%></td>
+                      <td colspan="2"><em id="couponOffer"></em></td>
                   </tr>
                     <tr>
                         <th>Total</th>
-                        <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900"><%=total%></span></td>
+                        <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900" id="total"><%=total%></span></td>
                      
                     </tr>
                 </tbody>
@@ -151,6 +154,42 @@
                     
                 </div>
             </div>
+            <div class="m-5">
+              <div class="heading_s1 mb-3">
+                  <h4>Apply Coupon</h4>
+              </div>
+              <div class="total-amount">
+                  <div class="left">
+                    <div class="coupon">
+                      <form action="/cartItems" target="_blank">
+                        <div class="form-row row justify-content-center">
+                          <div class="form-group col-lg-6">
+                            <input
+                              type="text"
+                              class="form-control"
+                              autocomplete="off"
+                              required
+                              id="code"
+                              placeholder="coupon code"
+                            />
+                          </div>
+                          <div class="form-group col-lg-6">
+                            <button
+                              class="btn btn-sm btn-outline-primary bg-light"
+                              style="width: 3em; height: 3em"
+                              type="button"
+                              onclick="couponValidator(this,'<%=total%>')"
+                            >
+                              <i class="icon-long-arrow-right"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                      <span class="couponErr"></span>
+                    </div>
+                  </div>
+                </div>
+          </div>
         </section>
   
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -228,5 +267,52 @@
                   }
               })
             }
+
+
+            
+function couponValidator(elem, total) {
+    code = document.getElementById("code").value.trim();
+    $.ajax({
+      url: "/coupon_validator?code="+code,
+      method: "get",
+      success: (response) => {
+
+        if (response.status == true) {
+             
+                $.ajax({
+                  url: "/apply_coupon?code=" + code,
+                  method: "get",
+                  success: (response) => {
+
+                    if (response.status == true) {
+                      document.querySelector(".couponErr").style.color ="#19ff11";
+                      document.querySelector(".couponErr").innerHTML ="Coupon Applied Succesfully";
+                      document.getElementById("total").innerHTML = total - response.discountAmount;
+                      document.getElementById("total1").value = total - response.discountAmount;
+                      document.getElementById("couponOffer").innerHTML = response.discount+'%';
+                      document.getElementById("codes").value = response.code;
+
+
+                  
+                    } else {
+                      document.querySelector(".couponErr").style.color ="#ff0707";
+                      document.querySelector(".couponErr").innerHTML =response.reason;
+                    }
+                  },
+                });
+              } else {
+                document.querySelector(".couponErr").style.color = "#ff0707";
+                document.querySelector(".couponErr").innerHTML = response.reason;
+
+                setTimeout(function () {
+                 location.reload()
+                }, 3000);
+              }
+            },
+      
+    });
+  }
+
+
           
           </script>

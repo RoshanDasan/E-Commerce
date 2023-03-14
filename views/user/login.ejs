@@ -1,5 +1,4 @@
 <section>
-
   <main class="main">
     <section class="p-auto my-5">
       <div class="container">
@@ -8,50 +7,76 @@
             <div class="row d-flex justify-content-center">
               <div class="col-lg-6">
                 <div
-                  class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5">
+                  class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5"
+                >
                   <div class="padding_eight_all bg-white">
                     <div class="heading_s1">
                       <h3 class="mb-30">Login</h3>
                     </div>
 
-
                     <%if (locals.blockedStatus){%>
-                      <p style="color: red;" class="message">You are blocked by admin </p>
-                      <%}%>
+                    <p style="color: red" class="message">
+                      You are blocked by admin
+                    </p>
+                    <%}%> <%if(locals.loggedinstatus==false){%>
+                    <p style="color: red" class="message">
+                      Invalid email or password
+                    </p>
+                    <%}%>
 
-                        <%if(locals.loggedinstatus==false){%>
-                        <p style="color: red;" class="message">Invalid email or password</p>
-                        <%}%>
-
-                          <form action="/login" method="post">
-                            <div class="form-group">
-                              <input type="" required="" name="email" placeholder="Your Email/Mobile Number" />
-                            </div>
-                            <div class="form-group">
-                              <input required="" type="password" name="password" placeholder="Password" />
-                            </div>
-                            <div class="login_footer form-group">
-                              <div class="chek-form">
-                                <div class="custome-checkbox">
-                                  <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1"
-                                    value="" />
-                                  <label class="form-check-label" for="exampleCheckbox1"><span>Remember
-                                      me</span></label>
-                                </div>
-                              </div>
-                              <a class="text-muted" href="/update_password">Forgot password?</a>
-                            </div>
-                            <div class="form-group">
-                              <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login"
-                                style="width: 100%">
-                                Log in
-                              </button>
-                            </div>
-                            <div>
-                              <p class="mb-3 text-center text-success">OR</p>
-                            </div>
-                            <div class="form-group">
-                              <!-- <button
+                    <form action="/login" method="post">
+                      <div class="form-group">
+                        <input
+                          type=""
+                          required=""
+                          name="email"
+                          placeholder="Your Email/Mobile Number"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <input
+                          required=""
+                          type="password"
+                          name="password"
+                          placeholder="Password"
+                        />
+                      </div>
+                      <div class="login_footer form-group">
+                        <div class="chek-form">
+                          <div class="custome-checkbox">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              name="checkbox"
+                              id="exampleCheckbox1"
+                              value=""
+                            />
+                            <label
+                              class="form-check-label"
+                              for="exampleCheckbox1"
+                              ><span>Remember me</span></label
+                            >
+                          </div>
+                        </div>
+                        <a class="text-muted" href="/update_password"
+                          >Forgot password?</a
+                        >
+                      </div>
+                      <div class="form-group">
+                        <button
+                          type="submit"
+                          class="btn btn-fill-out btn-block hover-up"
+                          name="login"
+                          style="width: 100%"
+                        >
+                          Log in
+                        </button>
+                      </div>
+                      <div>
+                        <p class="mb-3 text-center text-success">OR</p>
+                      </div>
+                      <div class="form-group">
+                        <!-- <button
                           type="submit"
                           class="btn btn-fill-out btn-block hover-up"
                           name="login"
@@ -59,12 +84,16 @@
                         >
                           Request OTP
                         </button> -->
-                              <a href="/otplogin" class="btn btn-warning w-100">Request OTP</a>
-                            </div>
-                            <div>
-                              <a class="ms-5" href="/signup">New ? Create An Account</a>
-                            </div>
-                          </form>
+                        <a href="/otplogin" class="btn btn-warning w-100"
+                          >Request OTP</a
+                        >
+                      </div>
+                      <div>
+                        <a class="ms-5" href="/signup"
+                          >New ? Create An Account</a
+                        >
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -74,12 +103,4 @@
       </div>
     </section>
   </main>
- 
 </section>
-
-
-<script>
-  setTimeout(function () {
-    document.querySelector('.message').style.display = 'none';
-  }, 3000);
-</script

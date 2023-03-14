@@ -1,5 +1,4 @@
 const user = require("../../models/connection");
-const ObjectId = require("mongodb").ObjectId;
 
 module.exports = {
   //get add product
@@ -20,7 +19,7 @@ module.exports = {
   postAddProduct: (userdata, filename) => {
 
     return new Promise((resolve, reject) => {
-      ImageUpload = new user.product({
+      let ImageUpload = new user.product({
         Productname: userdata.name,
         ProductDescription: userdata.description,
         Quantity: userdata.quantity,
@@ -66,6 +65,22 @@ module.exports = {
         });
     });
   },
+
+  // unlist product
+  unlistProduct:(proId, condition)=>
+  {
+    return new Promise(async (resolve, reject) => {
+      await user.product.updateOne({_id:proId},
+        {$set:{unlist:condition}}).then((response)=>
+        {
+          resolve(response)
+        }).catch((err)=>
+        {
+          reject(err)
+        })
+    })
+
+  },
   //post editproduct
   postEditProduct: (productId, editedData, filename) => {
     return new Promise(async (resolve, reject) => {
@@ -94,6 +109,7 @@ module.exports = {
           resolve(response);
         });
     });
+   
   },
   
   //  imported from view category
@@ -212,6 +228,24 @@ module.exports = {
       ]);
       resolve(response);
     });
+  },
+
+  getWalletCount:()=>
+  {
+    return new Promise(async (resolve, reject) => {
+      let response = await user.order.aggregate([
+        {
+          $unwind: "$orders",
+        },
+        {
+          $match: {
+            "orders.paymentmode": "wallet",
+          },
+        },
+      ]);
+      resolve(response);
+    });
+
   },
 
   getSalesReport: async () => {

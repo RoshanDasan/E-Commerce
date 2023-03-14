@@ -89,7 +89,7 @@
       </div>
 
       <div>
-        <p  id="days"><%= JSON.stringify(locals.ordersPerDay) %></p>
+        <p  id="days"style="visibility: hidden;" ><%= JSON.stringify(locals.ordersPerDay) %></p>
         <p style="visibility: hidden;" id="payment"><%= JSON.stringify(locals.paymentCount) %></p>
 
       </div>
@@ -152,19 +152,21 @@
 
 
     
-  var xValue = ["Online","COD"];
+  var xValue = ["Online","COD","Wallet"];
   var yValue = [];
          let paymentData = JSON.parse(document.getElementById('payment').innerHTML);
          console.log(paymentData);
 
        yValue.push(paymentData[0])
        yValue.push(paymentData[1])
+       yValue.push(paymentData[2])
+
          
   var barColors = [
     "green",
     "yellow",
+    "blue",
     "red",
-    "green",
     "#1e7145"
   ];
   
