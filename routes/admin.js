@@ -64,7 +64,7 @@ router.put('/orderStatus', adminproductcontroller.getEditOrderStatus)
 
 router.get("/add_banner",auths.auth, adminController.getAddBanner)
 
-router.post("/add_banner",upload.addBannerupload,auths.auth, adminController.postAddBanner)
+router.post("/add_banner",upload.addBannerupload, adminController.postAddBanner)
 
 router.get("/list_banner",auths.auth, adminController.listBanner)
 
