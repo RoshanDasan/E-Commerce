@@ -62,7 +62,12 @@
                                           <div class="detail-qty border radius  m-auto">
                                              <div><button class="cart-item-count border border-success" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',-1)">-</button></div>
                                               <div id="<%= cartItems.item %>"><%= cartItems.quantity%></div>
+                                              <% if (cartItems.quantity<cartItems.carted.Quantity) { %>
                                               <div>  <button class="cart-item-count border border-success" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',1)">+</button></div> 
+                                                <% } else { %>
+
+                                              <div>  <button class="cart-item-count border border-success" onclick="changeQuantity('<%= cartItems._id%>','<%= cartItems.item %>','<%= userId.id %>',1)"  disabled>+</button></div> 
+                                                <% } %>
                                           </div>
                                       </td>
                                       <td class="text-right" cartItemss-title="total">
@@ -166,6 +171,7 @@
      },
 
      success:(response)=>{  
+      location.reload()
        if(response.removeProduct){
            alert("Removed Product From Cart")
            location.reload()

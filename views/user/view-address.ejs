@@ -27,7 +27,9 @@
                         <h5><%=response.item.email%></h5>
     
     
-                <button class="btn mt-4" onclick="deleteAddress('<%=response._id%>','<%=response.item._id%>')">Delete This Address</button>       
+                <button class="btn mt-4" onclick="deleteAddress('<%=response._id%>','<%=response.item._id%>')">Delete This Address</button> 
+                <a href="/edit_address/?id=<%=response._id%>" class="btn btn-info text-white">Edit Address</a>  
+                      
             </div>
             
             

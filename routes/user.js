@@ -58,6 +58,14 @@ router.get("/add_address",auths.userauth,controllers.getAddresspage)
 
 router.post("/add_address",auths.userauth, controllers.postAddresspage)
 
+router.get("/add_new_address",auths.userauth,controllers.getNewAddresspage)
+
+router.post("/add_new_address",auths.userauth, controllers.postNewAddresspage)
+
+router.get('/edit_address', auths.userauth, controllers.getEditAddress)
+
+router.post('/edit_address',auths.userauth, controllers.postEditAddress)
+
 router.delete('/delete_cart_item',auths.userauth, controllers.getDeleteCart)
 
 router.get('/change_number',auths.userauth, controllers.getChangeNumber)

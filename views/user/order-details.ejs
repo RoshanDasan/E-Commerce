@@ -29,7 +29,7 @@
                 <div class="row">
                   <div class="col-md-1">
                     <img
-                      src="/uploads/<%=response.image%>"
+                      src="/uploads/<%=response.image[0]%>"
                       class="img-fluid"
                       alt="Phone"
                     />
@@ -169,14 +169,14 @@
                
 
                 <%}%> <%if(orderDetails.orderConfirm == 'delivered'){%>
-                <button onclick="returnOrder('<%=orderDetails._id%>')">
+                <button class="btn btn-danger" onclick="returnOrder('<%=orderDetails._id%>')">
                   Return
                 </button>
                 <% } else if (orderDetails.orderConfirm == 'returned') { %>
                   <!-- <p class="text-danger">Your order was Returned</p> -->
                 <%}else {%>
 
-                <button onclick="cancelOrder('<%=orderDetails._id%>')">
+                <button class="btn btn-info" onclick="cancelOrder('<%=orderDetails._id%>')">
                   Cancel
                 </button>
                 <%}%>

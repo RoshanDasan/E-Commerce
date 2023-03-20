@@ -1,0 +1,319 @@
+<section class="mt-50 mb-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-25">
+            <h4>Add Your address</h4>
+          </div>
+          <form action="/add_new_address" method="post" id="myform">
+            <div class="form-group">
+              <input
+                type="text"
+                name="fname"
+                id="fname"
+                placeholder="First name"
+                onkeyup="validateName()"
+              />
+              <span id="name-error" class="validation-label"></span>
+            </div>
+  
+            <div class="form-group">
+              <input
+                type="text"
+                name="street"
+                id="streetname"
+                placeholder="Street Name"
+                onkeyup="validateStreet()"
+              />
+              <span id="street-error" class="validation-label"></span>
+            </div>
+  
+            <div class="form-group">
+              <input
+                type="text"
+                name="apartment"
+                id="apartment"
+                placeholder="Apartment"
+                onkeyup="validateApartment()"
+              />
+              <span id="apartment-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                name="city"
+                placeholder="City"
+                id="city"
+                onkeyup="validateCity()"
+              />
+              <span id="city-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                name="state"
+                placeholder="State"
+                id="state"
+                onkeyup="validateState()"
+              />
+              <span id="state-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                name="pincode"
+                placeholder="Pincode"
+                id="pincode"
+                onkeyup="validatePincode()"
+              />
+              <span id="pincode-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                name="mobile"
+                placeholder="Mobile"
+                id="mobile"
+                onkeyup="validateMobile()"
+              />
+              <span id="mobile-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                name="email"
+                placeholder="email"
+                id="email"
+                onkeyup="validateEmail()"
+              />
+              <span id="email-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input name="userId" value="<%= user.id%>" type="hidden" />
+            </div>
+  
+            <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+  
+            <button type="submit">
+              Add address
+            </button>
+            <span><a href="/profile" class="btn btn-primary">cancel</a></span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    let nameError = document.getElementById("name-error");
+    let streetError = document.getElementById("street-error");
+    let aparatmentError = document.getElementById("apartment-error");
+    let cityError = document.getElementById("city-error");
+    let stateError = document.getElementById("state-error");
+    let pincodeError = document.getElementById("pincode-error");
+    let mobileError = document.getElementById("mobile-error");
+    let emailError = document.getElementById("email-error");
+    let myform = document.getElementById('myform');
+  
+    const regex = /^[^ ].*/;
+    const mobileRegex = /^\+?\d{10,12}$/;
+    const pinRegex = /^\+?\d{6,8}$/;
+
+  
+    function validateName() {
+      let nameInput = document.getElementById("fname");
+      let name = document.getElementById("fname").value;
+  
+      if (name.length == 0) {
+        nameError.innerHTML = "Name is required";
+        nameError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      if (!name.match(regex)) {
+        nameError.innerHTML = "Write valid name";
+        nameError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      nameError.innerHTML = "";
+      nameError.style.color = "green";
+      nameInput.style.border = "solid 2px green";
+      return true;
+    }
+    function validateStreet() {
+      let nameInput = document.getElementById("streetname");
+      let name = document.getElementById("fname").value;
+  
+      if (name.length == 0) {
+        streetError.innerHTML = "Street name is required";
+        streetError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      if (!name.match(regex)) {
+        streetError.innerHTML = "Write valid name";
+        streetError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      streetError.innerHTML = "";
+      streetError.style.color = "green";
+      nameInput.style.border = "solid 2px green";
+      return true;
+    }
+    function validateApartment() {
+      let nameInput = document.getElementById("apartment");
+      let name = document.getElementById("apartment").value;
+  
+      if (name.length == 0) {
+        aparatmentError.innerHTML = "Apartment is required";
+        aparatmentError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      if (!name.match(regex)) {
+        aparatmentError.innerHTML = "Write valid name";
+        aparatmentError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      aparatmentError.innerHTML = "";
+      aparatmentError.style.color = "green";
+      nameInput.style.border = "solid 2px green";
+      return true;
+    }
+    function validateCity() {
+      let nameInput = document.getElementById("city");
+      let name = document.getElementById("city").value;
+  
+      if (name.length == 0) {
+        cityError.innerHTML = "City is required";
+        cityError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      if (!name.match(regex)) {
+        cityError.innerHTML = "Write valid name";
+        cityError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      cityError.innerHTML = "";
+      cityError.style.color = "green";
+      nameInput.style.border = "solid 2px green";
+      return true;
+    }
+    function validateState() {
+      let nameInput = document.getElementById("state");
+      let name = document.getElementById("state").value;
+  
+      if (name.length == 0) {
+        stateError.innerHTML = "State is required";
+        stateError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      if (!name.match(regex)) {
+        stateError.innerHTML = "Write valid name";
+        stateError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      stateError.innerHTML = "";
+      stateError.style.color = "green";
+      nameInput.style.border = "solid 2px green";
+      return true;
+    }
+    function validatePincode() {
+      let nameInput = document.getElementById("pincode");
+      let name = document.getElementById("pincode").value;
+  
+      if (name.length == 0) {
+        pincodeError.innerHTML = "Pincode is required";
+        pincodeError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      if (!name.match(pinRegex)) {
+        pincodeError.innerHTML = "Write valid name";
+        pincodeError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      pincodeError.innerHTML = "";
+      pincodeError.style.color = "green";
+      nameInput.style.border = "solid 2px green";
+      return true;
+    }
+    function validateMobile() {
+      let nameInput = document.getElementById("mobile");
+      let name = document.getElementById("mobile").value;
+  
+      if (name.length == 0) {
+        mobileError.innerHTML = "Mobile Number is required";
+        mobileError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      if (!name.match(mobileRegex)) {
+        mobileError.innerHTML = "Write valid name";
+        mobileError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+        return false;
+      }
+      mobileError.innerHTML = "";
+      mobileError.style.color = "green";
+      nameInput.style.border = "solid 2px green";
+      return true;
+    }
+    function validateEmail() {
+      let nameInput = document.getElementById("email");
+      let email = document.getElementById("email").value;
+  
+      if (email.length == 0) {
+        emailError.innerHTML = "Email is required";
+        emailError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+  
+        return false;
+      }
+      if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+        emailError.innerHTML = "Email invalid";
+        emailError.style.color = "red";
+        nameInput.style.border = "solid 2px red";
+  
+        return false;
+      }
+      emailError.innerHTML = "";
+      emailError.style.color = "green";
+      nameInput.style.border = "solid 2px green";
+      return true;
+    }
+  
+    
+    myform.addEventListener('submit',(event)=>
+    {
+      event.preventDefault();
+      
+      if(!validateName() || !validateApartment() || !validateStreet() || !validateCity() || !validateState() || !validatePincode() || !validateMobile() || !validateEmail())
+      {
+        return false;
+      }
+      else
+      {
+        myform.submit();
+      }
+    })
+  
+    $("#checkout-form").submit((e) => {
+      e.preventDefault();
+      $.ajax({
+        url: "/add_address",
+        method: "post",
+        data: $("#checkout-form").serialize(),
+        success: (response) => {},
+      });
+    });
+  </script>
+  

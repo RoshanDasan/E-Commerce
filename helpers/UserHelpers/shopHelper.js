@@ -2,7 +2,6 @@ const { response } = require("../../app");
 const user = require("../../models/connection");
 const ObjectId = require("mongodb").ObjectId;
 
-
 module.exports = {
   //list product
   shopListProduct: () => {
@@ -47,7 +46,7 @@ module.exports = {
   },
 
   // address section
-  
+
   // get address of the user
 
   getAddress: (userId) => {
@@ -85,42 +84,95 @@ module.exports = {
 
   postAddress: (userId, data) => {
     return new Promise(async (resolve, reject) => {
-      let addressInfo = {
-        fname: data.fname,
-        lname: data.lname,
-        street: data.street,
-        apartment: data.apartment,
-        city: data.city,
-        state: data.state,
-        pincode: data.pincode,
-        mobile: data.mobile,
-        email: data.email,
-      };
+      try {
+        let addressInfo = {
+          fname: data.fname,
+          lname: data.lname,
+          street: data.street,
+          apartment: data.apartment,
+          city: data.city,
+          state: data.state,
+          pincode: data.pincode,
+          mobile: data.mobile,
+          email: data.email,
+        };
 
-      let AddressInfo = await user.address.findOne({ user: userId });
-      if (AddressInfo) {
+        let AddressInfo = await user.address.findOne({ user: userId });
+        if (AddressInfo) {
+          await user.address
+            .updateOne(
+              { user: userId },
+              {
+                $push: {
+                  Address: addressInfo,
+                },
+              }
+            )
+            .then((response) => {
+              resolve(response);
+            });
+        } else {
+          let addressData = new user.address({
+            user: userId,
+
+            Address: addressInfo,
+          });
+
+          await addressData.save().then((response) => {
+            resolve(response);
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  // edit address
+  getEditAddress: (addressId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await user.address.findOne({ _id: addressId }).then((response) => {
+          resolve(response);
+        });
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  },
+
+  editAddress: (addressId, editData) => {
+    console.log(addressId);
+    let address = {
+      fname: editData.fname,
+      street: editData.street,
+      apartment: editData.apartment,
+      city: editData.city,
+      state: editData.state,
+      pincode: editData.pincode,
+      mobile: editData.mobile,
+      email: editData.email,
+    };
+
+    return new Promise(async (resolve, reject) => {
+      try {
         await user.address
           .updateOne(
-            { user: userId },
+            { _id: addressId },
             {
-              $push: {
-                Address: addressInfo,
+              $set: {
+                Address: address,
               },
             }
           )
           .then((response) => {
+            console.log(response);
             resolve(response);
           });
-      } else {
-        let addressData = new user.address({
-          user: userId,
-
-          Address: addressInfo,
-        });
-
-        await addressData.save().then((response) => {
-          resolve(response);
-        });
+      } catch (error) {
+        console.log(error);
+        reject(error);
       }
     });
   },
@@ -142,9 +194,7 @@ module.exports = {
     });
   },
 
-
   // coupon helpers
-
 
   // validate a coupon
 
@@ -162,7 +212,7 @@ module.exports = {
             if (userCouponExists) {
               resolve({ status: false, reason: "coupon already used" });
             } else {
-              resolve({ status: true, reason: "coupon added"});
+              resolve({ status: true, reason: "coupon added" });
             }
           } else {
             resolve({ status: false, reason: "coupon expired" });
@@ -200,9 +250,7 @@ module.exports = {
         console.log(usedCoupon);
         if (usedCoupon.length == 1) {
           resolve({ status: true });
-        }
-        else
-        {
+        } else {
           resolve({ status: true });
         }
       } catch (err) {
@@ -211,7 +259,6 @@ module.exports = {
     });
   },
 
-  
   // apply coupon
   applyCoupon: (code, total) => {
     return new Promise(async (resolve, reject) => {
@@ -227,9 +274,19 @@ module.exports = {
               let discountAmount = (total * coupon.discountPercentage) / 100;
               if (discountAmount > coupon.maxDiscountValue) {
                 discountAmount = coupon.maxDiscountValue;
-                resolve({ status: true, discountAmount: discountAmount, discount:coupon.discountPercentage, code:code });
+                resolve({
+                  status: true,
+                  discountAmount: discountAmount,
+                  discount: coupon.discountPercentage,
+                  code: code,
+                });
               } else {
-                resolve({ status: true, discountAmount: discountAmount ,  discount:coupon.discountPercentage, code:code});
+                resolve({
+                  status: true,
+                  discountAmount: discountAmount,
+                  discount: coupon.discountPercentage,
+                  code: code,
+                });
               }
             } else {
               resolve({
@@ -284,16 +341,13 @@ module.exports = {
     });
   },
 
-
   // get related products by the category to add on image zoom page
 
-  getProductByCategory:(category) =>
-  {
-    return new Promise(async(resolve, reject) => {
-      await user.product.find({category:category}).then((response)=>
-      {
-        resolve(response)
-      })
-    })
-  }
+  getProductByCategory: (category) => {
+    return new Promise(async (resolve, reject) => {
+      await user.product.find({ category: category }).then((response) => {
+        resolve(response);
+      });
+    });
+  },
 };

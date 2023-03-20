@@ -127,7 +127,7 @@ module.exports = {
       res.render("user/otpLogin", { userExist: true });
     } else {
       client.verify.v2
-        .services(otpLogin.serviceId)
+        .services(process.env.serviceId)
         .verifications.create({ to: `+91 ${mobilenumber}`, channel: "sms" })
         .then((verification) => console.log(verification.status))
         .then(() => {
@@ -343,10 +343,13 @@ module.exports = {
   },
 
   postSort: async (req, res) => {
+    let user = req.session.user.id;
+    let users = req.session.user;
     let sortOption = req.body["selectedValue"];
     let viewCategory = await adminCategoryHelper.viewAddCategory();
     shopHelpers.postSort(sortOption).then((response) => {
       res.render("user/filter-by-category", {
+        user,users,
         response,
         viewCategory,
         count,
@@ -449,8 +452,41 @@ module.exports = {
     await shopHelpers
       .postAddress(req.session.user.id, req.body)
       .then((data) => {
+        res.redirect("/check_out");
+      });
+  },
+
+  getNewAddresspage: (req, res) => {
+    let users = req.session.user;
+    let user = req.session.user.id;
+    res.render("user/add-new-address", { user, users, wishcount, count });
+  },
+
+  postNewAddresspage: async (req, res) => {
+    await shopHelpers
+      .postAddress(req.session.user.id, req.body)
+      .then((data) => {
         res.redirect("/profile");
       });
+  },
+
+  getEditAddress:async (req, res)=>
+  {
+    let users = req.session.user;
+    let user = req.session.user.id;
+    let editData = await shopHelpers.getEditAddress(req.query.id)
+    console.log(editData);
+    res.render("user/edit-address", {editData, user, users, wishcount, count });
+  },
+
+  postEditAddress:async (req, res)=>
+  {
+    try {
+      await shopHelpers.editAddress(req.body.addressId, req.body)
+      res.redirect('/view_address')
+    } catch (error) {
+      
+    }
   },
 
   postchangeProductQuantity: async (req, res) => {

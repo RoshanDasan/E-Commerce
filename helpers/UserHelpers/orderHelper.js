@@ -551,7 +551,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       try {
         const crypto = require("crypto");
-        let hmac = crypto.createHmac("sha256", razorpay.key_secret);
+        let hmac = crypto.createHmac("sha256", process.env.key_secret);
         hmac.update(
           details["payment[razorpay_order_id]"] +
             "|" +
@@ -571,6 +571,7 @@ module.exports = {
   createData: (details) => {
     let address = details.address[0];
     let product = details.products[0][0];
+    console.log(product);
 
     var data = {
       // Customize enables you to provide your own templates

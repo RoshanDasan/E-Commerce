@@ -5,18 +5,16 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const expressLayouts = require("express-ejs-layouts");
 const session= require('express-session')
+const dotenv = require('dotenv')
 
 
 
-// DB connection
-
-const db = require("./models/connection");
 
 const userRouter = require("./routes/user");
 const adminRouter = require("./routes/admin");
 
 const app = express();
-
+dotenv.config()
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
