@@ -130,7 +130,13 @@ module.exports = {
   },
   postAddBanner: (req, res) => {
     adminHelper.addBanner(req.body, req.file.filename).then((response) => {
-      res.redirect("/admin/add_banner");
+      console.log(req.body);
+      console.log(req.file.filename);
+
+      if(response){
+
+        res.redirect("/admin/add_banner");
+      }
     });
   },
 
