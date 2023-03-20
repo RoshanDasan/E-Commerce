@@ -6,6 +6,7 @@ const logger = require("morgan");
 const expressLayouts = require("express-ejs-layouts");
 const session= require('express-session')
 const dotenv = require('dotenv')
+const connectDB = require('./models/connectAtlas')
 
 
 
@@ -37,6 +38,16 @@ app.use(function (req, res, next) {
 
 app.use("/", userRouter);
 app.use("/admin", adminRouter);
+
+const start = function () {
+  try {
+    connectDB(process.env.MONGO_URI)
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+start() 
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {    

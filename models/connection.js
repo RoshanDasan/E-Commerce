@@ -1,11 +1,5 @@
 var mongoose = require("mongoose");
-const db = mongoose
-  .connect("mongodb://0.0.0.0:27017/roshanCart", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Database connected!"))
-  .catch((err) => console.log(err));
+
 
 const userschema = new mongoose.Schema({
   username: {
