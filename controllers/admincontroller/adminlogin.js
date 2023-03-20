@@ -129,6 +129,7 @@ module.exports = {
     res.render("admin/add-banner", { layout: "adminLayout", admins });
   },
   postAddBanner: (req, res) => {
+    console.log(req);
     adminHelper.addBanner(req.body, req.file.filename).then((response) => {
       console.log(req.body);
       console.log(req.file.filename);
@@ -136,6 +137,9 @@ module.exports = {
       if(response){
 
         res.redirect("/admin/add_banner");
+      }
+      else{
+        res.status(505)
       }
     });
   },
