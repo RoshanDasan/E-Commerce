@@ -28,6 +28,8 @@
                
                   <!-- <button onclick="cancelorder('<%=response._id%>')" class="btn btn-xs">Cancel</button> -->
                   <a href="/admin/edit_banner?banner=<%=response._id%>" class="btn btn-primary"> Edit Banner </a>
+
+                  <button class="btn btn-danger" onclick="deleteBanner('<%=response._id%>')" >Delete</button>
               
               </td>
              
@@ -40,6 +42,25 @@
     </div>
  
   </div>
+
+
+  <script>
+    function deleteBanner(deleteId)
+    {
+      $.ajax({
+        url:'/admin/delete_banner/'+deleteId,
+        method:'DELETE',
+        success:(response)=>
+        {
+          console.log(response);
+          if(response)
+          {
+            location.reload() 
+          }
+        }
+      })
+    }
+  </script>
 
   
 <style>

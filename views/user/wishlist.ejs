@@ -130,11 +130,8 @@ $.ajax({
           url: '/add-to-cart/'+proId,
           method: 'GET',
           success: (response) => {
-            if(response.status){
-                console.log(response.status);
-                location.reload()      
-            }
-            
+                console.log(response);
+                      
           }
     
 })

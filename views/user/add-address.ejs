@@ -256,7 +256,7 @@
       nameInput.style.border = "solid 2px red";
       return false;
     }
-    if (!name.match(mobileRegex) || !name.length < 11 || !name.length > 10) {
+    if (!name.match(mobileRegex)) {
       mobileError.innerHTML = "Write valid name";
       mobileError.style.color = "red";
       nameInput.style.border = "solid 2px red";

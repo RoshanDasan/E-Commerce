@@ -1,3 +1,4 @@
+const { response } = require("../../app");
 const user = require("../../models/connection");
 
 module.exports = {
@@ -196,6 +197,16 @@ module.exports = {
       resolve(response)
     })
 
+  },
+
+  deleteBanner:(deleteId)=>
+  {
+    return new Promise(async (resolve, reject) => {
+      await user.banner.deleteOne({_id: deleteId}).then((response)=>
+      {
+        resolve(response)
+      })
+    })
   },
 
   getCodCount: () => {

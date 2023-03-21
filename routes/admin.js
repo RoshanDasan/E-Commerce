@@ -36,7 +36,7 @@ router.post("/edit_category/:id",admincategorycontroller.postEditCategory)
 
 router.get("/add_product",auths.auth,adminproductcontroller.getAddProduct)
 
-router.post("/add_product",upload.uploads,adminproductcontroller.postAddProduct)
+router.post("/add_product",auths.auth,upload.uploads,adminproductcontroller.postAddProduct)
 
 router.get("/view_product",auths.auth,adminproductcontroller.getViewproduct)
 
@@ -64,13 +64,15 @@ router.put('/orderStatus', adminproductcontroller.getEditOrderStatus)
 
 router.get("/add_banner",auths.auth, adminController.getAddBanner)
 
-router.post("/add_banner",upload.addBannerupload, adminController.postAddBanner)
+router.post("/add_banner",auths.auth,upload.addBannerupload, adminController.postAddBanner)
 
 router.get("/list_banner",auths.auth, adminController.listBanner)
 
 router.get("/edit_banner",auths.auth, adminController.getEditBanner)
 
 router.post("/edit_banner",upload.editBannerupload,auths.auth, adminController.postEditBanner)
+
+router.delete('/delete_banner/:id', adminController.deleteBanner)
 
 router.get('/sales_report',adminController.getSalesReport)
 

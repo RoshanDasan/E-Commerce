@@ -1,3 +1,4 @@
+const { response } = require("../../app");
 const adminHelper = require("../../helpers/adminHelpers/adminProductHelpers");
 const orderHelper = require("../../helpers/adminHelpers/orderHelper");
 
@@ -45,31 +46,30 @@ module.exports = {
 
   getDashboard: async (req, res) => {
     admins = req.session.admin;
-    let totalProducts,days = [];
+    let totalProducts,
+      days = [];
     let ordersPerDay = {};
     let paymentCount = [];
 
     let Products = await adminHelper.getAllProducts();
     totalProducts = Products.length;
-      
-  
 
     await orderHelper.getOrderByDate().then((response) => {
-      let result = response
+      let result = response;
       for (let i = 0; i < result.length; i++) {
         for (let j = 0; j < result[i].orders.length; j++) {
-          let ans = {}
+          let ans = {};
           ans["createdAt"] = result[i].orders[j].createdAt;
           days.push(ans);
-          
         }
-    
       }
 
       days.forEach((order) => {
-         let day = order.createdAt.toLocaleDateString("en-US", {weekday: "long"});
+        let day = order.createdAt.toLocaleDateString("en-US", {
+          weekday: "long",
+        });
         ordersPerDay[day] = (ordersPerDay[day] || 0) + 1;
-      })
+      });
     });
 
     let getCodCount = await adminHelper.getCodCount();
@@ -82,12 +82,9 @@ module.exports = {
     let getWalletCount = await adminHelper.getWalletCount();
     let WalletCount = getWalletCount.length;
 
-
-
     paymentCount.push(onlineCount);
     paymentCount.push(codCount);
     paymentCount.push(WalletCount);
-
 
     await orderHelper.getAllOrders().then((response) => {
       var length = response.length;
@@ -113,8 +110,6 @@ module.exports = {
     admins = req.session.admin;
 
     orderHelper.getAllOrders().then((response) => {
-
-
       res.render("admin/all-orders", {
         layout: "adminLayout",
         response,
@@ -129,17 +124,11 @@ module.exports = {
     res.render("admin/add-banner", { layout: "adminLayout", admins });
   },
   postAddBanner: (req, res) => {
-    console.log(req);
     adminHelper.addBanner(req.body, req.file.filename).then((response) => {
-      console.log(req.body);
-      console.log(req.file.filename);
-
-      if(response){
-
+      if (response) {
         res.redirect("/admin/add_banner");
-      }
-      else{
-        res.status(505)
+      } else {
+        res.status(505);
       }
     });
   },
@@ -182,6 +171,14 @@ module.exports = {
       });
   },
 
+  // delete banner
+
+  deleteBanner: (req, res) => {
+    adminHelper.deleteBanner(req.params.id).then((response) => {
+      res.json(true);
+    });
+  },
+
   //admin logout
 
   getAdminLogOut: (req, res) => {
@@ -199,7 +196,9 @@ module.exports = {
       let day = orderDate.getDate();
       let month = orderDate.getMonth() + 1;
       let year = orderDate.getFullYear();
-      return `${isNaN(day) ? "00" : day}-${isNaN(month) ? "00" : month}-${ isNaN(year) ? "0000" : year}`;
+      return `${isNaN(day) ? "00" : day}-${isNaN(month) ? "00" : month}-${
+        isNaN(year) ? "0000" : year
+      }`;
     };
 
     report.forEach((orders) => {
@@ -210,7 +209,8 @@ module.exports = {
     res.render("admin/sales-report", {
       layout: "adminLayout",
       admins,
-      Details,getDate
+      Details,
+      getDate,
     });
   },
 
@@ -221,7 +221,9 @@ module.exports = {
       let day = orderDate.getDate();
       let month = orderDate.getMonth() + 1;
       let year = orderDate.getFullYear();
-      return `${isNaN(day) ? "00" : day}-${isNaN(month) ? "00" : month}-${ isNaN(year) ? "0000" : year}`;
+      return `${isNaN(day) ? "00" : day}-${isNaN(month) ? "00" : month}-${
+        isNaN(year) ? "0000" : year
+      }`;
     };
 
     adminHelper.postReport(req.body).then((orderdata) => {
@@ -232,7 +234,8 @@ module.exports = {
       res.render("admin/sales-report", {
         layout: "adminLayout",
         admins,
-        Details,getDate
+        Details,
+        getDate,
       });
     });
   },
