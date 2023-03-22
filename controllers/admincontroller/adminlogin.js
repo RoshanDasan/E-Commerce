@@ -86,6 +86,21 @@ module.exports = {
     paymentCount.push(codCount);
     paymentCount.push(WalletCount);
 
+    let orderByCategory = await orderHelper.getOrderByCategory()
+
+    let Men=0, Women=0, Kids=0
+    orderByCategory[0].forEach((Products)=>
+    {
+      if(Products.category == 'Men') Men ++
+      if(Products.category == 'Women') Women ++
+      if(Products.category == 'Kids') Kids ++
+    })
+    let category = []
+    category.push(Men)
+    category.push(Women)
+    category.push(Kids)
+
+
     await orderHelper.getAllOrders().then((response) => {
       var length = response.length;
 
@@ -102,6 +117,7 @@ module.exports = {
         totalProducts,
         ordersPerDay,
         paymentCount,
+        category
       });
     });
   },
@@ -205,7 +221,6 @@ module.exports = {
       Details.push(orders.orders);
     });
 
-    console.log(Details[0].productsDetails[0]);
     res.render("admin/sales-report", {
       layout: "adminLayout",
       admins,

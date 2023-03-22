@@ -581,13 +581,13 @@ module.exports = {
       },
       images: {
         // The logo on top of your invoice
-        logo: "https://freelogocreator.com/user_design/logos/2023/02/28/120325-medium.png",
+        logo: "https://freelogocreator.com/user_design/logos/2023/03/16/125820.jpg",
         // The invoice background
         // background: "https://public.easyinvoice.cloud/img/watermark-draft.jpg",
       },
       // Your own data
       sender: {
-        company: "RoshanCart",
+        company: "Rapid Delux",
         address: "Washington DC",
         zip: "4567 CD",
         city: "Los santos",
@@ -617,7 +617,7 @@ module.exports = {
         },
       ],
       // The message you would like to display on the bottom of your invoice
-      "bottom-notice": "Thank you for your order from RoshanCart",
+      "bottom-notice": "Thank you for your order from Rapid Delux",
       // Settings to customize your invoice
       settings: {
         currency: "INR", // See documentation 'Locales and Currency' for more info. Leave empty for no currency.

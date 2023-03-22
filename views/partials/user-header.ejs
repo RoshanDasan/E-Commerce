@@ -59,13 +59,21 @@
                           <div class="header-action-icon-2">
                               <a href="/view_wishlist">
                                   <img class="svgInject" alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
+                              
+                                  <% if (locals.wishcount != 0 ) { %>
                                   <span class="pro-count blue" id="wishlistcounting"><%=locals.wishcount%></span>
+
+                                    <% }%>
                               </a>
                           </div>
                           <div class="header-action-icon-2">
                               <a class="mini-cart-icon" href="/cart">
                                   <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
+                                  <% if (locals.count !=0) { %>
                                   <span class="pro-count blue" id="cartcounting"><%=locals.count%></span>
+
+                                    <% } %>
+                                    
                               </a>
                               <div class="cart-dropdown-wrap cart-dropdown-hm2">
                               
@@ -92,20 +100,13 @@
                   <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
                       <nav>
                           <ul>
-                              <li><a class="active" href="/">Home <i class="fi-rs-angle-down"></i></a>
-                              
-                              </li>
-                              <li>
-                                  <a href=#">About</a>
-                              </li>
-                              <li><a href="/shop">Shop <i class="fi-rs-angle-down"></i></a>
+                              <li><a class="active" href="/">Home </a>
                               
                               </li>
                            
-                           
-                          
-                              <li>
-                                  <a href="#">Contact</a>
+                              <li><a href="/shop">Shop </i></a>
+                        
+                                
                               </li>
                           </ul>
                       </nav>
@@ -119,13 +120,19 @@
                       <div class="header-action-icon-2">
                           <a href="/view_wishlist">
                               <img alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
-                              <span class="pro-count white"><%=locals.wishcount%></span>
+                              <% if (locals.wishcount != 0 ) { %>
+                                <span class="pro-count blue" id="wishlistcounting"><%=locals.wishcount%></span>
+
+                                  <% }%>
                           </a>
                       </div>
                       <div class="header-action-icon-2">
                           <a class="mini-cart-icon" href="/cart">
                               <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
-                              <span class="pro-count white"><%=locals.count%></span>
+                              <% if (locals.count !=0) { %>
+                                <span class="pro-count blue" id="cartcounting"><%=locals.count%></span>
+
+                                  <% } %>
                           </a>
                           <div class="cart-dropdown-wrap cart-dropdown-hm2">
                               <ul>
@@ -231,11 +238,9 @@
      
           <div class="mobile-social-icon">
               <h5 class="mb-15 text-grey-4">Follow Us</h5>
-              <a href="#"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-              <a href="#"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-              <a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-              <a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-              <a href="#"><img src="assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
+              <a href="https://www.facebook.com/abroshan.abr"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
+              <a href="https://twitter.com/RoshanEdas"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
+              <a href="https://www.instagram.com/__roshan_das__/"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
           </div>
       </div>
   </div>

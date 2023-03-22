@@ -69,7 +69,7 @@
       </div> -->
     </div>
     <div class="row">
-      <div class="col-xl-8 col-lg-12">
+      <div class="col-xl-6 col-lg-12">
         <div class="card mb-4">
           <article class="card-body">
             <h5 class="card-title">Sale statistics</h5>
@@ -78,7 +78,7 @@
         </div>
        
       </div>
-      <div class="col-xl-4 col-lg-12">
+      <div class="col-xl-3 col-lg-12">
         <div class="card mb-4">
           <article class="card-body">
             <h5 class="card-title">Payment Mode</h5>
@@ -88,9 +88,21 @@
         
       </div>
 
+      <div class="col-xl-3 col-lg-12">
+        <div class="card mb-4">
+          <article class="card-body">
+            <h5 class="card-title">category Sales</h5>
+            <canvas id="myChart3" ></canvas>
+          </article>
+        </div>
+        
+      </div>
+
       <div>
         <p  id="days"style="visibility: hidden;" ><%= JSON.stringify(locals.ordersPerDay) %></p>
         <p style="visibility: hidden;" id="payment"><%= JSON.stringify(locals.paymentCount) %></p>
+        <p style="visibility: hidden;" id="categoryData"><%= JSON.stringify(locals.category) %></p>
+
 
       </div>
       
@@ -183,6 +195,43 @@
       title: {
         display: true,
         text: "Number of orders by payment mode"
+      }
+    } 
+  });
+
+
+   
+  var xValue = ["Men","Women","Kids"];
+  var yValues = [];
+         let CategoryData = JSON.parse(document.getElementById('categoryData').innerHTML);
+         console.log(paymentData);
+
+       yValues.push(CategoryData[0])
+       yValues.push(CategoryData[1])
+       yValues.push(CategoryData[2])
+
+         
+  var barColors = [
+    "green",
+    "yellow",
+    "blue",
+    "red",
+    "#1e7145"
+  ];
+  
+  new Chart("myChart3", {
+    type: "pie",
+    data: {
+      labels: xValue,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Orders by category"
       }
     } 
   });

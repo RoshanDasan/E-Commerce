@@ -22,9 +22,9 @@ module.exports = {
       count = await cartAndWishlistHelpers.getCartCount(req.session.user.id);
       wishcount = await cartAndWishlistHelpers.getWishCount(req.session.user.id);
 
-      res.render("user/user", { users, count, bannerData, wishcount });
+      res.render("user/user", { users, count, bannerData, wishcount ,userExist : true});
     } else {
-      res.render("user/user", { bannerData });
+      res.render("user/user", { bannerData, userExist: false });
     }
   },
   getUserLogin: (req, res) => {

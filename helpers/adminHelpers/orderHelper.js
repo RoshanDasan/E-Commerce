@@ -17,10 +17,25 @@ module.exports =
         { $sort: { "orders.createdAt": -1 } } 
       ])
         .then((response) => {
-          console.log(response);
           resolve(response);
         });
     });
+  },
+
+  // get orders by category wise
+
+  getOrderByCategory:()=>
+  {
+    return new Promise(async (resolve, reject) => {
+      await user.order.aggregate([
+        { $unwind: "$orders"},
+      ]).then((response)=>
+      {
+        const productDetails = response.map(order => order.orders.productsDetails);
+        resolve(productDetails)
+
+      })
+    })
   },
 
   // edit the order status
