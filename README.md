@@ -1,9 +1,5 @@
 # E-Commerce
-This is my personal e commerce website that designed for get some knowledge about the web development using js.
+This is my personal e-commerce website designed to gain knowledge about web development. The website was built using Express.js and MongoDB, and I implemented APIs to better understand their functionality.
 
+The website includes fully comprehensible code, and I'm happy to say that anyone can make contributions to it.
 
-<% if (condition) { %>
-
-<% } else { %>
-
-<% } %>
