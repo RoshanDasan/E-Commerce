@@ -26,7 +26,6 @@
                 <th class="align-middle" scope="col">Email</th>
                 <th class="align-middle" scope="col">Phone Number</th>
                 <th class="align-middle" scope="col">Orders</th>
-                <th class="align-middle" scope="col">Option</th>
               </tr>
             </thead>
             <tbody>
@@ -36,9 +35,7 @@
                 <td><%= user.username %></td>
                 <td><%= user.email %></td>
                 <td><%= user.phonenumber %></td>
-                <td>
-                  <a href="/admin/order" class="btn btn-primary">Orders</a>
-                </td>
+               
                 <td>
                   <%if(user.blocked){%>
 

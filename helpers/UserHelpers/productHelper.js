@@ -44,7 +44,8 @@ module.exports = {
               $pull: { cartItems: { productId: data.product } },
             }
           )
-          .then(() => {
+          .then((response) => {
+            console.log(response);
             resolve({ removeProduct: true });
           });
       } else {
