@@ -5,9 +5,11 @@ The website includes fully comprehensible code, and I'm happy to say that anyone
 
 To run this application
 copy
+
     https://github.com/RoshanDasan/E-Commerce.git
 
 Run
-   yarn install
-   yarn start
+
+    yarn install
+    yarn start
 
