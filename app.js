@@ -7,6 +7,7 @@ const expressLayouts = require("express-ejs-layouts");
 const session= require('express-session')
 const dotenv = require('dotenv')
 const connectDB = require('./models/connectAtlas')
+const mongoose = require('mongoose')
 
 
 
@@ -38,6 +39,9 @@ app.use(function (req, res, next) {
 
 app.use("/", userRouter);
 app.use("/admin", adminRouter);
+
+mongoose.set('strictQuery', false);
+
 
 const start = function () {
   try {

@@ -9,6 +9,7 @@
     "bcrypt": "^5.1.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "docker": "^0.2.14",
     "dotenv": "^16.0.3",
     "easyinvoice": "^2.3.3",
     "ejs": "^3.1.8",
@@ -19,11 +20,11 @@
     "mongoose": "^6.8.1",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
-    "nodemon": "^2.0.20",
+    "nodemon": "^3.0.1",
     "pdfkit": "^0.13.0",
-    "razorpay": "^2.8.4",
+    "razorpay": "^2.9.2",
     "sweetalert": "^2.1.2",
-    "twilio": "^3.84.0",
+    "twilio": "^4.16.0",
     "voucher-code-generator": "^1.3.0"
   },
   "devDependencies": {

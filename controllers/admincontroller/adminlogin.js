@@ -125,11 +125,21 @@ module.exports = {
   getAllOrderds: (req, res) => {
     admins = req.session.admin;
 
+    const getDate = (date) => {
+      let orderDate = new Date(date);
+      let day = orderDate.getDate();
+      let month = orderDate.getMonth() + 1;
+      let year = orderDate.getFullYear();
+      return `${isNaN(day) ? "00" : day}-${isNaN(month) ? "00" : month}-${
+        isNaN(year) ? "0000" : year
+      }`;
+    };
     orderHelper.getAllOrders().then((response) => {
       res.render("admin/all-orders", {
         layout: "adminLayout",
         response,
         admins,
+        getDate
       });
     });
   },

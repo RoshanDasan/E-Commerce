@@ -44,7 +44,10 @@
         <td><%=user._id%></td>
         <td><%=user.orders.paymentStatus%></td>
         <td><%=user.orders.shippingAddress.mobile%></td>
-        <td><%=user.orders.createdAt%></td>
+        <td><%=getDate(user.orders.createdAt)%></td>
+        <td><a href="/admin/getOrder_details/<%=user.orders._id%>" class="btn btn-info">View Details</a></td>
+
+        
 
 
         <%if(user.orders.orderConfirm == 'cancelled'){%>
@@ -53,7 +56,8 @@
      
            <%}else {%>
             <td><%=user.orders.orderConfirm%></td>
-        <td><div class="dropdown">
+        <td>
+          <!-- <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
            Change order status
           </button>
@@ -73,7 +77,18 @@
           
            
           </div>
-        </div></td>
+        </div> -->
+
+          <select class="form-select d-inline-block mb-lg-0 mb-15 ">
+            <option>Change status</option>
+            <option>Awaiting payment</option>
+            <option>Confirmed</option>
+            <option>Shipped</option>
+            <option>Delivered</option>
+          </select>
+      
+     
+      </td>
            
           <%}%>
 
@@ -117,12 +132,5 @@ function orderStatus(orderId, status)
   })
 }
 
-
-// $(document).ready(function () {
-//   $('#dtOrderExample').DataTable({
-//     "order": [[ 3, "desc" ]]
-//   });
-//     $('.dataTables_length').addClass('bs-select');
-// });
 
 </script>

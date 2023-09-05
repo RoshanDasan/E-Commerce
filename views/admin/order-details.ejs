@@ -1,0 +1,165 @@
+<section class="content-main">
+  <div class="content-header">
+    <div>
+      <h2 class="content-title card-title">ORDER DETAILS</h2>
+    </div>
+  </div>
+  <div class="card">
+    <header class="card-header">
+      <div class="row align-items-center">
+        <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
+          <span>
+            <i class="material-icons md-calendar_today"></i>
+            <b><%= getDate(orderDetails.createdAt)%> </b>
+          </span>
+          <br />
+          <small class="text-muted">Order ID: <%= orderDetails._id%></small>
+        </div>
+        <div class="col-lg-6 col-md-6 ms-auto text-md-end">
+          <select class="form-select d-inline-block mb-lg-0 mb-15 mw-200">
+            <option>Change status</option>
+            <option>Awaiting payment</option>
+            <option>Confirmed</option>
+            <option>Shipped</option>
+            <option>Delivered</option>
+          </select>
+          <a class="btn btn-primary" href="#">Save</a>
+          <a class="btn btn-secondary print ms-2" href="#"
+            ><i class="icon material-icons md-print"></i
+          ></a>
+        </div>
+      </div>
+    </header>
+    <!-- card-header end// -->
+    <div class="card-body">
+      <div class="row mb-50 mt-20 order-info-wrap">
+        <div class="col-md-4">
+          <article class="icontext align-items-start">
+            <span class="icon icon-sm rounded-circle bg-primary-light">
+              <i class="text-primary material-icons md-person"></i>
+            </span>
+            <div class="text">
+              <h6 class="mb-1">Customer</h6>
+              <p class="mb-1">
+                <%= address[0].fname%> <br />
+                <%= address[0].email%> <br />
+                +91 <%= address[0].mobile%>
+              </p>
+            </div>
+          </article>
+        </div>
+        <!-- col// -->
+        <div class="col-md-4">
+          <article class="icontext align-items-start">
+            <span class="icon icon-sm rounded-circle bg-primary-light">
+              <i class="text-primary material-icons md-local_shipping"></i>
+            </span>
+            <div class="text">
+              <h6 class="mb-1">Order info</h6>
+              <p class="mb-1">
+                Shipping: Fargo express <br />
+                Pay method: card <br />
+                Status: new
+              </p>
+              <a href="#">Download info</a>
+            </div>
+          </article>
+        </div>
+        <!-- col// -->
+        <div class="col-md-4">
+          <article class="icontext align-items-start">
+            <span class="icon icon-sm rounded-circle bg-primary-light">
+              <i class="text-primary material-icons md-place"></i>
+            </span>
+            <div class="text">
+              <h6 class="mb-1">Deliver to</h6>
+              <p class="mb-1">
+                City: Tashkent, Uzbekistan <br />Block A, House 123, Floor 2
+                <br />
+                Po Box 10000
+              </p>
+              <a href="#">View profile</a>
+            </div>
+          </article>
+        </div>
+        <!-- col// -->
+      </div>
+      <!-- row // -->
+      <div class="row">
+        <div class="col-lg-7">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="40%">Product</th>
+                  <th width="20%">Unit Price</th>
+                  <th width="20%">Quantity</th>
+                  <th width="20%" class="text-end">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% product[0].forEach(function(product){ %>
+                <tr>
+                  <td>
+                    <a class="itemside" href="#">
+                      <div class="left">
+                        <img
+                          src="/uploads/<%=product.image[0] %>"
+                          width="40"
+                          height="40"
+                          class="img-xs"
+                          alt="Item"
+                        />
+                      </div>
+                      <div class="info"><%= product.productsName%></div>
+                    </a>
+                  </td>
+                  <td><%= product.productsOfferPrice%></td>
+                  <td><%= product.quantity%></td>
+                  <td class="text-end">
+                    <%= parseInt(product.productsOfferPrice) *
+                    parseInt(product.quantity)%>
+                  </td>
+                </tr>
+                <% }); %>
+
+                <tr>
+                  <td colspan="4">
+                    <article class="float-end">
+                      <dl class="dlist">
+                        <dt>Subtotal:</dt>
+                        <dd>$973.35</dd>
+                      </dl>
+                      <dl class="dlist">
+                        <dt>Shipping cost:</dt>
+                        <dd>$10.00</dd>
+                      </dl>
+                      <dl class="dlist">
+                        <dt>Grand total:</dt>
+                        <dd><b class="h5">$983.00</b></dd>
+                      </dl>
+                      <dl class="dlist">
+                        <dt class="text-muted">Status:</dt>
+                        <dd>
+                          <span
+                            class="badge rounded-pill alert-success text-success"
+                            >Payment done</span
+                          >
+                        </dd>
+                      </dl>
+                    </article>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- table-responsive// -->
+        </div>
+        <!-- col// -->
+      </div>
+    </div>
+    <!-- card-body end// -->
+  </div>
+  <!-- card end// -->
+</section>
+<!-- content-main end// -->

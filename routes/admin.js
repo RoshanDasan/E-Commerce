@@ -4,6 +4,8 @@ const admincategorycontroller=require('../controllers/admincontroller/category')
 const adminusercontroller=require('../controllers/admincontroller/adminuser')
 const adminproductcontroller=require('../controllers/admincontroller/product')
 const adminCouponController = require('../controllers/admincontroller/adminCoupon')
+const adminOrderController = require('../controllers/admincontroller/orderList')
+
 var router = express.Router();
 const upload=require('../multer/multer')
 const auths=require('../middlewares/middleware')
@@ -61,6 +63,8 @@ router.get("/generate_coupon",auths.auth,adminCouponController.generateCoupon);
 router.delete('/coupon_delete/:id', adminCouponController.deleteCoupon)
 
 router.put('/orderStatus', adminproductcontroller.getEditOrderStatus)
+
+router.get('/getOrder_details/:id', adminOrderController.getOrderList)
 
 router.get("/add_banner",auths.auth, adminController.getAddBanner)
 

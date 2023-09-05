@@ -69,5 +69,37 @@ module.exports =
         });
     });
   },
+
+  // get order details 
+  getOrderDetails:(orderId)=>
+  {
+    try {
+
+      return new Promise(async (resolve, reject) => {
+        let productid = await user.order.findOne(
+          { "orders._id": orderId },
+          { "orders.$": 1 }
+        );
+  
+        let details = productid.orders[0];
+  
+        const address = productid.orders.map((object) => object.shippingAddress);
+        const productDetails = productid.orders.map(
+          (object) => object.productsDetails
+        );
+        const products = productDetails.map((object) => object);
+          if (products) {
+            
+            resolve({ products, address, details });
+          } else {
+            reject('error')
+          }
+      });
+      
+    } catch (error) {
+      throw(error)
+    }
+  }
+
     
 }
